@@ -1,0 +1,7 @@
+this is a patient vital monitoring device documentation .
+
+So our puprose is to recive these data to our server.
+
+This is a third party vendro device that we are procuring to use in our hospital and send vital parameter data to our dashboard.
+
+So how should we procced to achive that .

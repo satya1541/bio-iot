@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Environment variables — contains DB credentials & monitor IP, never commit
+
+
+# SQLite database files (legacy, now using MySQL)
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db

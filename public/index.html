@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Biolight Patient Monitor Dashboard - Real-time vital signs monitoring">
+  <title>Biolight Monitor Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header" id="header">
+    <div class="header-left">
+      <div class="logo">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <path d="M14 2L4 8v12l10 6 10-6V8L14 2z" stroke="url(#grad)" stroke-width="2" fill="none"/>
+          <path d="M4 14h6l2-4 2 8 2-6 2 3h6" stroke="url(#grad)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <defs><linearGradient id="grad" x1="0" y1="0" x2="28" y2="28"><stop stop-color="#00f0ff"/><stop offset="1" stop-color="#7c3aed"/></linearGradient></defs>
+        </svg>
+        <h1>Biolight <span>Monitor</span></h1>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="status-badge" id="connectionStatus">
+        <div class="status-dot"></div>
+        <span>Connecting...</span>
+      </div>
+      <div class="header-stat">
+        <span class="header-stat-label">Monitors</span>
+        <span class="header-stat-value" id="monitorCount">0</span>
+      </div>
+      <div class="header-stat">
+        <span class="header-stat-label">Time</span>
+        <span class="header-stat-value" id="currentTime">--:--:--</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main" id="mainContent">
+    <!-- Empty State -->
+    <div class="empty-state" id="emptyState">
+      <div class="empty-icon">
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+          <circle cx="32" cy="32" r="30" stroke="#334155" stroke-width="2"/>
+          <path d="M16 32h10l4-10 4 20 4-14 4 6h10" stroke="#64748b" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h2>Waiting for Patient Data</h2>
+      <p>Start the HL7 simulator to see live patient vitals:</p>
+      <code>node simulator/hl7-simulator.js</code>
+    </div>
+
+    <!-- Patient Cards Container -->
+    <div class="patients-grid" id="patientsGrid"></div>
+  </main>
+
+  <!-- Alarm Banner -->
+  <div class="alarm-banner" id="alarmBanner">
+    <div class="alarm-content">
+      <span class="alarm-icon">⚠️</span>
+      <span class="alarm-text" id="alarmText"></span>
+      <button class="alarm-dismiss" id="alarmDismiss">✕</button>
+    </div>
+  </div>
+
+  <!-- Patient Card Template -->
+  <template id="patientCardTemplate">
+    <div class="patient-card" data-mrn="">
+      <div class="card-header">
+        <div class="patient-info">
+          <h2 class="patient-name">--</h2>
+          <div class="patient-meta">
+            <span class="meta-item mrn">MRN: --</span>
+            <span class="meta-item bed">Bed: --</span>
+            <span class="meta-item sex-age">--</span>
+          </div>
+        </div>
+        <div class="monitor-badge">
+          <div class="monitor-dot"></div>
+          <span class="monitor-name">--</span>
+        </div>
+      </div>
+      <div class="vitals-grid">
+        <!-- HR -->
+        <div class="vital-tile vital-hr" data-param="HR">
+          <div class="vital-label">HR</div>
+          <div class="vital-value-row">
+            <span class="vital-value">--</span>
+            <span class="vital-unit">bpm</span>
+          </div>
+          <div class="vital-bar"><div class="vital-bar-fill"></div></div>
+        </div>
+        <!-- SpO2 -->
+        <div class="vital-tile vital-spo2" data-param="SpO2">
+          <div class="vital-label">SpO₂</div>
+          <div class="vital-value-row">
+            <span class="vital-value">--</span>
+            <span class="vital-unit">%</span>
+          </div>
+          <div class="vital-bar"><div class="vital-bar-fill"></div></div>
+        </div>
+        <!-- NIBP -->
+        <div class="vital-tile vital-nibp" data-param="NIBP">
+          <div class="vital-label">NIBP</div>
+          <div class="vital-value-row">
+            <span class="vital-value nibp-sys">--</span>
+            <span class="vital-sep">/</span>
+            <span class="vital-value nibp-dia">--</span>
+            <span class="vital-unit">mmHg</span>
+          </div>
+          <div class="vital-sub">MAP: <span class="nibp-map">--</span></div>
+        </div>
+        <!-- RR -->
+        <div class="vital-tile vital-rr" data-param="RR">
+          <div class="vital-label">RR</div>
+          <div class="vital-value-row">
+            <span class="vital-value">--</span>
+            <span class="vital-unit">rpm</span>
+          </div>
+          <div class="vital-bar"><div class="vital-bar-fill"></div></div>
+        </div>
+        <!-- Temp -->
+        <div class="vital-tile vital-temp" data-param="T1">
+          <div class="vital-label">Temp</div>
+          <div class="vital-value-row">
+            <span class="vital-value">--</span>
+            <span class="vital-unit">°C</span>
+          </div>
+          <div class="vital-bar"><div class="vital-bar-fill"></div></div>
+        </div>
+        <!-- PR -->
+        <div class="vital-tile vital-pr" data-param="PR">
+          <div class="vital-label">PR</div>
+          <div class="vital-value-row">
+            <span class="vital-value">--</span>
+            <span class="vital-unit">bpm</span>
+          </div>
+          <div class="vital-bar"><div class="vital-bar-fill"></div></div>
+        </div>
+      </div>
+      <!-- ECG Waveform Canvas -->
+      <div class="waveform-section">
+        <div class="waveform-header">
+          <span class="waveform-label">ECG Lead II</span>
+          <span class="waveform-rate">256 Hz</span>
+        </div>
+        <canvas class="waveform-canvas" width="800" height="120"></canvas>
+      </div>
+      <!-- Recent Alarms -->
+      <div class="alarms-section">
+        <div class="alarms-header">Recent Alarms</div>
+        <div class="alarms-list"></div>
+      </div>
+      <!-- Last Updated -->
+      <div class="card-footer">
+        <span class="last-updated">Last update: --</span>
+      </div>
+    </div>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>

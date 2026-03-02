@@ -1,0 +1,9407 @@
+=== PAGE 1 ===
+I
+Biolight Patient Data Sharing Protocol
+Catalogue
+1 Overview................................................................................................................................. 1
+2 Network communication protocol layer structure............................................................. 1
+2.1 HL7 Low-Level Protocol..............................................................................................1
+2.2 HL7 Protocol Layer...................................................................................................... 2
+2.3 Character Set.................................................................................................................2
+2.4 Message Separator and Escape character.....................................................................2
+2.5 Coding System..............................................................................................................2
+3. HL7 Message Type................................................................................................................3
+3.1 Definition...................................................................................................................... 3
+3.1.1 The Definition Of The Message Header (MSH)...............................................3
+3.1.2 Message Type.................................................................................................... 3
+3.1.3 Message Control ID...........................................................................................4
+3.2 Code System................................................................................................................. 4
+3.2.1 OBX Segment....................................................................................................4
+4 Unsolicited Send Interface.................................................................................................... 5
+4.1 Communication Process............................................................................................... 5
+4.1.1 Network Connection..........................................................................................5
+4.1.2 Network connection Settings.............................................................................5
+4.1.3 Sending process................................................................................................. 6
+4.1.4 Sending content and sending interval Settings..................................................6
+4.1.5 Send Content......................................................................................................6
+4.2 ORU_R01 Message...................................................................................................... 7
+4.2.1 Format................................................................................................................8
+4.2.2 MSH Segment....................................................................................................8
+4.2.3 PID Segment......................................................................................................8
+4.2.4 Part of the patient's OBX Segment....................................................................9
+4.2.5 PV1 Segment..................................................................................................... 9
+4.2.6 OBR Segment.................................................................................................. 10
+4.2.7 Orderly Observation OBX segment................................................................ 10
+4.2.7.1 Online Modules.................................................................................... 10
+4.2.7.2 Supported Parameters...........................................................................11
+4.2.7.3 Periodic Parameter Values....................................................................12
+4.2.7.4 Physiological Alarm............................................................................. 13
+4.2.7.5 Technical Alarm................................................................................... 14
+4.2.7.6 System Parameter................................................................................. 14
+4.2.7.7 Aperiodic Parameter Values.................................................................16
+4.2.7.8 Parameter alarm limit........................................................................... 17
+4.2.7.9 Parameter alarm level........................................................................... 18
+4.2.7.10 Parameter alarm switch...................................................................... 18
+4.2.8 Example........................................................................................................... 19
+
+
+=== PAGE 2 ===
+II
+4.3 Waveform Data Sending.............................................................................................27
+4.3.1 Message content...............................................................................................27
+4.3.2 Waveform sending form..................................................................................28
+4.3.3 Format..............................................................................................................28
+4.3.4 Definition of message segment........................................................................28
+4.3.5 Example........................................................................................................... 30
+5 Query Request Interface..................................................................................................... 32
+5.1 Communication process..............................................................................................32
+5.1.1 Network Connection........................................................................................32
+5.1.2 Network Connection Settings..........................................................................32
+5.1.3 Data Interaction................................................................................................32
+5.1.4 Send Content....................................................................................................32
+5.2 QRY_R02 Message.................................................................................................... 33
+5.2.1 Format..............................................................................................................33
+5.2.2 Example........................................................................................................... 33
+5.2.3 MSH Segment..................................................................................................33
+5.2.4 QRD Segment..................................................................................................34
+5.2.5 QRF Segment...................................................................................................34
+5.2.5.1 Field 5 of QRF......................................................................................35
+5.3 ACK Message............................................................................................................. 36
+5.3.1 Format..............................................................................................................36
+5.3.2 Example........................................................................................................... 36
+5.3.3 MSH Segment..................................................................................................36
+5.3.4 MSA Segment..................................................................................................36
+5.3.5 ERR Segment...................................................................................................37
+5.4 ORF_R04 Message.....................................................................................................37
+5.4.1 Format..............................................................................................................38
+5.4.2 Example........................................................................................................... 38
+5.4.3 MSH Segment..................................................................................................39
+5.4.4 MSA Segment..................................................................................................40
+5.4.5 QRD Segment..................................................................................................40
+5.4.6 QRF Segment...................................................................................................40
+5.4.7 PID Segment....................................................................................................41
+5.4.8 OBR Segment.................................................................................................. 41
+5.4.9 OBX Segment..................................................................................................41
+6 Real time query interface....................................................................................................42
+6.1 Communication process..............................................................................................42
+6.1.1 Network Connection........................................................................................42
+6.1.2 Network Connection Settings..........................................................................42
+6.1.3 Data Interaction................................................................................................42
+6.1.4 Send Content....................................................................................................43
+6.2 Broadcast Message(ADT_A01)..................................................................................43
+6.2.1 Format..............................................................................................................43
+6.2.2 Example........................................................................................................... 43
+
+
+=== PAGE 3 ===
+III
+6.2.3 MSH Segment..................................................................................................44
+6.2.4 EVN Segment.................................................................................................. 44
+6.2.5 PID Segment and PV1 Segment......................................................................44
+6.2.6 OBX Segment..................................................................................................44
+6.3 Heartbeat Packet......................................................................................................... 44
+6.3.1 Format..............................................................................................................45
+6.3.2 Segment Definition..........................................................................................45
+6.4 ACK Message............................................................................................................. 45
+6.4.1 Format..............................................................................................................45
+6.4.2 Example........................................................................................................... 45
+6.4.3 MSH Segment..................................................................................................45
+6.4.4 MSA Segment..................................................................................................46
+6.5 Query Message (QRY_R02).......................................................................................46
+6.5.1 Format..............................................................................................................46
+6.5.2 MSH Segment..................................................................................................47
+6.5.3 QRD Segment..................................................................................................47
+6.5.4 QRF Segment...................................................................................................47
+6.6 Response query report message (ORU_R01).............................................................48
+6.6.1 Periodic parameters..........................................................................................48
+6.6.2 MSH Segment..................................................................................................48
+6.6.3 PID Segment....................................................................................................48
+6.6.4 Patient OBX segment...................................................................................... 48
+6.6.5 Format..............................................................................................................48
+6.6.6 PV1 Segment................................................................................................... 49
+6.6.7 OBR Segment.................................................................................................. 49
+6.6.8 Orderly observation of OBX segments........................................................... 49
+6.6.9 Example........................................................................................................... 50
+6.6.9.1 Technical alarm.................................................................................... 50
+6.6.9.2 Physiological alarm.............................................................................. 50
+6.6.9.3 Waveform data......................................................................................50
+6.6.9.4 Parameter value.................................................................................... 51
+6.6.9.5 Parameter alarm switch........................................................................ 51
+6.6.9.6 Parameter alarm level........................................................................... 53
+6.6.9.7 Parameter alarm level........................................................................... 53
+7 ADT Net Query Interface....................................................................................................53
+7.1 Communication Process............................................................................................. 55
+7.1.1 Network Connection........................................................................................55
+7.1.2 Data Interaction................................................................................................55
+7.2 ADT Query Message (QRY_A19).............................................................................55
+7.2.1 Format..............................................................................................................55
+7.2.2 Example........................................................................................................... 56
+7.2.3 MSH Segment..................................................................................................56
+7.2.4 QRD Segment..................................................................................................56
+7.3 ADT Query Reply Message (ADR_A19).................................................................. 56
+
+
+=== PAGE 4 ===
+IV
+7.3.1 Format..............................................................................................................56
+7.3.2 Example........................................................................................................... 57
+7.3.3 MSH Segment..................................................................................................57
+7.3.4 MSA Segment..................................................................................................58
+7.3.5 QRD Segment..................................................................................................58
+7.3.6 PID Segment....................................................................................................58
+7.3.7 PV1 Segment................................................................................................... 58
+7.3.8 OBX Segment..................................................................................................59
+7.4 ACK Message............................................................................................................. 59
+7.4.1 Format..............................................................................................................59
+7.4.2 Example........................................................................................................... 59
+7.4.3 MSH Segment..................................................................................................59
+7.4.4 MSA Segment..................................................................................................59
+Appendix A Biolight Coding System.....................................................................................60
+Appendix A.1 Parameter ID............................................................................................. 60
+Appendix A.2 Parameter attribute section........................................................................75
+Appendix A.3 Module ID section.....................................................................................76
+Appendix A.4 Patient information ID.............................................................................. 77
+Appendix A.5 Controls and settings.................................................................................78
+Appendix A.6 Physiological Alarm ID............................................................................ 86
+Appendix A.7 Technical alarm ID....................................................................................94
+Appendix A.8 Module waveform ID..............................................................................110
+Appendix A.9 Unit conversion.......................................................................................112
+
+
+=== PAGE 5 ===
+1
+1 Overview
+The Biolight Patient Data Sharing Protocol (hereinafter referred to as the Biolight PDS
+Protocol) is used to export the data of the Biolight products through the TCP/IP network. As the
+server, the Biolight products can support multiple clients to connect to it. The Biolight PDS
+protocol is compatible with part of the HL7 V2.6 protocol and provides the following two types of
+data:
+(1)
+Unsolicited information. The data unsolicited sent include the online and offline status
+of the module, the parameters supported by the module, the result values of the
+parameters, physiological alarm information and technical alarm information. Once the
+connection is established, the server periodically sends data to the client. The server
+that sends this message is defined as an unsolicited sending interface.
+(2)
+Information requested by the client. Once the connection is established, the server will
+wait for the client to send the requested data information, and the server will send the
+requested specific data to the client after receiving the message.The server that sends
+and receives this message has two interfaces: the real-time sending interface and the
+query interface.
+HL7 messages defined in the Paulette Patient Data Sharing Agreement include:
+
+ORU_R01 message: module on/off message, module support parameter message,
+periodic parameter message, aperiodic parameter message, physiological alarm message,
+technical alarm message, parameter alarm limit message, parameter alarm level message,
+parameter alarm switch message, waveform data message, heartbeat packet message, etc.
+The above messages are distinguished by different message control ids (the MSH-10
+field is the message control ID. For the definition of the control ID, see A.5 Control and
+Settings).
+
+QRY_R02 message: data query message, which can be classified according to the query
+definition in the QRF_5 field. The query message types include physiological parameter
+data, physiological alarm data, technical alarm data, waveform data, etc. For details, see
+5.2 QRY^R02 Message.
+
+ORF_R04 message: indicates the data query result message. The message is the
+response to the QRY_R02 query message. For details, see 5.4 ORF^R04 Message.
+
+QRY_A19 message: ADT patient query message. This message can be located based on
+the medical record number in the QRD_8 field. For details, see 7.2 ADT Query Message
+(QRY_A19) .
+
+ADR_A19 message: ADT patient query result message. This message is the response to
+a QRY_A19 patient query message. For details, see 7.3 ADT Query Reply Message
+(ADR_A19).
+
+
+=== PAGE 6 ===
+1
+2 Network communication protocol layer structure
+The Biolight PDS protocol is defined above the TCP / IP layer, and the figure below shows
+the communication layer involved in the communication between the Biolight monitor and the
+client PC. The blue layer is defined in this document.
+2.1 HL7 Low-Level Protocol
+TCP/IP is a byte-stream protocol that does not provide message boundaries. HL7 , which
+belongs to application layer protocol, defines message format but does not provide any mechanism
+to detect message start and end. To mark the boundaries, the Minimal Lower Layer Protocol is
+used. On the network, a message is transmitted in the following format:
+
+Message start mark (1 byte) that corresponds to ASCII <VT>. Its hexadecimal value is
+<0x0B>.
+
+HL7 message of multiple bytes.
+1．It includes only ISO 8859-1 characters (hexadecimal values between 0x20 and
+0xFF) and <CR>. must not contain other control/non-printable characters.
+2．When a Biolight product receives a message containing illegal control characters, no further
+processing is performed.
+
+
+=== PAGE 7 ===
+2
+
+Message end mark (2 bytes) that respectively corresponds to ASCII <FS> and <CR>.
+Their respective hexadecimal values are <0x1C> and <0x0D>.
+2.2 HL7 Protocol Layer
+The HL7 protocol is a communication protocol developed by the American HL7 company
+for data exchange between medical systems. This protocol has been widely used in many
+countries and regions in the world.
+Biolight PDS protocol is based on HL7 protocol version 2.6. It uses only part of it.
+2.3 Character Set
+Biolight PDS protocol supports multiple character sets. The default character set is UTF-8.
+Character sets are defined in segment MSH.
+MSH|^~\&|||||||ORU^R01|154155500|P|2.3.1||||||UTF-8|
+The ISO8859_1 character set can be omitted if it is default.
+2.4 Message Separator and Escape character
+The following table lists the separators used in HL7 message.
+Element
+Separator
+Segment
+<CR> The hexadecimal value is 0X0D
+Field
+|
+Field Repetition
+~
+Component
+^
+Sub Component
+&
+If the HL7 message do uses the above separator characters in field content (i.e. the patient
+demographics), please use the escape character “\” before them.
+For example, string “A & B” should be transfer to “A\&B”.
+2.5 Coding System
+Biolight PDS protocol uses Biolight HL7 coding system (Biolight HL7 Code, hereinafter
+called BHC).) Please refer Appendix A.
+
+
+=== PAGE 8 ===
+3
+3. HL7 Message Type
+3.1 Definition
+There are many different types of HL7 messages, each with its own unique uses. Each type of
+HL7 message contains its own specific data content, and different data requires different types of
+HL7 messages to be sent. For example, parameter information and alarm information need to be
+sent by two different types of HL7 messages respectively.
+3.1.1 The Definition Of The Message Header (MSH)
+The MSH segment is the first segment of an HL7 message and defines the type of the
+message. The following table defines the syntax of the MSH segment.
+SEQ
+LEN
+DT
+OPT
+REP
+Field Name
+Description
+1
+1
+ST
+R
+No
+Field
+Separator
+“|”
+2
+4
+ST
+R
+No
+Coded
+Character
+“^~\&”
+3
+227
+HD
+O
+No
+The
+Application Is
+Being Sent
+4
+227
+HD
+O
+No
+Receiving
+Applications
+7
+24
+DTM
+R
+No
+Date/Time
+Of
+The Message
+9
+15
+MSG
+R
+No
+Message Type
+10
+199
+ST
+R
+No
+Message
+Control ID
+Defined
+In
+A.5
+Controls And Settings
+11
+3
+PT
+R
+No
+Process ID
+12
+60
+VID
+R
+No
+Version ID
+18
+16
+ID
+O
+Yes
+Character Set
+“UTF-8”
+The message type is defined by the Message Type and Message Control ID fields.
+3.1.2 Message Type
+The value of the message type has been defined by the HL7 protocol, and the following table
+lists the message types used in the Paulette PDS protocol.
+Message
+Description
+ADT
+Patient Management
+
+
+=== PAGE 9 ===
+4
+QRY
+Inquire
+ORU
+Actively Sent Observation Messages
+3.1.3 Message Control ID
+Each message has its unique message control ID. This ID is an Arabic number defined by the
+Paulette PDS protocol. For details, see Appendix A.5 Controls and Settings.
+3.2 Code System
+3.2.1 OBX Segment
+The OBX segment is used to send configuration information such as parameters, waveforms,
+alarms, alarm limits, alarm levels, etc. The following table defines the syntax of OBX segment.
+For details about OBX when it is used to transmit configuration information such as parameters,
+waveforms, alarms, alarm limits, and alarm levels, see 4.2.7 Orderly Observation OBX segment.
+SEQ
+LEN
+DT
+OPT
+Field Name
+2
+3
+ID
+O
+Value Type
+3
+705
+CWE
+R
+Observation Mark
+4
+20
+ST
+O
+Observer ID
+5
+99999
+VARIES
+O
+Observation Result
+6
+705
+CWE
+O
+Unit
+7
+60
+ST
+O
+Reference Range
+11
+1
+ID
+R
+Observed
+Result
+State
+13
+20
+ST
+O
+User-Defined Access
+Checks
+14
+24
+DTM
+O
+Date/Time
+Of
+Observation
+
+
+=== PAGE 10 ===
+5
+4 Unsolicited Send Interface
+This section introduces the specific content and implementation of unsolicited send interface,
+mainly from two aspects of communication process and data communication.
+4.1 Communication Process
+4.1.1 Network Connection
+
+Active sending interface as server:
+As the server of TCP communication, the active sending interface always listens for
+connection requests from TCP clients. Once the number of clients requesting connection reaches
+the maximum limit, the active sending interface rejects new connection requests. After the
+connection is successful, the active sending interface, as a server, does not disconnect from the
+client. Interruption and disconnection can only be initiated by the client. In the event of an
+unexpected network outage, which requires the client to re-establish the connection, the data
+generated during the outage will also be lost. After the connection is reconnected, the active
+sending interface sends the data generated after the connection. In addition, it should be noted that
+the active sending interface is only responsible for processing the connection request,
+disconnection request and sending data to the client, and does not receive other requests in
+addition to the request, such as query requests.
+If a physical network connection is interrupted during the connection, the Windows TCP
+SOCKET may fail to notify the active sending interface, leading us to believe that the socket is
+still connected properly. However, because the physical network connection is down, data cannot
+be sent or received properly. Therefore, if the client does not receive any data sent by the active
+sending interface within the set interval, the client is advised to resend the connection request. If
+the connection still fails to be established, take measures to rectify the network fault.
+
+Active sending interface as client:
+Active Sending When the interface functions as the TCP communication client, it sends a
+connection request to the server every 1s until the connection is successful. After the connection is
+successful, the active sending interface, as the client, does not disconnect from the server. If an
+unexpected network interruption occurs, the active sending interface sends a connection request to
+the server again one second later. If the connection fails, the active sending interface tries to
+connect to the server once every one second until the connection is successful.
+4.1.2 Network connection Settings
+
+Active sending interface as server: the client needs to know the IP address and port
+number of the server to connect. The server IP address can be viewed by clicking the
+[Main menu] button on the monitor and [System Info]. The port number is fixed as
+6201.
+
+
+=== PAGE 11 ===
+6
+
+Active sending interface as client: requires us to set the IP and port number of the server
+to be connected. Click [Main menu] button, click [Maintenance] button, enter password
+300246 or 785623 to enter the maintenance interface, click [Network Settings] button,
+click [HL7], [Role] select the client, and then set the server IP to be connected in [target
+IP], and set the server port number to be connected in [target port].
+4.1.3 Sending process
+After the TCP connection is established, the active sending interface sends the first
+ORU^R01 message to the other end through the socket, and then sends the latest monitor data
+(ORU^R01 message) at a set interval. The sent data and interval can be set on the HL7 setup
+interface, see 4.1.4 for details.
+When the other end receives the data, it can send an ACK or NACK in response, but the
+active sending interface does not process this response message.
+Aperiodic parameters such as NIBP and C.O are also sent at the set interval, and the sent
+value is the last manually measured value.
+4.1.4 Sending content and sending interval Settings
+1.
+Set the sending content: click [Main menu] button of the monitor, click [Maintenance] button,
+enter password 300246 or 785623 to enter the maintenance interface, click [Network Settings]
+button, click [HL7], the switch corresponding to [Send waveform] will be turned on, and the
+waveform data will be sent.
+2.
+Set the sending interval: Repeat the operations described in 1 above. After entering the HL7
+interface to set, click [Send parameter interval] to set a reasonable sending interval.
+4.1.5 Send Content
+1．After establishing the connection, the following data can be sent:
+(1)
+Module online data, that is, which modules are online.
+(2)
+Parameter configuration data, including parameter alarm switch, alarm level, alarm
+upper and lower limits.
+(3)
+Parameter data supported by the module, that is, the set of parameters supported by
+the online module.
+(4)
+Parameter data not supported by the module, that is, a collection of parameters not
+supported by the online module.
+(5)
+Physiological parameter data of periodic modules (sent once after establishing a
+connection, and then periodically sent according to the set sending interval).
+2．The data to be sent periodically according to the set sending interval is as follows:
+(1)
+Physiological parameter data of periodic modules.
+(2)
+Module configuration and device status: includes device standby status, maximum
+physiological and technical alarm levels, device alarm status, ECG lead type, PR
+source, RR source.
+
+
+=== PAGE 12 ===
+7
+3．The following data will be sent when triggered:
+(1)
+Non-periodic module physiological parameter data, such as: NIBP, C.O. data when
+the measurement is completed.
+(2)
+Module online information, one of the modules is online, send once.
+(3)
+Module offline information, one of the modules offline, send once.
+(4)
+Parameter information supported by the module and parameter information not
+supported by the module (generally sent with the module uplink and down
+information).
+(5)
+When the parameter configuration data (parameter alarm switch, alarm level, alarm
+upper and lower limits) changes, it will be sent once.
+4．The parameter waveform data is sent periodically, with a transmission period of 1 second.
+5．Physiological alarm information and technical alarm information are sent periodically,
+with a transmission period of 1 second.
+4.2 ORU_R01 Message
+The ORU in ORU_R01 is the unsolicited observation message, R01 is the event to be
+triggered, and the type of the message sent by the unsolicited send interface is the ORU
+unsolicited observation message. An HL7 message contains data for one patient.
+The ORU_R01 message is divided into five parts: message header, software segment, user
+authentication, patient result, and continuous pointer.
+The patient results are divided into two parts: the patient and the orderly observation.The
+patient part mainly includes patient identification (PID), additional demographic information
+(PD1), description and annotation (NTE), observations (OBX), visit (patient visit (PV1) and visit
+additional information (PV2)); Order observation mainly includes general order (ORC),
+observation report ID (OBR), description and annotation (NTE), observation role (ROL), timing /
+quantity (timing / quantity (TQ1), order sequence (TQ2)), contact data (CTD), observation
+(observation / result (OBX), description and annotation (NTE)), financial affairs (FT1), clinical
+trial identification (CT1), sample (sample (SPM), sample involved result (OBX)).
+The sections used this time are:
+
+MSH _ 1 (field separator), MSH_2 (code character), MSH_9 (message type), MSH_10
+(message control ID), MSH_11 (process ID), MSH_12 (version ID) for the message
+header (MSH);
+
+PID_3 (list of patient identifiers), PID_5 (patient name), PID_7 (date/time of birth),
+PID_8 (sex) of patient identification(PID);
+
+PV1_2 (patient class), PV1_3 (designated patient location), and PV1_7 (receiving
+doctor) of patient treatment (PV1);
+
+OBR_4 (set ID-OBR), OBR_7 (observation date / time) of observation ID (OBR);
+
+OBX_2 (valuetype), OBX_3 (observation identifier), OBX_4 (observed sub-ID),
+OBX_5 (observation results), OBX_11 (observation results status) of the observation
+results (OBX);
+
+
+=== PAGE 13 ===
+8
+4.2.1 Format
+An HL7 message in the unsolicited send interface contains data from a bed or a patient.
+Patient_1
+MSH
+Segment
+PID
+Segment
+PV1
+Segment
+OBR
+Segment
+OBX
+Segment
+OBX
+Segment
+...
+OBX
+Segment
+Patient_2
+MSH
+Segment
+PID
+Segment
+PV1
+Segment
+OBR
+Segment
+OBX
+Segment
+OBX
+Segment
+...
+OBX
+Segment
+......
+Patient_N
+MSH
+Segment
+PID
+Segment
+PV1
+Segment
+OBR
+Segment
+OBX
+Segment
+OBX
+Segment
+...
+OBX
+Segment
+4.2.2 MSH Segment
+MSH segment is first segment of HL7 message, it defines the message type.
+SEQ
+LEN
+DT
+OPT
+REP
+Field Name
+Description
+1
+1
+ST
+R
+No
+Field Separator
+|
+2
+4
+ST
+R
+No
+Encoding Characters
+^~\&
+9
+15
+MS
+G
+R
+No
+Message Type
+ORU^R01^ORU_R01
+10
+199
+ST
+R
+No
+Message Control ID
+An identifier that contains a
+number or otherwise uniquely
+identifies a message, for
+example:MSH|^~\&|||||||ORU^R
+01^ORU_R01|1004|P|2.6||||||UT
+F-8
+1004 represents Aperiodic
+parameter. For details, see
+Appendix A.5
+11
+3
+PT
+R
+No
+Processing ID
+P
+12
+60
+VID
+R
+No
+Version ID
+2.6
+4.2.3 PID Segment
+SEQ
+LEN
+DT
+OPT
+REP
+Field Name
+Description
+3
+250
+CX
+R
+Yes
+Patient Identifier List
+Patient Medical Record
+Number
+5
+250
+XPN
+R
+Yes
+Patient Name
+<First Name>^<Last Name>
+7
+24
+DTM
+O
+No
+Date/Time of Birth
+YYYYMMDD
+8
+1
+IS
+O
+No
+Sex
+M:Male
+F:Female
+
+
+=== PAGE 14 ===
+9
+U:Unknown
+4.2.4 Part of the patient's OBX Segment
+SEQ
+LEN
+DT
+OPT
+REP
+Field Name
+Description
+2
+3
+ID
+O
+No
+Value Type
+NM
+3
+705
+CWE
+R
+No
+Observation
+Identifier
+Patient record number
+Example：
+OBX||NM|4201^Height^BHC||150||||||F
+The field 4201^Height^BHC indicates
+that the message is sending patient
+height data, see Appendix A.4 for details
+5
+99999
+VARIES
+O
+Yes
+Observation
+Results
+Patient information value
+Example：
+OBX||NM|4201^Height^BHC||150||||||F
+The field 150 indicates that the patient's
+height is 150cm
+6
+705
+CWE
+O
+No
+Units
+This field is the unit of the current
+Observation
+Results,
+represented
+as:
+Unit ID ^ Unit ^ BHC. The unit ID is
+detailed in A.9 Units ID.
+11
+1
+ID
+R
+No
+Observation
+Results
+Status
+F：Stand for “Final”
+4.2.5 PV1 Segment
+SEQ
+LEN
+DT
+OPT
+REP
+Field Name
+Description
+2
+1
+IS
+R
+No
+Patient Class
+I:Inpatient
+O:Outpatient
+3
+80
+PL
+O
+No
+Assigned
+Patient
+Location
+<point of care> ^<room>^<bed>
+<bed> divided into:
+<OfficeName>&<bed
+id>&<IP>&<IPSeq>&0
+<IP>:the bedside device IP Address;
+<IPSeq>:the telemetry transmitter’s
+sequence number.
+7
+250
+XCN
+O
+Yes
+Attending
+Doctor
+Doctor ID
+18
+2
+IS
+O
+No
+Patient Type
+“N”: Neonate
+“A”: Adult
+“P”: Pediatric
+
+
+=== PAGE 15 ===
+10
+“U”: Unknow
+4.2.6 OBR Segment
+SEQ
+LEN
+DT
+OPT
+REP
+Field Name
+Description
+4
+705
+CWE
+R
+No
+Universal
+Service ID
+Monitor
+7
+24
+DTM
+O
+No
+Observation
+Date/Time
+yyyymmddhhmmss
+Example:OBR||||Monitor|||20210914161435
+The observation time is:16:14:35,14
+September 2021
+4.2.7 Orderly Observation OBX segment
+4.2.7.1 Online Modules
+SEQ
+LEN
+DT
+OPT
+REP
+Field Name
+Description
+2
+3
+ID
+O
+No
+Value Type
+CE
+3
+705
+CWE
+R
+No
+Observation
+Identifier
+Parameter attribute identification ID
+(this message is an online module)
+Example:OBX||CE|5^^BHC||5001^EC
+G^BHC||||||F
+The5^^BHC represents a module for
+this message, see Appendix A.2
+5
+99999
+VARIES
+O
+Yes
+Observation
+Results
+The online module identification ID
+indicates which modules are online
+Example:OBX||CE|5^^BHC||5001^EC
+G^BHC||||||F
+The 5001 ^ ECG ^ BHC represents
+ECG for details in Appendix A.3.
+11
+1
+ID
+R
+No
+Observation
+Results
+Status
+F
+The OBX segment indicates that the ECG module is online. The format is as follows:
+
+
+=== PAGE 16 ===
+11
+4.2.7.2 Supported Parameters
+SEQ
+LEN
+DT
+OPT
+REP
+Field Name
+Description
+2
+3
+ID
+O
+No
+Value Type
+CE
+3
+705
+CWE
+R
+No
+Observation
+Identifier
+Parameter attribute identification ID(this
+message is a supported parameter)
+OBX||CE|7^^BHC|5001|201^HR^BHC|||
+|||F
+The 7^^BHC represents the supported
+parameters sent by this message. For
+details, please refer to Appendix A.2.
+4
+20
+ST
+O
+No
+Observation
+Sub-ID
+Module identification ID (specifically
+which module)
+Example:
+OBX||CE|7^^BHC|5001|201^HR^BHC|||
+|||F
+The 5001 represents the ECG module,
+That is, the message is a parameter
+supported by the ECG module
+5
+9999
+9
+VARIES
+O
+Yes
+Observation
+Results
+Specific
+parameter
+identification
+ID
+supported by the module，
+Example:
+OBX||CE|7^^BHC|5001|201^HR^BHC|||
+|||F
+The 201^HR^BHC represents HR
+parameters for details in Appendix A.1.
+11
+1
+ID
+R
+No
+Observation
+Results
+Status
+F
+This message is included in a module online message, typically an online module message
+(OBX message) followed by information about all parameters supported by the online module
+
+
+=== PAGE 17 ===
+12
+(OBX message).
+The OBX segment indicates that the ECG module supports HR parameters in the following
+format:
+4.2.7.3 Periodic Parameter Values
+SE
+Q
+LEN
+DT
+OP
+T
+RE
+P
+Field
+Name
+Description
+2
+3
+ID
+O
+No
+Value
+Type
+NM
+3
+705
+CWE
+R
+No
+Observatio
+n Identifier
+Parameter identification ID，
+Example:
+OBX||NM|201^HR^BHC|5001|60||||||F
+The 201^HR^BHC represents HR
+parameters for details in Appendix A.1.
+4
+20
+ST
+O
+No
+Observatio
+n Sub-ID
+Module identification ID (specifically which
+module),
+Example:
+OBX||NM|201^HR^BHC|5001|60||||||F
+The 5001 represents the ECG module,
+please refer to Appendix A.3 for details
+5
+9999
+9
+VARIE
+S
+O
+Yes
+Observatio
+n Results
+Parameter values ，
+Example:OBX||NM|201^HR^BHC|5001|60||
+||||F
+The 60 is the value of the HR parameter of
+the ECG module at this time.
+6
+705
+CWE
+O
+No
+Units
+This
+field
+is
+the
+unit
+of
+the
+current
+Observation Result. If this field is blank, it
+means that the observation result unit is the
+default unit in A.1 parameter ID; On the
+contrary, the units of the observation results
+are represented as: unit ID ^ unit ^ BHC,
+
+
+=== PAGE 18 ===
+13
+and the unit ID is defined in A.9 Units ID.
+11
+1
+ID
+R
+No
+Observatio
+n
+Results
+Status
+F
+The OBX segment indicates that the HR parameter value of the ECG module is 60 bpm in
+the following format:
+4.2.7.4 Physiological Alarm
+SEQ
+LEN
+DT
+OPT
+REP
+Field Name
+Description
+2
+3
+ID
+O
+No
+Value Type
+CE
+3
+705
+CWE
+R
+No
+Observation
+Identifier
+Alarm level (consistent with the
+set alarm configuration)
+5
+20
+ST
+O
+No
+Observation
+Results
+Parameter
+alarm
+identification
+OBX||CE|3||10151^SpO2
+High^BHC||||||F|||2022051210391,
+10151^SpO2 High^BHC in this
+field refers to the physiological
+alarm content of SPO2. For the
+specific alarm content, please refer
+to
+the
+alarm
+information
+corresponding
+to
+10151
+in
+Appendix A.6
+11
+99999
+VARIES
+O
+Yes
+Observation
+Results
+Status
+F
+14
+1
+ID
+R
+No
+Date/Time
+of
+the
+Observation
+yyyymmddhhmmss
+The OBX segment represents an advanced alarm with SpO2 too high at time 2022051210391,
+expressed in the following format:
+
+
+=== PAGE 19 ===
+14
+4.2.7.5 Technical Alarm
+SEQ
+LEN
+DT
+OPT
+REP
+Field Name
+Description
+2
+3
+ID
+O
+No
+Value Type
+CE
+3
+705
+CWE
+R
+No
+Observation
+Identifier
+Alarm level
+5
+20
+ST
+O
+No
+Observation
+Results
+Parameter alarm identification
+(same as physiological alarm)
+See Appendix A.7 for details
+11
+99999
+VARIES
+O
+Yes
+Observation
+Results Status
+F
+14
+1
+ID
+R
+No
+Date/Time
+of
+the Observation
+Yyyymmddhhmmss
+The OBX segment represents a technical alarm for ECG lead loss at time 2022051210391,
+expressed in the following format:
+4.2.7.6 System Parameter
+SEQ
+LEN
+DT
+OPT
+REP
+Field Name
+Description
+
+
+=== PAGE 20 ===
+15
+2
+3
+ID
+O
+No
+Value Type
+Guardian name:ST
+Other:CE
+3
+705
+CWE
+R
+No
+Observation
+Identifier
+Specific system parameters
+Monitor name
+Standby state
+Highest level of physiological
+alarm
+Highest level of technical alarm
+System alarm status
+ECG lead type
+PR source
+RR source
+5
+20
+ST
+O
+No
+Observation
+Results
+Monitor name:Monitor
+Standby state:
+0（Non-standby）
+1（Standby）
+Physiological (technical) highest
+alarm level:
+0（Unknown）;
+1（Prompt）;
+2（Low）;
+3（Middle）;
+4（High）
+System alarm status:
+0（Normal）;
+1（Pause ）;
+2（Reset）;
+3（Close）;
+4（Default）
+ECG lead type:
+0（Unknown）;
+1（3 leads）;
+2（5 leads）;
+3（6 leads）;
+4（12 leads）
+PR source:
+0（Unknown）;
+1（SPO2）;
+2（SPO2L）;
+3（IBP）;
+RR source:
+0（Unknown）;
+1（ECG）;
+2（CO2）;
+
+
+=== PAGE 21 ===
+16
+3（RM）;
+4（SPO2）
+11
+99999
+VARIE
+S
+O
+Yes
+Observation
+Results Status
+F
+The following OBX segments indicate that the ECG lead type is 3 leads, in the following
+format:
+4.2.7.7 Aperiodic Parameter Values
+SEQ
+LEN
+DT
+OPT
+REP
+Field Name
+Description
+2
+3
+ID
+O
+No
+Value Type
+NM
+3
+705
+CWE
+R
+No
+Observation
+Identifier
+Specific parameter identification
+4
+20
+ST
+O
+No
+Observation
+Sub-ID
+Module identification (specifically
+which module)
+5
+99999
+VARIES
+O
+Yes
+Observation
+Results
+Parameter values
+6
+705
+CWE
+O
+No
+Units
+This field is the unit of the current
+Observation Result. If this field is
+blank, it means that the observation
+result unit is the default unit in A.1
+parameter ID; On the contrary, the
+units of the observation results are
+represented as: unit ID ^ unit ^
+BHC, and the unit ID is defined in
+A.9 Units ID.
+11
+1
+ID
+R
+No
+Observation
+Results
+Status
+F
+13
+20
+ST
+O
+No
+User-defined
+access query
+APERIODIC
+14
+24
+DTM
+O
+No
+Date/Time of
+yyyymmddhhmmss
+
+
+=== PAGE 22 ===
+17
+the
+Observation
+Same time as OBR_7 field
+The following OBX segment represents a diastolic pressure of 125 mmHg for the aperiodic
+parameter NIBP measured at 20230518101323, expressed in the following format:
+4.2.7.8 Parameter alarm limit
+SEQ
+LEN
+DT
+OPT
+REP
+Field Name
+Description
+2
+3
+ID
+O
+No
+Value Type
+NM
+3
+705
+CWE
+R
+No
+Observation
+Identifier
+Upper limit of parameter:1^^BHC
+Lower limit of parameter:2^^BHC
+4
+20
+ST
+O
+No
+Observation
+Sub-ID
+Parameter identification ID
+5
+99999
+VARIES
+O
+Yes
+Observation
+Results
+Alarm upper or lower limit value
+6
+705
+CWE
+O
+No
+Units
+This field is the unit of the current
+Observation Result. If this field is
+blank, it means that the observation
+result unit is the default unit in A.1
+parameter ID; On the contrary, the
+units of the observation results are
+represented as: unit ID ^ unit ^
+BHC, and the unit ID is defined in
+A.9 Units ID.
+11
+1
+ID
+R
+No
+Observation
+Results
+Status
+F
+The following OBX segment represents the HR heart rate parameter alarm threshold of
+[50,120] bpm, expressed in the following format:
+
+
+=== PAGE 23 ===
+18
+4.2.7.9 Parameter alarm level
+SEQ
+LEN
+DT
+OPT
+REP
+Field Name
+Description
+2
+3
+ID
+O
+No
+Value Type
+NM
+3
+705
+CWE
+R
+No
+Observation
+Identifier
+Alarm level identifier:3^^BHC
+4
+20
+ST
+O
+No
+Observation
+Sub-ID
+Parameter identification ID
+5
+99999
+VARIES
+O
+Yes
+Observation
+Results
+Alarm level value:
+0:Tips
+1:Low level alarm
+2:Middle alarm
+3:High alarm
+11
+1
+ID
+R
+No
+Observation
+Results Status
+F
+The following OBX segment indicates that the alarm level of HR heart rate parameter is
+intermediate alarm, and the format is as follows:
+4.2.7.10 Parameter alarm switch
+SEQ
+LEN
+DT
+OPT
+REP
+Field Name
+Description
+
+
+=== PAGE 24 ===
+19
+2
+3
+ID
+O
+No
+Value Type
+NM
+3
+705
+CWE
+R
+No
+Observation
+Identifier
+Alarm switch identifier:4^^BHC
+4
+20
+ST
+O
+No
+Observation
+Sub-ID
+Parameter identification ID
+5
+99999
+VARIES
+O
+Yes
+Observation
+Results
+Alarm switch value:
+1（Switch on）
+0（Switch off）
+11
+1
+ID
+R
+No
+Observation
+Results Status
+F
+The following OBX segment indicates that the alarm switch of HR heart rate parameter is on,
+and the format is as follows:
+4.2.8 Example
+1. Within 1 second after establishing the connection, send the online module parameter flag first.
+MSH|^~\&|||||20230518094209||ORU^R01^ORU_R01|1001|P|2.6||||||UTF-8
+PID|||78||Mis^Lucy^Merry||20020202|F
+OBX||NM|4201^Height^BHC||170.0|31^cm^BHC|||||F
+OBX||NM|4202^Weight^BHC||65.0|41^kg^BHC|||||F
+OBX||NM|4203^Blood^BHC||3||||||F
+OBX||NM|4204^Pace^BHC||2||||||F
+PV1||I|^^&8&0^^^^^^1CBA8CB36CEF|||||||||||||||A
+OBR||||Monitor|||20230518094209
+OBX||CE|5^^BHC||5001^ECG^BHC||||||F
+OBX||CE|7^^BHC|5001|201^HR^BHC||||||F
+OBX||CE|7^^BHC|5001|219^PVCs^BHC||||||F
+OBX||CE|7^^BHC|5001|202^QTC^BHC||||||F
+OBX||CE|7^^BHC|5001|203^DELTAQTC^BHC||||||F
+OBX||CE|7^^BHC|5001|204^ST-I^BHC||||||F
+OBX||CE|7^^BHC|5001|205^ST-II^BHC||||||F
+OBX||CE|7^^BHC|5001|206^ST-III^BHC||||||F
+OBX||CE|7^^BHC|5001|207^ST-aVR^BHC||||||F
+
+
+=== PAGE 25 ===
+20
+OBX||CE|7^^BHC|5001|208^ST-aVL^BHC||||||F
+OBX||CE|7^^BHC|5001|209^ST-aVF^BHC||||||F
+OBX||CE|7^^BHC|5001|210^ST-V1^BHC||||||F
+OBX||CE|7^^BHC|5001|211^ST-V2^BHC||||||F
+OBX||CE|7^^BHC|5001|212^ST-V3^BHC||||||F
+OBX||CE|7^^BHC|5001|213^ST-V4^BHC||||||F
+OBX||CE|7^^BHC|5001|214^ST-V5^BHC||||||F
+OBX||CE|7^^BHC|5001|215^ST-V6^BHC||||||F
+OBX||CE|5^^BHC||5002^SPO2^BHC||||||F
+OBX||CE|7^^BHC|5002|251^SPO2^BHC||||||F
+OBX||CE|7^^BHC|5002|259^PR^BHC||||||F
+OBX||CE|7^^BHC|5002|252^PI^BHC||||||F
+OBX||CE|5^^BHC||5004^NIBP^BHC||||||F
+OBX||CE|7^^BHC|5004|351^NIBP S^BHC||||||F
+OBX||CE|7^^BHC|5004|352^NIBP D^BHC||||||F
+OBX||CE|7^^BHC|5004|353^NIBP M^BHC||||||F
+OBX||CE|7^^BHC|5004|354^NIBP SDP^BHC||||||F
+OBX||CE|7^^BHC|5004|355^NIBP PR^BHC||||||F
+OBX||CE|5^^BHC||5005^RESP^BHC||||||F
+OBX||CE|7^^BHC|5005|401^RR^BHC||||||F
+OBX||CE|5^^BHC||5012^CO^BHC||||||F
+OBX||CE|7^^BHC|5012|751^C.O.^BHC||||||F
+OBX||CE|7^^BHC|5012|752^C.I.^BHC||||||F
+OBX||CE|7^^BHC|5012|753^TI^BHC||||||F
+OBX||CE|7^^BHC|5012|754^TB^BHC||||||F
+OBX||CE|5^^BHC||5031^IBP P1^BHC||||||F
+OBX||CE|7^^BHC|5031|1501^Sys^BHC||||||F
+OBX||CE|7^^BHC|5031|1502^Dia^BHC||||||F
+OBX||CE|7^^BHC|5031|1503^Mean^BHC||||||F
+OBX||CE|7^^BHC|5031|1504^PR^BHC||||||F
+OBX||CE|7^^BHC|5031|1505^PPV^BHC||||||F
+OBX||CE|5^^BHC||5039^ART^BHC||||||F
+OBX||CE|7^^BHC|5039|1661^Sys^BHC||||||F
+OBX||CE|7^^BHC|5039|1662^Dia^BHC||||||F
+OBX||CE|7^^BHC|5039|1663^Mean^BHC||||||F
+OBX||CE|7^^BHC|5039|1664^PR^BHC||||||F
+OBX||CE|7^^BHC|5039|1665^PPV^BHC||||||F
+OBX||CE|5^^BHC||5021^TEMPA^BHC||||||F
+OBX||CE|7^^BHC|5021|1051^T01^BHC||||||F
+OBX||CE|7^^BHC|5021|1052^T02^BHC||||||F
+2. Send the supported parameter and parameter value data within the set time interval.
+MSH|^~\&|||||20230713104819||ORU^R01^ORU_R01|1004|P|2.6||||||UTF-8
+PID|||78||Mis^Lucy^Merry||20020202|F
+
+
+=== PAGE 26 ===
+21
+OBX||NM|4201^Height^BHC||170.0|31^cm^BHC|||||F
+OBX||NM|4202^Weight^BHC||65.0|41^kg^BHC|||||F
+OBX||ST|4203^Blood^BHC||O||||||F
+OBX||ST|4204^Pace^BHC||U||||||F
+PV1||I|CCU^^&36&0&0|||||||||||||||A
+OBR||||CMS|||20230717170425
+OBX||NM|201^HR^BHC|5001|60||||||F
+OBX||NM|219^PVCs^BHC|5001|0||||||F
+OBX||NM|220^QT^BHC|5001|353||||||F
+OBX||NM|202^QTC^BHC|5001|353||||||F
+OBX||NM|203^DELTAQTC^BHC|5001|0||||||F
+OBX||NM|204^ST-I^BHC|5001|-0.03||||||F
+OBX||NM|205^ST-II^BHC|5001|-0.02||||||F
+OBX||NM|206^ST-III^BHC|5001|0.03||||||F
+OBX||NM|207^ST-aVR^BHC|5001|0.02||||||F
+OBX||NM|208^ST-aVL^BHC|5001|-0.02||||||F
+OBX||NM|209^ST-aVF^BHC|5001|-0.01||||||F
+OBX||NM|217^ST-Va^BHC|5001|0.02||||||F
+OBX||NM|218^ST-Vb^BHC|5001|-0.03||||||F
+OBX||NM|251^SPO2^BHC|5002|99||||||F
+OBX||NM|252^PI^BHC|5002|7.46||||||F
+OBX||NM|259^PR^BHC|5002|60||||||F
+OBX||NM|351^NIBP S^BHC|5004|125|11^mmHg^BHC|||||F||APERIODIC|20230717165605
+OBX||NM|352^NIBP D^BHC|5004|84|11^mmHg^BHC|||||F||APERIODIC|20230717165605
+OBX||NM|353^NIBP M^BHC|5004|96|11^mmHg^BHC|||||F||APERIODIC|20230717165605
+OBX||NM|355^NIBP PR^BHC|5004|60||||||F||APERIODIC|20230717165605
+OBX||NM|401^RR^BHC|5005|20||||||F
+OBX||NM|751^C.O.^BHC|5012|5.2||||||F||APERIODIC|20230717162612
+OBX||NM|752^C.I.^BHC|5012|2.9||||||F||APERIODIC|20230717162612
+OBX||NM|754^TB^BHC|5012|36.89|21^C^BHC|||||F||APERIODIC|20230717162612
+OBX||NM|1501^Sys^BHC|5031|122|11^mmHg^BHC|||||F
+OBX||NM|1502^Dia^BHC|5031|81|11^mmHg^BHC|||||F
+OBX||NM|1503^Mean^BHC|5031|99|11^mmHg^BHC|||||F
+OBX||NM|1504^PR^BHC|5031|60||||||F
+OBX||NM|1505^PPV^BHC|5031|2||||||F
+OBX||NM|1521^Sys^BHC|5032|122|11^mmHg^BHC|||||F
+OBX||NM|1522^Dia^BHC|5032|81|11^mmHg^BHC|||||F
+OBX||NM|1523^Mean^BHC|5032|99|11^mmHg^BHC|||||F
+OBX||NM|1524^PR^BHC|5032|60||||||F
+OBX||NM|1525^PPV^BHC|5032|2||||||F
+OBX||NM|2151^Drop Speed^BHC|5060|50||||||F
+OBX||NM|2152^Flowing^BHC|5060|150||||||F
+OBX||NM|1051^T01^BHC|5021|36.6|21^C^BHC|||||F
+OBX||NM|1052^T02^BHC|5021|36.5|21^C^BHC|||||F
+
+
+=== PAGE 27 ===
+22
+OBX||NM|2052^Score Type^BHC|5058|0||||||F
+OBX||ST|4002^Monitor Name^BHC||36_||||||F
+OBX||CE|4021^Tec Highest Level^BHC||0^Unknown^BHC||||||F
+OBX||CE|4022^Phy Highest Level^BHC||3^Middle Level^BHC||||||F
+OBX||CE|4023^Alarm Setting^BHC||0^Normal^BHC||||||F
+OBX||CE|4024^ECG Lead Type^BHC||3^6 Lead^BHC||||||F
+OBX||CE|4025^PR_Source^BHC||1^SpO2^BHC||||||F
+OBX||CE|4026^RR_Source^BHC||1^ECG^BHC||||||F
+3．Data completed by NIBP aperiodic measurement
+MSH|^~\&|||||20230518101324||ORU^R01^ORU_R01|1005|P|2.6||||||UTF-8
+PID|||78||Mis^Lucy^Merry||20020202|F
+OBX||NM|4201^Height^BHC||170.0|31^cm^BHC|||||F
+OBX||NM|4202^Weight^BHC||65.0|41^kg^BHC|||||F
+OBX||NM|4203^Blood^BHC||3||||||F
+OBX||NM|4204^Pace^BHC||2||||||F
+PV1||I|^^&8&0^^^^^^1CBA8CB36CEF|||||||||||||||A
+OBR||||Monitor|||20230518101324
+OBX||NM|351^NIBP S^BHC|5004|125|11^mmHg^BHC|||||F||APERIODIC|20230518101323
+OBX||NM|352^NIBP D^BHC|5004|84|11^mmHg^BHC|||||F||APERIODIC|20230518101323
+OBX||NM|353^NIBP M^BHC|5004|96|11^mmHg^BHC|||||F||APERIODIC|20230518101323
+OBX||NM|354^NIBP SDP^BHC|5004|41|11^mmHg^BHC|||||F||APERIODIC|20230518101323
+OBX||NM|355^NIBP PR^BHC|5004|60||||||F||APERIODIC|20230518101323
+OBX||ST|4002^Monitor Name^BHC||Monitor||||||F
+OBX||CE|4021^Tec Highest Level^BHC||1^Tips^BHC||||||F
+OBX||CE|4022^Phy Highest Level^BHC||5^None^BHC||||||F
+OBX||CE|4023^Alarm Setting^BHC||1^Pause^^BHC||||||F
+4．C.O. aperiodic parameter measurement completed data
+MSH|^~\&|||||20230518101323||ORU^R01^ORU_R01|1006|P|2.6||||||UTF-8
+PID|||78||Mis^Lucy^Merry||20020202|F
+OBX||NM|4201^Height^BHC||170.0|31^cm^BHC|||||F
+OBX||NM|4202^Weight^BHC||65.0|41^kg^BHC|||||F
+OBX||NM|4203^Blood^BHC||3||||||F
+OBX||NM|4204^Pace^BHC||2||||||F
+PV1||I|^^&8&0^^^^^^1CBA8CB36CEF|||||||||||||||A
+OBR||||Monitor|||20230518101323
+OBX||NM|751^C.O.^BHC|5012|5.2||||||F||APERIODIC|20230518101323
+OBX||NM|752^C.I.^BHC|5012|2.9||||||F||APERIODIC|20230518101323
+OBX||NM|753^TI^BHC|5012|-1||||||F||APERIODIC|20230518101323
+OBX||NM|754^TB^BHC|5012|36.87|21^C^BHC|||||F||APERIODIC|20230518101323
+OBX||ST|4002^Monitor Name^BHC||Monitor||||||F
+OBX||CE|4021^Tec Highest Level^BHC||1^Tips^BHC||||||F
+
+
+=== PAGE 28 ===
+23
+OBX||CE|4022^Phy Highest Level^BHC||5^None^BHC||||||F
+OBX||CE|4023^Alarm Setting^BHC||1^Pause^BHC||||||F
+OBX||CE|4024^ECG Lead Type^BHC||1^3 Lead^BHC||||||F
+OBX||CE|4025^PR_Source^BHC||1^SpO2^BHC||||||F
+OBX||CE|4026^RR_Source^BHC||1^ECG^BHC||||||F
+5．NMT aperiodic parameter measurement completed data
+MSH|^~\&|||||20230518115149||ORU^R01^ORU_R01|1025|P|2.6||||||UTF-8
+PID|||78||Mis^Lucy^Merry||20020202|F
+OBX||NM|4201^Height^BHC||170.0|31^cm^BHC|||||F
+OBX||NM|4202^Weight^BHC||65.0|41^kg^BHC|||||F
+OBX||NM|4203^Blood^BHC||3||||||F
+OBX||NM|4204^Pace^BHC||2||||||F
+PV1||I|^^&8&0^^^^^^1CBA8CB36CEF|||||||||||||||A
+OBR||||Monitor|||20230518115149
+OBX||ST|2201^Stimulate Current^BHC|5057|25^25^25^25||||||F
+||APERIODIC|20230518115149
+OBX||ST|2202^Measure Current^BHC|5057|24.80^24.81^24.80^24.79||||||F
+||APERIODIC|20230518115149
+OBX||ST|2203^Bargraph Strength^BHC|5057|70^10^10^0||||||F
+||APERIODIC|20230518115149
+OBX||NM|2204^Measure Result^BHC|5057|3||||||F||APERIODIC|20230518115149
+OBX||NM|2205^Result Type^BHC|5057|0||||||F||APERIODIC|20230518115149
+OBX||NM|2206^Stimulate Cycle^BHC|5057|-1||||||F||APERIODIC|20230518115149
+OBX||NM|2207^Stimulate Mode^BHC|5057|3||||||F||APERIODIC|20230518115149
+OBX||NM|2208^Auto Mode^BHC|5057|-1||||||F||APERIODIC|20230518115149
+OBX||NM|2209^Bargraph Number^BHC|5057|4||||||F||APERIODIC|20230518115149
+OBX||ST|4002^Monitor Name^BHC||Monitor||||||F
+OBX||CE|4021^Tec Highest Level^BHC||1^Tips^BHC||||||F
+OBX||CE|4022^Phy Highest Level^BHC||3^Middle Level^BHC||||||F
+OBX||CE|4023^Alarm Setting^BHC||0^Normal^BHC||||||F
+OBX||CE|4024^ECG Lead Type^BHC||1^3 Lead^BHC||||||F
+OBX||CE|4025^PR_Source^BHC||1^SpO2^BHC||||||F
+OBX||CE|4026^RR_Source^BHC||1^ECG^BHC||||||F
+6．PAWP aperiodic parameter measurement completed data
+MSH|^~\&|||||20230518114729||ORU^R01^ORU_R01|1026|P|2.6||||||UTF-8
+PID|||78||Mis^Lucy^Merry||20020202|F
+OBX||NM|4201^Height^BHC||170.0|31^cm^BHC|||||F
+OBX||NM|4202^Weight^BHC||65.0|41^kg^BHC|||||F
+OBX||NM|4203^Blood^BHC||3||||||F
+OBX||NM|4204^Pace^BHC||2||||||F
+
+
+=== PAGE 29 ===
+24
+PV1||I|^^&8&0^^^^^^1CBA8CB36CEF|||||||||||||||A
+OBR||||Monitor|||20230518114729
+OBX||NM|1706^Pawp^BHC|5041|81||||||F||APERIODIC|20230518114729
+OBX||ST|4002^Monitor Name^BHC||Monitor||||||F
+OBX||CE|4021^Tec Highest Level^BHC||1^Tips^BHC||||||F
+OBX||CE|4022^Phy Highest Level^BHC||5^None^BHC||||||F
+OBX||CE|4023^Alarm Setting^BHC||0^Normal^BHC||||||F
+OBX||CE|4024^ECG Lead Type^BHC||1^3 Lead^BHC||||||F
+OBX||CE|4025^PR_Source^BHC||1^SpO2^BHC||||||F
+OBX||CE|4026^RR_Source^BHC||1^ECG^BHC||||||F
+7．EWS aperiodic parameter measurement completed data
+MSH|^~\&|||||20230518135302||ORU^R01^ORU_R01|1027|P|2.6||||||UTF-8
+PID|||78||Mis^Lucy^Merry||20020202|F
+OBX||NM|4201^Height^BHC||170.0|31^cm^BHC|||||F
+OBX||NM|4202^Weight^BHC||65.0|41^kg^BHC|||||F
+OBX||NM|4203^Blood^BHC||3||||||F
+OBX||NM|4204^Pace^BHC||2||||||F
+PV1||I|^^&8&0^^^^^^1CBA8CB36CEF|||||||||||||||A
+OBR||||Monitor|||20230518135302
+OBX||NM|2051^Total Score^BHC|5058|5||||||F||APERIODIC|20230518135302
+OBX||NM|2052^Score Type^BHC|5058|0||||||F||APERIODIC|20230518135302
+OBX||ST|4002^Monitor Name^BHC||Monitor||||||F
+OBX||CE|4021^Tec Highest Level^BHC||1^Tips^BHC||||||F
+OBX||CE|4022^Phy Highest Level^BHC||1^Tips^BHC||||||F
+OBX||CE|4023^Alarm Setting^BHC||0^Normal^BHC||||||F
+OBX||CE|4024^ECG Lead Type^BHC||1^3 Lead^BHC||||||F
+OBX||CE|4025^PR_Source^BHC||1^SpO2^BHC||||||F
+OBX||CE|4026^RR_Source^BHC||1^ECG^BHC||||||F
+8．GCS aperiodic parameter measurement completed data
+MSH|^~\&|||||20230518135251||ORU^R01^ORU_R01|1028|P|2.6||||||UTF-8
+PID|||78||Mis^Lucy^Merry||20020202|F
+OBX||NM|4201^Height^BHC||170.0|31^cm^BHC|||||F
+OBX||NM|4202^Weight^BHC||65.0|41^kg^BHC|||||F
+OBX||NM|4203^Blood^BHC||3||||||F
+OBX||NM|4204^Pace^BHC||2||||||F
+PV1||I|^^&8&0^^^^^^1CBA8CB36CEF|||||||||||||||A
+OBR||||Monitor|||20230518135251
+OBX||NM|2101^Total Score^BHC|5059|9||||||F||APERIODIC|20230518135251
+OBX||NM|2102^Eye Opening^BHC|5059|2||||||F||APERIODIC|20230518135251
+OBX||NM|2103^Verbal Response^BHC|5059|3||||||F||APERIODIC|20230518135251
+
+
+=== PAGE 30 ===
+25
+OBX||NM|2104^Motor Response^BHC|5059|4||||||F||APERIODIC|20230518135251
+OBX||ST|4002^Monitor Name^BHC||Monitor||||||F
+OBX||CE|4021^Tec Highest Level^BHC||1^Tips^BHC||||||F
+OBX||CE|4022^Phy Highest Level^BHC||5^None^BHC||||||F
+OBX||CE|4023^Alarm Setting^BHC||0^Normal^BHC||||||F
+OBX||CE|4024^ECG Lead Type^BHC||1^3 Lead^BHC||||||F
+OBX||CE|4025^PR_Source^BHC||1^SpO2^BHC||||||F
+OBX||CE|4026^RR_Source^BHC||1^ECG^BHC||||||F
+9．Parameter alarm upper and lower limits
+MSH|^~\&|||||20230713104818||ORU^R01^ORU_R01|1009|P|2.6||||||UTF-8
+PID||||||||M
+OBX||NM|4201^Height^BHC||66.9|32^inch^BHC|||||F
+OBX||NM|4202^Weight^BHC||143.3|42^lb^BHC|||||F
+OBX||NM|4203^Blood^BHC||4||||||F
+OBX||NM|4204^Pace^BHC||2||||||F
+PV1||I|^^&8&0^^^^^^1CBA8CB36CEF|||||||||||||||A
+OBR||||Monitor|||20230713104818
+OBX||NM|1^^BHC|201|348||||||F
+OBX||NM|2^^BHC|201|347||||||F
+OBX||NM|1^^BHC|251|100||||||F
+OBX||NM|2^^BHC|251|90||||||F
+OBX||NM|1^^BHC|351|120|11^mmHg^BHC|||||F
+OBX||NM|2^^BHC|351|70|11^mmHg^BHC|||||F
+OBX||NM|1^^BHC|352|70|11^mmHg^BHC|||||F
+OBX||NM|2^^BHC|352|40|11^mmHg^BHC|||||F
+OBX||NM|1^^BHC|353|90|11^mmHg^BHC|||||F
+OBX||NM|2^^BHC|353|50|11^mmHg^BHC|||||F
+OBX||NM|1^^BHC|354|90|11^mmHg^BHC|||||F
+OBX||NM|2^^BHC|354|50|11^mmHg^BHC|||||F
+OBX||NM|1^^BHC|801|49|11^mmHg^BHC|||||F
+OBX||NM|2^^BHC|801|20|11^mmHg^BHC|||||F
+OBX||NM|1^^BHC|802|3|11^mmHg^BHC|||||F
+OBX||NM|1^^BHC|803|30||||||F
+OBX||NM|2^^BHC|803|8||||||F
+OBX||NM|1^^BHC|881|3.0||||||F
+OBX||NM|2^^BHC|881|0.5||||||F
+OBX||NM|1^^BHC|882|2.0||||||F
+OBX||NM|2^^BHC|882|0.5||||||F
+OBX||NM|1^^BHC|841|100|14^%^BHC|||||F
+OBX||NM|2^^BHC|841|18|14^%^BHC|||||F
+OBX||NM|1^^BHC|842|100|14^%^BHC|||||F
+OBX||NM|2^^BHC|842|18|14^%^BHC|||||F
+
+
+=== PAGE 31 ===
+26
+OBX||NM|1^^BHC|821|82||||||F
+OBX||NM|2^^BHC|821|0||||||F
+OBX||NM|1^^BHC|822|77||||||F
+OBX||NM|2^^BHC|822|0||||||F
+OBX||NM|1^^BHC|401|30||||||F
+OBX||NM|2^^BHC|401|8||||||F
+OBX||NM|1^^BHC|1501|120|11^mmHg^BHC|||||F
+OBX||NM|2^^BHC|1501|70|11^mmHg^BHC|||||F
+OBX||NM|1^^BHC|1502|70|11^mmHg^BHC|||||F
+OBX||NM|2^^BHC|1502|40|11^mmHg^BHC|||||F
+OBX||NM|1^^BHC|1503|90|11^mmHg^BHC|||||F
+OBX||NM|2^^BHC|1503|50|11^mmHg^BHC|||||F
+OBX||NM|1^^BHC|1521|120|11^mmHg^BHC|||||F
+OBX||NM|2^^BHC|1521|70|11^mmHg^BHC|||||F
+OBX||NM|1^^BHC|1522|70|11^mmHg^BHC|||||F
+OBX||NM|2^^BHC|1522|40|11^mmHg^BHC|||||F
+OBX||NM|1^^BHC|1523|90|11^mmHg^BHC|||||F
+OBX||NM|2^^BHC|1523|50|11^mmHg^BHC|||||F
+OBX||NM|1^^BHC|1051|39.0|21^C^BHC|||||F
+OBX||NM|2^^BHC|1051|36.0|21^C^BHC|||||F
+OBX||NM|1^^BHC|1102|39.0|21^C^BHC|||||F
+OBX||NM|2^^BHC|1102|36.0|21^C^BHC|||||F
+10．Parameter alarm switch
+MSH|^~\&|||||20230518101318||ORU^R01^ORU_R01|1011|P|2.6||||||UTF-8
+PID|||78||Mis^Lucy^Merry||20020202|F
+OBX||NM|4201^Height^BHC||170.0|31^cm^BHC|||||F
+OBX||NM|4202^Weight^BHC||65.0|41^kg^BHC|||||F
+OBX||NM|4203^Blood^BHC||3||||||F
+OBX||NM|4204^Pace^BHC||2||||||F
+PV1||I|^^&8&0^^^^^^1CBA8CB36CEF|||||||||||||||A
+OBR||||Monitor|||20230518101318
+OBX||NM|4^^BHC|201|1||||||F
+OBX||NM|4^^BHC|251|1||||||F
+OBX||NM|4^^BHC|351|1||||||F
+OBX||NM|4^^BHC|352|1||||||F
+OBX||NM|4^^BHC|353|1||||||F
+OBX||NM|4^^BHC|354|1||||||F
+OBX||NM|4^^BHC|401|1||||||F
+OBX||NM|4^^BHC|754|1||||||F
+OBX||NM|4^^BHC|1501|1||||||F
+OBX||NM|4^^BHC|1502|1||||||F
+OBX||NM|4^^BHC|1503|1||||||F
+OBX||NM|4^^BHC|1521|1||||||F
+
+
+=== PAGE 32 ===
+27
+OBX||NM|4^^BHC|1522|1||||||F
+OBX||NM|4^^BHC|1523|1||||||F
+OBX||NM|4^^BHC|1051|1||||||F
+OBX||NM|4^^BHC|1052|1||||||F
+11．Parameter alarm level
+MSH|^~\&|||||20230518101318||ORU^R01^ORU_R01|1010|P|2.6||||||UTF-8
+PID|||78||Mis^Lucy^Merry||20020202|F
+OBX||NM|4201^Height^BHC||170.0|31^cm^BHC|||||F
+OBX||NM|4202^Weight^BHC||65.0|41^kg^BHC|||||F
+OBX||NM|4203^Blood^BHC||3||||||F
+OBX||NM|4204^Pace^BHC||2||||||F
+PV1||I|^^&8&0^^^^^^1CBA8CB36CEF|||||||||||||||A
+OBR||||Monitor|||20230518101318
+OBX||NM|3^^BHC|201|2||||||F
+OBX||NM|3^^BHC|251|2||||||F
+OBX||NM|3^^BHC|351|2||||||F
+OBX||NM|3^^BHC|352|2||||||F
+OBX||NM|3^^BHC|353|2||||||F
+OBX||NM|3^^BHC|354|2||||||F
+OBX||NM|3^^BHC|401|2||||||F
+OBX||NM|3^^BHC|754|2||||||F
+OBX||NM|3^^BHC|1501|2||||||F
+OBX||NM|3^^BHC|1502|2||||||F
+OBX||NM|3^^BHC|1503|2||||||F
+OBX||NM|3^^BHC|1521|2||||||F
+OBX||NM|3^^BHC|1522|2||||||F
+OBX||NM|3^^BHC|1523|2||||||F
+OBX||NM|3^^BHC|1051|2||||||F
+OBX||NM|3^^BHC|1052|2||||||F
+4.3 Waveform Data Sending
+4.3.1 Message content
+The waveform message consists of four parts: waveform channel definition data (CHN),
+timing information (time and date observed), actual waveform data (WAV) and waveform
+annotation (ANO). The waveform data of each module can be either single channel or
+multi-channel, and the data of each channel can use separate timing information, channel
+definition data, digital waveform data and waveform annotation. In addition, depending on the
+situation, the waveform data channels of multiple sensors can share timing information, channel
+definition data, and waveform annotations.
+
+
+=== PAGE 33 ===
+28
+4.3.2 Waveform sending form
+The waveform data is sent by the ORU_R01 message, which contains waveform specific data
+and channel attributes (sensitivity, sample rate, etc.). Both single and multi-channel waveforms
+can be sent.
+In addition, the sampling rate sent by the ECG waveform can be selected, which is set in the
+HL7 interface.
+4.3.3 Format
+4.3.4 Definition of message segment
+(1)
+MSH Segment
+In this message, the message type is: ORU_R01; Message control ID: 1015, the control ID is
+defined in Appendix A.5 Controls and Settings.
+(2)
+PID segment, patient observation OBX segment, PV1 segment
+Same as above.
+(3)
+OBX Segment
+
+OBX channel description data
+SEQ
+LEN
+DT
+OPT
+Field Name
+Description
+2
+3
+ID
+O
+Value Type
+CD
+3
+705
+CWE
+R
+Observation
+Identifier
+Waveform identifier，“30001^ST-I^BHC”
+indicates the channel definition for sending
+
+
+=== PAGE 34 ===
+29
+the waveform of ST_I
+4
+20
+ST
+O
+Observation
+Sub-ID
+Waveform
+channel
+ID,
+for
+example,
+1
+indicates channel 1
+5
+99999
+CD
+O
+Observation
+Results
+Channel definition
+11
+1
+ID
+R
+Observation
+Results Status
+F
+
+Channel definition: < Channel Identifier (WVI) >^< Waveform Source (WVS) >^<
+Channel sensitivity/unit (CSU) >^< Channel annotation Parameter (CCP) >^< Channel
+sampling frequency (NM) > ^< Minimum/Maximum (NR) >;
+
+Channel identifier sub-component: < Channel Number (NM)> &< Channel name (ST)>
+
+Waveform source sub-components: <Source Name 1(ST)> &< Source Name 2 (ST) >
+
+Channel sensitivity/Unit subcomponent: <Channel sensitivity (NM)> &<Unit of
+Measurement Identifier (ST)>&< Description of Unit of measurement (ST)>&<Unit of
+Measurement
+Code
+System
+(ID)>&<Alternate
+Unit
+of
+Measurement
+Identifier
+(ST)>&<Description of Alternate Units of Measurement (ST)>&<Alternate Unit of
+Measurement Code System (ID)>
+
+Sub-components of channel labeling parameters: <Channel scale sensitivity correction
+factor (NM)>&<Channel scale baseline (NM)> &< Channel scale time skewness (NM)>
+
+Minimum/Maximum subcomponent: <Minimum value (NM)>&<Maximum value
+(NM)>
+
+OBX Timing information
+SEQ
+LEN
+DT
+OPT
+Field Name
+Description
+2
+3
+ID
+O
+Value Type
+TS
+3
+705
+CWE
+R
+Observation
+Identifier
+Waveform identifier,
+“30001^ST-I^BHC”
+Indicates
+that
+the message sent is the waveform
+observation date and time of ST_I
+4
+20
+ST
+O
+Observation Sub-ID
+Waveform channel ID, for example,
+1 indicates channel 1
+5
+65536
+CD
+O
+Observation Results
+Observe date and time
+YYYYMMddHHmmss
+11
+1
+ID
+R
+Observation
+Results
+Status
+F
+
+The timing information section determines the date and time of the first data point of the
+child ID observed for a particular waveform channel group
+
+Waveform data
+SEQ
+LEN
+DT
+OPT
+Field Name
+Description
+
+
+=== PAGE 35 ===
+30
+2
+3
+ID
+O
+Value Type
+NM or NA
+3
+705
+CWE
+R
+Observation
+Identifier
+Waveform parameter name identifier,
+“30001^ST-I^BHC”Represents
+the
+waveform data of ST_I
+4
+20
+ST
+O
+Observation Sub-ID
+Waveform channel ID, for example, 1
+indicates channel 1
+5
+65536
+CD
+O
+Observation Results
+Waveform
+data,
+single
+channel
+or
+multi-channel
+waveform
+data,
+the
+length is not greater than 65536
+11
+1
+ID
+R
+Observation Results
+Status
+F
+Waveform data:
+
+One-dimensional array: <Waveform value 1>^<Waveform value 2>^<Waveform value
+3>... (NA)
+
+Two-dimensional array: <Waveform value 11>^<Waveform value 12>^<Waveform
+value 13>... ~< Waveform value 21>^<Waveform value 22>^<Waveform value 23>...
+(NA)
+
+Multi-channel: <Channel 1 data 1> ^<Channel 2 data 1>^<Channel 3 data 1>... ~
+<Channel 1 data 2> ^<Channel 2 data 2>^<Channel 3 data 2>... ~ (NM)
+
+Waveform Notes
+SEQ
+LEN
+DT
+OPT
+Field Name
+Description
+2
+3
+ID
+O
+Value Type
+CE
+3
+705
+CWE
+R
+Observation Identifier
+Waveform parameter name identifier，
+“30001^ST-I^BHC”Waveform
+annotation representing ST_I
+4
+20
+ST
+O
+Observation Sub-ID
+Waveform channel ID, for example, 1
+indicates channel 1
+5
+6553
+6
+CD
+O
+Observation Results
+Waveform annotation content
+11
+1
+ID
+R
+Observation
+Results
+Status
+F
+4.3.5 Example
+MSH|^~\&|||||20230518135303||ORU^R01^ORU_R01|1015|P|2.6||||||UTF-8
+PID|||78||Mis^Lucy^Merry||20020202|F
+OBX||NM|4201^Height^BHC||170.0|31^cm^BHC|||||F
+OBX||NM|4202^Weight^BHC||65.0|41^kg^BHC|||||F
+OBX||NM|4203^Blood^BHC||3||||||F
+OBX||NM|4204^Pace^BHC||2||||||F
+PV1||I|^^&8&0^^^^^^1CBA8CB36CEF|||||||||||||||A
+
+
+=== PAGE 36 ===
+31
+OBR||||Monitor|||20230518135303
+OBX||CD|30002^ECG_II^BHC|1|1^^0.001&mV^^256^-300000&300000||||||F
+OBX||TS|30002^ECG_II^BHC|1|20230614102744||||||F
+OBX||NA|30002^ECG_II^BHC|1|-187^-187^-193^-194^-187^-184^-190^-196^-168^-72^45^247
+^456^625^740^828^895^939^958^951^921^887^814^708^590^454^278^66^-141^-287^-344^-3
+36^-310^-280^-267^-281^-310^-328^-321^-296^-281^-285^-288^-277^-264^-263^-271^-273^-2
+60^-253^-315^-602^-1177^-1682^-1949^1257^359^2434^4536^6444^7986^8625^
+7919^6124^4423^2039^-223^-2071^-2998^-2814^--1986^-1138^-583^-359^-369^-548^-756^-76
+9^-586^-424^-458^-616^-668^-557^-435^-426^-522^-587^-518^-394^-350^-405^-430^-360^-24
+8^-192^-212^-246^-203^-104^-35^-28^-29^25^119^191^211^212^249^331^418^467^495^
+548^632^713^790^863^1003^1175^1328^1437^1517^1598^1658^1648^1552^1418^1332^1260^
+1222^1179^1068^845^530^181^-131^-367^-494^-619^-706^-754^-770^-765^-747^-718^-709^-7
+21^-732^-724^-699^-677^-676^-682^-671^-648^-626^-622^-625^-625^-621^-610^-601^-597^-5
+86^-566^-549^-540^-540^-543^-545^-545^-536^-523^-522^-526^-523^-517^-515^-513^-510^-5
+05^-490^-480^-466^-455^-447^-446^-445^-442^-435^-422^-412^-410^-419^-423^-418^-410^-4
+03^-395^-386^-381^-383^-393^-393^-376^-357^-347^-345^-343^-343^-351^-348^-338^-329^-3
+30^-333^-334^-331^-326^-323^-313^-302^-296^-291^-286^-284^-286^-287^-288^-294^-288^-2
+71^-256^-252^-265^-277^-280^-274^-260^-242^-235^-238^-236^-228^-218^-213^-222^-230^-2
+34^-229^-215^-205^-196^-196^-201^-203^-197^-191^-193^-204^-210^-205^-197^-164^-66^53^
+256^465^630^746^831^898^943^961^958^926^875^780^679^578^446^264^59^-130^-265^-326
+^-331^-316^-297^-288^-286^-285^-281||||||F
+OBX||CE|30002^ECG_II^BHC|1|||||||F
+OBX||CD|30082^IBP_P2^BHC|1|1^^0.5&mmHg^^100^-5000&36000||||||F
+OBX||TS|30082^IBP_P2^BHC|1|20230518135303||||||F
+OBX||NA|30082^IBP_P2^BHC|1|9099^9429^9746^10066^10391^10709^11010^11273^11477^1
+1633^11768^11889^11991^12076^12149^12200^12222^12222^12205^12167^12114^12050^11
+969^11875^11769^11646^11510^11373^11236^11088^10918^10728^10537^10374^10227^100
+71^9915^9799^9750^9751^9759^9756^9758^9773^9784^9781^9767^9742^9708^9664^9618^95
+84^9562^9536^9502^9468^9437^9406^9377^9347^9310^9275^9248^9219^9182^9146^9117^90
+89^9055^9021^8992^8962^8922^8882^8849^8818^8789^8767^8737^8688^8642^8618^8601^85
+69^8530^8498^8473^8442^8402^8364^8330^8291^8238^8181^8146^8154^8215^8355^8596^89
+05^9230^9549^9871^10200^10529||||||F
+OBX||CE|30082^IBP_P2^BHC|1|||||||F
+
+
+=== PAGE 37 ===
+32
+5 Query Request Interface
+This section introduces the relevant content of the query interface.
+5.1 Communication process
+5.1.1 Network Connection
+The query interface is only used as the server to wait for connection requests from the client,
+and the process of establishing a connection is the same as actively sending the interface as the
+server. Therefore, please refer to section 4.1.1.
+5.1.2 Network Connection Settings
+Query interface as server: The client needs to know the IP and port number of the server in order
+to connect. The IP address of the server can be viewed by clicking on the [Main menu] button of
+the monitor and clicking on the [System Info]. The port number is fixed to 6202.
+5.1.3 Data Interaction
+The query interface adopts a communication mode of request and response, which means that
+the server will not send any data to the client until it receives the query message (QRY_R02) sent
+by the client.
+The client can query the data of one, multiple, or all monitors at once, and can specify the
+type of data to be queried. As the query interface of the server, after receiving the query message,
+it will first return an ACK message as a response, and finally return a message containing the
+query result (ORF_R04). After receiving the result returned by the interface, the client will send
+an ACK or NCK as a response, but this response will be ignored. If the server does not specify the
+data type to query, the interface will not return any messages.
+If the client sends a query message followed by a new query message, the interface will first
+respond to the previous query message, and then send an ACK message warning the client that the
+query message interval is too short. Therefore, when sending query messages, it is important for
+the client to keep track of the time interval and wait at least 10 seconds before sending new query
+messages.
+5.1.4 Send Content
+The following data is sent after the client sends the correct query message.
+1．Module parameter values.
+2．Physiological alarm data.
+
+
+=== PAGE 38 ===
+33
+3．Technical alarm data.
+4．Module configuration and device status include: device standby state, physiological and
+technical highest alarm level, device alarm state, ECG lead type, PR source, RR source.
+5．Module parameter alarm configuration data, including alarm switch, alarm level, and
+alarm upper and lower limit values.
+5.2 QRY_R02 Message
+QRY_ The QRY in R02 represents the query observation results, and R02 represents the
+event. The query message type sent by the client is QRY_ R02 generally forms a query and
+response mode with ORF.
+QRY_ R02 is divided into three parts, namely Message Header (MSH), Query Definition
+(QRD), and Query Filter (QRF).
+5.2.1 Format
+MSH
+Message header
+QRD
+Query Definition
+QRF
+Query filtering
+5.2.2 Example
+MSH|^~\&|||||20220424095857||ORY^R02^ORY_R02|1029|P|2.6||||||UTF-8
+QRD|20220424095857|R|I|2|||||RES
+QRF|MON||||0&0^1^0^0
+5.2.3 MSH Segment
+The MSH segment is the first segment of an HL7 message, which defines the message type.
+Field
+Length
+Data
+Type
+Wash
+ability
+Repeat
+ability
+Field Name
+Describe
+1
+1
+ST
+R
+No
+Field
+separator
+|
+2
+4
+ST
+R
+No
+Code
+Characters
+^~\&
+9
+15
+MSG
+R
+No
+Date/time
+of
+the message
+ORY^R02^ORY_R02
+7
+24
+DTM
+R
+No
+Message
+Type
+yyyyMMddHHmmss
+10
+199
+ST
+R
+No
+Message
+Control ID
+Contains
+a
+number
+or
+other
+identifier that uniquely identifies
+the message, such as MSH | ^~&| |
+
+
+=== PAGE 39 ===
+34
+| | 20220424095857 | | ORY ^ R02
+^ORY_R02| 1029 | P| 2.6||||||UTF-8
+1029 represents the control ID of
+the
+real-time
+query
+message,
+indicating that this HL7 message is
+a real-time query message. Please
+refer to Appendix A.5 controls and
+settings
+11
+3
+PT
+R
+No
+Process ID
+P
+12
+60
+VID
+R
+No
+Version ID
+2.6
+5.2.4 QRD Segment
+Field
+Length
+Data
+Type
+Wash
+ability
+Repeat
+ability
+Field
+Name
+Describe
+1
+24
+DTM
+R
+No
+Query
+Data/Ti
+me
+Format:yyyyMMddHHmmss
+2
+1
+ID
+R
+No
+Query
+Must always be R
+3
+1
+ID
+R
+No
+Query
+Priority
+Must always be I
+4
+10
+ST
+R
+No
+Query
+ID
+Cannot be empty and must be less
+than 16 characters
+9
+250
+CWE
+R
+Yes
+Filter
+themes
+Must be a result between query and
+response RES
+Example:QRD|20220424095857|R|I|2|||||RES
+Message processing rules:
+
+The first field must be in the correct time format, otherwise the interface will return an
+error message.
+
+The second field must be R, otherwise the interface will return an error message.
+
+The third field must be I, otherwise the interface will return an error message.
+
+The fourth field cannot be empty, otherwise the interface will return an error message,
+and the interface cannot determine the uniqueness of the ID
+5.2.5 QRF Segment
+QRF defines the detailed content to be queried, and there is only one query condition (QRF)
+at a time.
+Field
+Length
+Data
+Type
+Wash
+ability
+Repeat
+ability
+Field Name
+Describe
+1
+20
+ST
+R
+Yes
+Filter
+the
+location
+of
+In the monitoring data of queries
+and responses, it must always be a
+
+
+=== PAGE 40 ===
+35
+the theme
+MON
+5
+60
+ST
+O
+Yes
+Other
+QRY
+topic
+filtering
+Contains locally defined filtering
+criteria
+for
+use
+between
+two
+systems, as detailed in 5.2.5.1
+Example: QRF | MON | | | | 0&0 ^ 1 ^ 0 ^ 0, where 1 in the segment indicates that the query
+data type is physiological parameter data.
+Message processing rules:
+
+The first field must be MON, otherwise the interface will return an error message
+
+The fifth field cannot be empty, otherwise the interface will return an error message
+5.2.5.1 Field 5 of QRF
+The format for querying and filtering topics is as follows:
+<IP>&<IPSeq>^<SendType>^ 0 ^ 0
+Please refer to the table below for the description of all components in this field
+Composition
+Data type
+Numerical range
+describe
+<IP>
+integer
+0-4294967295
+Because CMS and PDS gateways are
+connected to multiple bedside monitors
+simultaneously, IP addresses are used to
+identify unique bedside monitors or telemetry
+monitors. 0 represents requesting data from the
+monitor and does not require an IP address
+<IpSeq>
+integer
+0-255
+Subtract 1 from the serial number of the
+telemetry transmitter, which is used when
+connecting to the central monitoring system. 0
+represents requesting data from the monitor and
+does not require an IP address.
+Note: This is not a port number
+<SendType>
+integer
+1-63
+Requested data type
+When data is represented in binary
+Physiological parameter data: The 0th value is
+1;
+Physiological alarm data: The first value is 1;
+Technical alarm data:
+The second value is 1;
+Alarm setting data: The third digit value is 1;
+Other configuration data: The fourth digit value
+is 1;
+Waveform data: The 5th digit value is 1;
+All data: digits 0-5 are 1
+
+
+=== PAGE 41 ===
+36
+5.3 ACK Message
+5.3.1 Format
+ACK message is the error message returned by the interface upon receiving an incorrect
+query message from the client. The client can correct its own query message based on this error
+message to obtain the desired result message.
+5.3.2 Example
+MSH|^~\\&|||||20230522165958||ACK|1018|P|2.6||||||UTF-8
+MSA|AR|1029|The request is too fast.
+5.3.3 MSH Segment
+Field
+Length
+Data
+Type
+Wash
+ability
+Repeat
+ability
+Field Name
+Describe
+1
+1
+ST
+R
+No
+Field separator
+|
+2
+4
+ST
+R
+No
+Code Characters
+^~\&
+9
+15
+MSG
+R
+No
+Date/time
+of
+the
+message
+ACK
+7
+24
+DTM
+R
+No
+Message Type
+yyyyMMddHHmmss
+10
+199
+ST
+R
+No
+Message
+Control
+ID
+1018：Control ID of ACK
+confirmation message
+11
+3
+PT
+R
+No
+Process ID
+P
+12
+60
+VID
+R
+No
+Version ID
+2.6
+MSH|^~\\&|||||20230522165958||ACK|1018|P|2.6||||||UTF-8
+The message type field for this segment is: ACK
+5.3.4 MSA Segment
+Field
+Length
+Data
+Type
+Wash
+ability
+Repeat
+ability
+Field Name
+Describe
+1
+2
+ID
+R
+No
+Confirmati
+on Code
+AA: Initial mode: Application
+acceptance;
+AE: initial mode: application
+Software bug;
+AR: Initial mode: Application
+rejection;
+
+
+=== PAGE 42 ===
+37
+CA: Application confirmation in
+enhanced mode, indicating
+acceptance;
+CE: Acceptance confirmation in
+enhanced mode, indicating an error;
+CR: Acceptance confirmation in
+enhanced mode, indicating
+rejection.
+2
+199
+ST
+R
+No
+Message
+Control ID
+Consistent with the control ID of
+the query message
+3
+80
+ST
+O
+No
+text
+message
+Describe the reason for the error or
+rejection, such as:
+The request is too fast.
+MSA|AR|1029|The request is too fast.
+5.3.5 ERR Segment
+Field
+Length
+Data
+Type
+Wash
+ability
+Repeat
+ability
+Field Name
+Describe
+1
+493
+ELD
+O
+Yes
+Error
+codes
+and
+locations
+Error codes and locations
+2
+18
+ERL
+O
+Yes
+error location
+3
+705
+CWE
+R
+No
+HL7 error code
+0：Received message
+4
+2
+ID
+R
+No
+Severity
+W：Warning
+I：Information
+E：Error
+F：Fatal Error
+5
+705
+CWE
+O
+No
+Application Software
+bug Code
+1：Not connected
+2：Unauthorized
+6
+80
+ST
+O
+Yes
+Application Software
+bug parameter
+<IP>,<IPSeq>
+For details, refer to section
+5.2.5.1
+5.4 ORF_R04 Message
+QRY_ The QRY in R04 represents the query observation results, while R04 represents the
+event. The query result message type sent by the server is QRY_ R04.
+
+
+=== PAGE 43 ===
+38
+5.4.1 Format
+Patient_1
+MSH
+Segment
+MSA
+Segment
+QRD
+Segment
+QRF
+Segment
+PID
+Segment
+OBR
+Segment
+OBX
+Segment
+...
+......
+5.4.2 Example
+MSH|^~\\&|||||20230522165958||ORF^R04^ORF_R04|1030|P|2.6||||||UTF-8
+MSA|AA|1029
+QRD|20230522170331|R|I|2|||||RES
+QRF|MON||||0&0^1^0^0
+PID|||2||Mis^Lucy^Bob||19951108|F
+OBR||||Monitor|||20230522165958
+OBX||NM|201^HR^BHC|5001|-1||||||F
+OBX||NM|219^PVCs^BHC|5001|-1||||||F
+OBX||NM|251^SPO2^BHC|5002|99||||||F
+OBX||NM|259^PR^BHC|5002|60||||||F
+OBX||NM|252^PI^BHC|5002|7.45||||||F
+OBX||NM|258^RR^BHC|5002|20||||||F
+OBX||NM|351^NIBP S^BHC|5004|-1||||||F
+OBX||NM|352^NIBP D^BHC|5004|-1||||||F
+OBX||NM|353^NIBP M^BHC|5004|-1||||||F
+OBX||NM|354^NIBP SDP^BHC|5004|-1||||||F
+OBX||NM|355^NIBP PR^BHC|5004|-1||||||F
+OBX||NM|401^RR^BHC|5005|20||||||F
+OBX||NM|751^C.O.^BHC|5012|-1||||||F
+OBX||NM|752^C.I.^BHC|5012|-1||||||F
+OBX||NM|753^TI^BHC|5012|-1||||||F
+OBX||NM|754^TB^BHC|5012|36.98||||||F
+OBX||NM|1501^Sys^BHC|5031|122||||||F
+OBX||NM|1502^Dia^BHC|5031|81||||||F
+OBX||NM|1503^Mean^BHC|5031|99||||||F
+OBX||NM|1504^PR^BHC|5031|60||||||F
+OBX||NM|1505^PPV^BHC|5031|-1||||||F
+Patient_2
+MSH
+Segment
+MSA
+Segment
+QRD
+Segment
+QRF
+Segment
+PID
+Segment
+OBR
+Segment
+OBX
+Segment
+...
+Patient_n
+MSH
+Segment
+MSA
+Segment
+QRD
+Segment
+QRF
+Segment
+PID
+Segment
+OBR
+Segment
+OBX
+Segment
+...
+
+
+=== PAGE 44 ===
+39
+OBX||NM|1521^Sys^BHC|5032|122||||||F
+OBX||NM|1522^Dia^BHC|5032|81||||||F
+OBX||NM|1523^Mean^BHC|5032|99||||||F
+OBX||NM|1524^PR^BHC|5032|60||||||F
+OBX||NM|1525^PPV^BHC|5032|-1||||||F
+OBX||NM|1051^T01^BHC|5021|36.6||||||F
+OBX||NM|1052^T02^BHC|5021|36.5||||||F
+OBX||NM|2151^Drop Speed^BHC|5060|49||||||F
+OBX||NM|2152^Flowing^BHC|5060|147||||||F
+OBX||NM|2051^Total Score^BHC|5058|-1||||||F
+OBX||NM|2052^Score Type^BHC|5058|0||||||F
+OBX||NM|2101^Total Score^BHC|5059|-1||||||F
+OBX||NM|2102^Eye Opening^BHC|5059|-1||||||F
+OBX||NM|2103^Verbal Response^BHC|5059|-1||||||F
+OBX||NM|2104^Motor Response^BHC|5059|-1||||||F
+5.4.3 MSH Segment
+Field
+Length
+Data
+Type
+Wash
+ability
+Repeat
+ability
+Field Name
+Describe
+1
+1
+ST
+R
+No
+Field
+separator
+|
+2
+4
+ST
+R
+No
+Code
+Characters
+^~\&
+9
+15
+MS
+G
+R
+No
+Date/time
+of
+the message
+ORF^R04^ORF_R04
+7
+24
+DT
+M
+R
+No
+Message
+Type
+yyyyMMddHHmmss
+10
+199
+ST
+R
+No
+Message
+Control ID
+Contains a number or other
+identifier that uniquely identifies
+the message,
+For example: MSH | ^~ &| | |
+20230522165958 | | ORF ^ R04 ^
+ORF_ R04 | 1030 | P | 2.6||||||UTF-8
+1030 represents the control ID of
+the query result message type,
+indicating that this HL7 message is
+the returned query result message.
+Please refer to Appendix A.5
+Controls and settings
+11
+3
+PT
+R
+No
+Process ID
+P
+12
+60
+VID
+R
+No
+Version ID
+2.6
+
+
+=== PAGE 45 ===
+40
+5.4.4 MSA Segment
+Field
+Length
+Data
+Type
+Wash
+ability
+Repeat
+ability
+Field
+Name
+Describe
+1
+2
+ID
+R
+No
+Confirmat
+ion Code
+AA: Initial mode: Application
+acceptance;
+AE: initial mode: application
+Software bug;
+AR: Initial mode: Application
+rejection;
+CA: Application confirmation in
+enhanced mode, indicating
+acceptance;
+CE: Acceptance confirmation in
+enhanced mode, indicating an error;
+CR: Acceptance confirmation in
+enhanced mode, indicating rejection.
+2
+199
+ST
+O
+No
+Message
+Control
+ID
+1029 (consistent with the control ID
+of real-time query messages)
+3
+80
+ST
+O
+No
+text
+message
+Describe the reason for the error or
+rejection, such as:
+The request is too fast.
+5.4.5 QRD Segment
+Field
+Length
+Data
+Type
+Wash
+ability
+Repeat
+ability
+Field Name
+Describe
+1
+24
+DTM
+R
+No
+Query
+date/time
+Format：yyyyMMddHHmmss
+2
+1
+ID
+R
+No
+Query
+time
+codes
+Must always beR
+3
+1
+ID
+R
+Yes
+Query
+Priority
+Must always beI
+4
+10
+ST
+R
+Yes
+Query ID
+Cannot be empty and must be less
+than 16 characters
+9
+250
+CWE
+R
+No
+Filter
+themes
+Must be the result RES between
+query and response
+5.4.6 QRF Segment
+Field
+Length
+Data
+Wash
+Repeat
+Field Name
+Describe
+
+
+=== PAGE 46 ===
+41
+Type
+ability
+ability
+1
+20
+ST
+R
+Yes
+Filter
+the
+location of the
+theme
+In the monitoring data of queries
+and responses, it must always be a
+MON
+5
+60
+ST
+O
+Yes
+Other
+QRY
+topic filtering
+For details, refer to section 5.2.5.1
+5.4.7 PID Segment
+Field
+Length
+Data Type
+Wash
+ability
+Repeat
+ability
+Field Name
+Describe
+3
+250
+CX
+R
+Yes
+Patient
+identifier table
+Patient's
+medical
+record
+number
+5
+250
+XPN
+R
+Yes
+Patient Name
+First Name ^ Middle name
+^ Last Name
+7
+24
+DTM
+O
+No
+Date/Time
+of
+Birth
+YYYYMMDD
+8
+1
+IS
+O
+No
+Gender
+M: Male
+F: Women
+U: Unknown
+5.4.8 OBR Segment
+Field
+Length
+Data
+Type
+Wash
+ability
+Repeat
+ability
+Field Name
+Describe
+4
+705
+CWE
+R
+No
+Universal
+Service
+Identifier
+Monitor
+7
+24
+DTM
+O
+No
+Observation
+date/time
+yyyyMMddHHmmss
+For example: OBR Monitor
+20210914161435
+Indicating observation time:
+September 14, 2021 16:14:35
+5.4.9 OBX Segment
+The definition and usage of OBX segment here are the same as section 4.2.7, please refer to
+section 4.2.7 for details.
+
+
+=== PAGE 47 ===
+42
+6 Real time query interface
+The difference between real-time interfaces and other interfaces is that only one patient's data
+is sent in a TCP connection. The patient's personal information does not appear in every HL7
+message (that is, PID and PV1 segments do not appear in each HL7 message), and is only sent
+after the connection is established or changed. In addition, this interface also sets up UDP
+broadcast information to send machine system information and patient personal information.
+6.1 Communication process
+6.1.1 Network Connection
+The method and process for establishing a connection between the client and server of the
+real-time query interface are the same as those for actively sending the interface, so we can refer
+to 4.1.1.
+6.1.2 Network Connection Settings
+Real time query interface as the server: The client needs to know the IP and port number of
+the server in order to connect. The IP address of the server can be viewed by clicking on the [Main
+menu] button of the monitor and clicking on the [System Info]. The port number is fixed to
+6210. In addition, the real-time query interface is also set with UDP broadcast information, which
+will send broadcast information to all hosts in the subnet where the monitor is located, with port
+number 6234.
+6.1.3 Data Interaction
+The real-time query interface adopts a communication mode that combines request and
+response with active sending. That is, after the client establishes a connection with the interface,
+the interface first sends online module information to the client, and then sends heartbeat packets
+every second. At the same time, the client needs to send a heartbeat packet to the interface. If the
+interface does not receive the heartbeat packet sent by the client within 10 seconds after
+establishing the connection, it will actively disconnect.
+During the process of maintaining network connectivity, the client can send a message that
+needs to be queried (QRY_R02) and specify a response time interval. After receiving the correct
+query message, the interface will reply to the corresponding (ORU_R01) result message based on
+the time interval.
+If the client sends a query and message followed by a new and different query message, the
+interface returns the result message of the new query message first, and then the previous result
+message. Each subsequent result message will also be sent in this way.
+
+
+=== PAGE 48 ===
+43
+The real-time query interface also sets up UDP broadcast information, sending machine
+system information and patient personal information every second to inform other hosts on the
+network of its existence.
+6.1.4 Send Content
+6．Online broadcast information: including patient name, gender, doctor ID, date of birth,
+department, bed number, and monitor name;
+7．TCP heartbeat packet information: sent once every 1 second;
+8．Patient information: When the TCP connection is successfully established, the latest
+patient information will be sent to the client every second;
+9．Response message: After receiving the query message, the interface will return the
+corresponding response message;
+10．Physiological parameters:
+When the interface receives
+a query message
+as a
+physiological parameter, it sends physiological parameters according to the time interval;
+11．Physiological alarm information: When the interface receives a query message as a
+physiological alarm, it sends physiological alarm information according to the time interval;
+12．Technical alarm information: When the interface receives a query message as a technical
+alarm, it sends technical alarm information according to the time interval;
+13．Module online and offline information: After establishing a TCP connection between the
+interface and the client, the interface will send the online module information once, and then send
+it again if there are any changes afterwards.
+14．Parameter alarm configuration information: When the interface receives a query
+message as a technical alarm, it sends parameter alarm configuration information according to the
+time interval;
+6.2 Broadcast Message(ADT_A01)
+The bedside monitor broadcasts an online notification message every second, informing other
+hosts on the network of its existence. Afterwards, other hosts on the network can dynamically
+connect based on the broadcast message, and all devices can use the broadcast message.
+6.2.1 Format
+MSH
+Message header
+EVN
+Event Type
+PID
+Patient identifier set
+PV1
+Patient visits
+[ { OBX } ]
+Monitor Name
+6.2.2 Example
+MSH|^~\&|||||20230523111421||ADT^A01^ADT_A01|1012|P|2.6||||||UTF-8
+
+
+=== PAGE 49 ===
+44
+EVN||20230512094930
+PID|||78||Mis^Lucy^Merry||20020202|F
+PV1||I|^^&8&0^^^^^^1CBA8CB36CEF|||||||||||||||A
+OBX||ST|4002^Monitor Name^BHC||Monitor1||||||F
+6.2.3 MSH Segment
+The MSH segment of the broadcast message has the same definition and usage as the MSH
+field in section 4.2.2.
+The message type field is ADT_ A01, the message control field is: 1012.
+6.2.4 EVN Segment
+Field
+Length
+Data Type
+Wash ability
+Repeat ability
+Field Name
+Describe
+2
+24
+DTM
+R
+No
+Record
+Date / Time
+yyyymmddhhmmss
+Example:EVN||20230512094930
+6.2.5 PID Segment and PV1 Segment
+The PID and PV1 segments of the broadcast message are identical to the PID and PV1
+segments in sections 4.2.3 and 4.2.5.
+6.2.6 OBX Segment
+Field
+Length
+Data Type
+Wash ability
+Repeat ability
+Field Name
+Describe
+2
+3
+ID
+O
+No
+Value Type
+ST
+3
+705
+CWE
+R
+No
+Observatio
+n identifier
+4002^Monitor
+Name^BHC
+Monitor Name Code
+5
+99999
+VARIES
+O
+Yes
+Observatio
+ns
+Monitor Name：Monitor1
+Example:OBX||ST|4002^Monitor Name^BHC||Monitor||||||F
+6.3 Heartbeat Packet
+Both communication parties must send messages to each other every second in the following
+format. If either party fails to receive a message within 10 seconds, it is considered that a network
+malfunction has occurred and the network connection is actively interrupted.
+
+
+=== PAGE 50 ===
+45
+6.3.1 Format
+MSH
+Header
+Example：
+MSH|^~\&|||||20230523112340||ORU^R01^ORU_R01|1014|P|2.6||||||UTF-8
+6.3.2 Segment Definition
+The message type in the heartbeat packet is: ORU_ R01; Message control ID: 1014
+6.4 ACK Message
+ACK message is the error message returned by the interface upon receiving an incorrect
+query message from the client. The client can correct its own query message based on this error
+message to obtain the desired result message.
+6.4.1 Format
+MSH
+Header
+MSA
+Message Acknowledgment
+6.4.2 Example
+MSH|^~\&|||||20230523120248||ACK|1018|P|2.6||||||UTF-8
+MSA|AR|1004|Message format error
+6.4.3 MSH Segment
+Field
+Length
+Data
+Type
+Wash ability
+Repeat ability
+Field Name
+Describe
+1
+1
+ST
+R
+No
+Field separator
+|
+2
+4
+ST
+R
+No
+Code
+Characters
+^~\&
+7
+24
+DTM
+R
+No
+Date/time
+of
+the message
+yyyyMMddHHmms
+s
+9
+15
+MSG
+R
+No
+Message Type
+ACK
+10
+199
+ST
+R
+No
+Message
+Control ID
+1018：Control ID of
+ACK
+confirmation
+message
+11
+3
+PT
+R
+No
+Process ID
+P
+
+
+=== PAGE 51 ===
+46
+12
+60
+VID
+R
+No
+Version ID
+2.6
+MSH|^~\&|||||20230523120248||ACK|1018|P|2.6||||||UTF-8
+The control ID of the ACK confirmation message is: ACK
+6.4.4 MSA Segment
+Field
+Length
+Data
+Type
+Wash
+ability
+Repeat
+ability
+Field Name
+Describe
+1
+2
+ID
+R
+No
+Confirmatio
+n Code
+AA:Initial mode: Application
+acceptance；
+AE:Initial mode: application Software
+bug；
+AR:Initial mode:Application
+Rejection；
+CA:Application confirmation in
+enhanced mode, indicating acceptance;
+CE: Acceptance confirmation in
+enhanced mode, indicating an error;
+CR: Acceptance confirmation in
+enhanced mode, indicating rejection.
+2
+199
+ST
+O
+No
+Message
+control ID
+1004(consistent with the control ID of
+the query message)
+3
+80
+ST
+O
+No
+Text
+message
+Describe the reason for the error or
+rejection, such as:Message format
+error
+MSA|AR|1004|Message format error
+6.5 Query Message (QRY_R02)
+Query messages are messages sent by the server to the interface for querying the required
+data type.
+6.5.1 Format
+MSH
+Message Header
+QRD
+Query Definition
+QRF
+Query filtering
+Example:MSH|^~\&|||||20220424095857||ORY^R02^ORY_R02|1029|P|2.6||||||UTF-8
+QRD|20220424095857|R|I|2|||||RES
+QRF|MON||||0&0^1^0^0
+
+
+=== PAGE 52 ===
+47
+6.5.2 MSH Segment
+The MSH segment of the query message has the same definition and usage as the MSH field
+in section 5.2.3. The message type field of the MSH segment is: QRY_ R02; The message control
+ID field is the encoding of the data type to be queried by the server, as detailed in Appendix A.5
+Control and Settings.
+Example:
+MSH|^~\&|||||20220424095857||ORY^R02^ORY_R02|1029|P|2.6||||||UTF-8
+6.5.3 QRD Segment
+Field
+Length
+Data
+Type
+Wash
+ability
+Repeat
+ability
+Field Name
+Describe
+1
+24
+DTM
+R
+No
+Query
+Data/Time
+Format:yyyyMMddHHmmss
+2
+1
+ID
+R
+No
+Query
+Must always be R
+3
+1
+ID
+R
+Yes
+Query Priority
+Must always be I
+4
+10
+ST
+R
+Yes
+Query ID
+Cannot be empty and must be less
+than 16 characters
+9
+250
+CWE
+R
+No
+Filter themes
+Must be a result between query
+and response RES
+Example:
+QRD|20220424095857|R|I|2|||||RES
+Message processing rules:
+
+The first field must be the correct date/time, otherwise the interface will return an error
+message;
+
+The second field must be R, otherwise the interface will return an error message;
+
+The third field must be I, otherwise the interface will return an error message;
+
+The fourth field cannot be empty, otherwise the interface will return an error message;
+
+The ninth field must be RES, otherwise the interface will return an error message.
+6.5.4 QRF Segment
+QRF defines the detailed content to be queried.
+Field
+Length
+Data
+Type
+Wash
+ability
+Repeat
+ability
+Field Name
+Describe
+1
+20
+ST
+R
+Yes
+Topic filtering
+Must Always be MON
+5
+60
+ST
+O
+Yes
+Other filtering
+Contains locally defined filtering
+criteria
+for
+use
+between
+two
+systems, as detailed in 5.2.5.1
+Example:
+QRF|MON||||0&0^1^0^0 ，1 in the segment indicates that the query information type is
+physiological parameter data。
+
+
+=== PAGE 53 ===
+48
+Message processing rules:
+
+The first field must be MON, otherwise the interface will return an error message
+
+The fifth field cannot be empty, otherwise the interface will return an error message
+6.6 Response query report message (ORU_R01)
+6.6.1 Periodic parameters
+All parameter data is unified by one ORU_ R01 message is sent, and after the query message
+arrives, it is sent according to the time interval.
+6.6.2 MSH Segment
+Please refer to 4.2.2 for the definition, where the message type field of the MSH segment is:
+ORU_ R01; The message control ID field is: 1004.
+Example:
+MSH|^~\&|||||20220509091226||ORU^R01^ORU_R01|1004|P|2.6||||||UTF-8
+6.6.3 PID Segment
+The definition and usage of the PID segment here are identical to those in section 4.2.3,
+please refer to section
+for details.
+Example:
+PID|||78||Mis^Lucy^Merry||20020202|F
+6.6.4 Patient OBX segment
+The definition and usage of the PID segment here are identical to those in section 4.2.4,
+please refer to section 4.2.4 for details.
+6.6.5 Format
+MSH
+Message
+Header
+PID
+Patient identification
+[{
+OBX
+Patient Partial Observations
+……
+}]
+PV1
+Patient visits
+OBR
+Observation Report ID
+{
+
+
+=== PAGE 54 ===
+49
+OBX
+Observations/Results
+OBX
+Observations/Results
+......
+}
+6.6.6 PV1 Segment
+The definition and usage of section PV1 here are identical to section 4.2.5, please refer to
+section 4.2.5 for details.
+Example:
+PV1||I|^^&8&0^^^^^^1CBA8CB36CEF|||||||||||||||A
+6.6.7 OBR Segment
+The definition and usage of section OBR here are identical to section 4.2.6, please refer to
+section 4.2.6 for details.
+Example:
+OBR||||Monitor|||20220510095657
+6.6.8 Orderly observation of OBX segments
+The definition and usage of section OBR here are identical to section 4.2.7, please refer to
+section 4.2.7 for details.
+Example:
+OBX||NM|201^HR^BHC|5001|60||||||F
+OBX||NM|202^QTC^BHC|5001|360||||||F
+OBX||NM|203^DELTAQTC^BHC|5001|-1||||||F
+OBX||NM|204^ST-I^BHC|5001|-0.02||||||F
+OBX||NM|205^ST-II^BHC|5001|-0.02||||||F
+OBX||NM|206^ST-III^BHC|5001|0.00||||||F
+OBX||NM|207^ST-aVR^BHC|5001|0.02||||||F
+OBX||NM|208^ST-aVL^BHC|5001|-0.01||||||F
+OBX||NM|209^ST-aVF^BHC|5001|-0.01||||||F
+OBX||NM|210^ST-V1^BHC|5001|0.02||||||F
+OBX||NM|211^ST-V2^BHC|5001|0.03||||||F
+OBX||NM|212^ST-V3^BHC|5001|-0.01||||||F
+OBX||NM|213^ST-V4^BHC|5001|-0.03||||||F
+
+
+=== PAGE 55 ===
+50
+6.6.9 Example
+6.6.9.1 Technical alarm
+MSH|^~\&|||||20220511164311||ORU^R01^ORU_R01|1008|P|2.6||||||UTF-8
+PID|||78||Mis^Lucy^Merry||20020202|F
+OBX||NM|4201^Height^BHC||170.0|31^cm^BHC|||||F
+OBX||NM|4202^Weight^BHC||65.0|41^kg^BHC|||||F
+OBX||NM|4203^Blood^BHC||3||||||F
+OBX||NM|4204^Pace^BHC||2||||||F
+PV1||I|^^&8&0^^^^^^1CBA8CB36CEF|||||||||||||||A
+OBR||||Monitor|||20220511164311
+OBX||CE|0||20307^IBP1 Zero Required^BHC||||||F|||20220511160815
+OBX||CE|0||20467^ART Zero Required^BHC||||||F|||20220511160815
+OBX||CE|0||23013^No Battery^BHC||||||F|||20220511160823
+OBX||CE|0||23008^Recorder Not Exist^BHC||||||F|||20220511160815
+6.6.9.2 Physiological alarm
+MSH|^~\&|||||20220512103944||ORU^R01^ORU_R01|1007|P|2.6||||||UTF-8
+PID|||78||Mis^Lucy^Merry||20020202|F
+OBX||NM|4201^Height^BHC||170.0|31^cm^BHC|||||F
+OBX||NM|4202^Weight^BHC||65.0|41^kg^BHC|||||F
+OBX||NM|4203^Blood^BHC||3||||||F
+OBX||NM|4204^Pace^BHC||2||||||F
+PV1||I|^^&8&0^^^^^^1CBA8CB36CEF|||||||||||||||A
+OBR||||Monitor|||20220512103944
+OBX||CE|3||10151^SpO2 High^BHC||||||F|||20220512103917
+6.6.9.3 Waveform data
+MSH|^~\&|||||20220512104347||ORU^R01^ORU_R01|1015|P|2.6||||||UTF-8
+PID|||78||Mis^Lucy^Merry||20020202|F
+OBX||NM|4201^Height^BHC||170.0|31^cm^BHC|||||F
+OBX||NM|4202^Weight^BHC||65.0|41^kg^BHC|||||F
+OBX||NM|4203^Blood^BHC||3||||||F
+OBX||NM|4204^Pace^BHC||2||||||F
+PV1||I|^^&8&0^^^^^^1CBA8CB36CEF|||||||||||||||A
+OBR||||Monitor|||20220512104347
+OBX||CD|30021^SPO2^BHC|1|1^^1^^100^0&250||||||F
+OBX||TS|30021^SPO2^BHC|1|20220512104347||||||F
+OBX||NA|30021^SPO2^BHC|1|208^214^219^221^221^217^213^209^203^197^184^177^17
+
+
+=== PAGE 56 ===
+51
+0^164^157^143^136^130^124^118^108^103^99^96^94^92^91^92^93^94^96^97^98^98^97
+^95^92^90^86^83^76^73^69^66^63^58^55^52^50^47^43^41^39^37^35^32^31^30^29^28^
+26^26^25^25^24^24^24^24^24^24^25^25^25^26^26^26^27^27^28^29^31^32^33^34^35^3
+7^38^40^42^45||||||F
+OBX||CE|30021^SPO2^BHC|1|||||||F
+6.6.9.4 Parameter value
+MSH|^~\&|||||20220512151316||ORU^R01^ORU_R01|1001|P|2.6||||||UTF-8
+PID|||78||Mis^Lucy^Merry||20020202|F
+OBX||NM|4201^Height^BHC||170.0|31^cm^BHC|||||F
+OBX||NM|4202^Weight^BHC||65.0|41^kg^BHC|||||F
+OBX||NM|4203^Blood^BHC||3||||||F
+OBX||NM|4204^Pace^BHC||2||||||F
+PV1||I|^^&8&0^^^^^^1CBA8CB36CEF|||||||||||||||A
+OBR||||Monitor|||20230607150307
+OBX||NM|201^HR^BHC|5001|60||||||F
+OBX||NM|220^QT^BHC|5001|356||||||F
+OBX||NM|202^QTC^BHC|5001|356||||||F
+OBX||NM|203^DELTAQTC^BHC|5001|0||||||F
+OBX||NM|204^ST-I^BHC|5001|-0.03||||||F
+OBX||NM|205^ST-II^BHC|5001|-0.02||||||F
+OBX||NM|206^ST-III^BHC|5001|0.01||||||F
+OBX||NM|207^ST-aVR^BHC|5001|0.03||||||F
+OBX||NM|208^ST-aVL^BHC|5001|-0.02||||||F
+OBX||NM|209^ST-aVF^BHC|5001|-0.01||||||F
+OBX||NM|210^ST-V1^BHC|5001|0.02||||||F
+OBX||NM|211^ST-V2^BHC|5001|0.03||||||F
+OBX||NM|212^ST-V3^BHC|5001|-0.01||||||F
+OBX||NM|213^ST-V4^BHC|5001|-0.03||||||F
+OBX||NM|214^ST-V5^BHC|5001|-0.04||||||F
+OBX||NM|215^ST-V6^BHC|5001|-0.03||||||F
+OBX||NM|251^SPO2^BHC|5002|99||||||F
+OBX||NM|252^PI^BHC|5002|7.45||||||F
+OBX||NM|258^RR^BHC|5002|20||||||F
+OBX||NM|259^PR^BHC|5002|60||||||F
+OBX||NM|351^NIBP S^BHC|5004|125|11^mmHg^BHC|||||F||APERIODIC|20230607145326
+OBX||NM|352^NIBP D^BHC|5004|84|11^mmHg^BHC|||||F||APERIODIC|20230607145326
+OBX||NM|353^NIBP M^BHC|5004|96|11^mmHg^BHC|||||F||APERIODIC|20230607145326
+OBX||NM|354^NIBP SDP^BHC|5004|41|11^mmHg^BHC|||||F||APERIODIC|20230607145326
+OBX||NM|355^NIBP PR^BHC|5004|60|11^mmHg^BHC|||||F||APERIODIC|20230607145326
+OBX||NM|401^RR^BHC|5005|20||||||F
+OBX||NM|801^CO2Et^BHC|5013|5.0|14^%^BHC|||||F
+OBX||NM|802^CO2Fi^BHC|5013|0.2|14^%^BHC|||||F
+
+
+=== PAGE 57 ===
+52
+OBX||NM|803^awRR^BHC|5013|12||||||F
+OBX||NM|751^C.O.^BHC|5012|5.2||||||F||APERIODIC|20230607141336
+OBX||NM|752^C.I.^BHC|5012|2.9||||||F||APERIODIC|20230607141336
+OBX||NM|753^TI^BHC|5012|-1||||||F||APERIODIC|20230607141336
+OBX||NM|754^TB^BHC|5012|36.66|21^C^BHC|||||F||APERIODIC|20230607141336
+OBX||NM|1501^Sys^BHC|5031|123|11^mmHg^BHC|||||F
+OBX||NM|1502^Dia^BHC|5031|82|11^mmHg^BHC|||||F
+OBX||NM|1503^Mean^BHC|5031|100|11^mmHg^BHC|||||F
+OBX||NM|1504^PR^BHC|5031|60||||||F
+OBX||NM|1521^Sys^BHC|5032|123|11^mmHg^BHC|||||F
+OBX||NM|1522^Dia^BHC|5032|82|11^mmHg^BHC|||||F
+OBX||NM|1523^Mean^BHC|5032|100|11^mmHg^BHC|||||F
+OBX||NM|1524^PR^BHC|5032|60||||||F
+OBX||NM|1051^T01^BHC|5021|36.6|21^C^BHC|||||F
+OBX||NM|1052^T02^BHC|5021|36.5|21^C^BHC|||||F
+6.6.9.5 Parameter alarm switch
+MSH|^~\&|||||20220520141935||ORU^R01^ORU_R01|1011|P|2.6||||||UTF-8
+PID|||78||Mis^Lucy^Merry||20020202|F
+OBX||NM|4201^Height^BHC||170.0|31^cm^BHC|||||F
+OBX||NM|4202^Weight^BHC||65.0|41^kg^BHC|||||F
+OBX||NM|4203^Blood^BHC||3||||||F
+OBX||NM|4204^Pace^BHC||2||||||F
+PV1||I|^^&8&0^^^^^^1CBA8CB36CEF|||||||||||||||A
+OBR||||Monitor|||20220520141935
+OBX||NM|4^^BHC|201|1||||||F
+OBX||NM|4^^BHC|251|0||||||F
+OBX||NM|4^^BHC|351|1||||||F
+OBX||NM|4^^BHC|352|0||||||F
+OBX||NM|4^^BHC|353|1||||||F
+OBX||NM|4^^BHC|354|0||||||F
+OBX||NM|4^^BHC|401|1||||||F
+OBX||NM|4^^BHC|754|1||||||F
+OBX||NM|4^^BHC|1501|1||||||F
+OBX||NM|4^^BHC|1502|1||||||F
+OBX||NM|4^^BHC|1503|1||||||F
+OBX||NM|4^^BHC|1661|1||||||F
+OBX||NM|4^^BHC|1662|0||||||F
+OBX||NM|4^^BHC|1663|0||||||F
+OBX||NM|4^^BHC|1051|1||||||F
+OBX||NM|4^^BHC|1052|1||||||F
+
+
+=== PAGE 58 ===
+53
+6.6.9.6 Parameter alarm level
+MSH|^~\&|||||20220520142146||ORU^R01^ORU_R01|1010|P|2.6||||||UTF-8
+PID|||78||Mis^Lucy^Merry||20020202|F
+OBX||NM|4201^Height^BHC||170.0|31^cm^BHC|||||F
+OBX||NM|4202^Weight^BHC||65.0|41^kg^BHC|||||F
+OBX||NM|4203^Blood^BHC||3||||||F
+OBX||NM|4204^Pace^BHC||2||||||F
+PV1||I|^^&8&0^^^^^^1CBA8CB36CEF|||||||||||||||A
+OBR||||Monitor|||20220520142146
+OBX||NM|3^^BHC|201|3||||||F
+OBX||NM|3^^BHC|251|3||||||F
+OBX||NM|3^^BHC|351|3||||||F
+OBX||NM|3^^BHC|352|2||||||F
+OBX||NM|3^^BHC|353|3||||||F
+OBX||NM|3^^BHC|354|2||||||F
+OBX||NM|3^^BHC|401|2||||||F
+OBX||NM|3^^BHC|754|1||||||F
+OBX||NM|3^^BHC|1501|2||||||F
+OBX||NM|3^^BHC|1502|3||||||F
+OBX||NM|3^^BHC|1503|2||||||F
+OBX||NM|3^^BHC|1661|2||||||F
+OBX||NM|3^^BHC|1662|2||||||F
+OBX||NM|3^^BHC|1663|2||||||F
+OBX||NM|3^^BHC|1051|1||||||F
+OBX||NM|3^^BHC|1052|1||||||F
+6.6.9.7 Parameter alarm level
+MSH|^~\&|||||20230713104818||ORU^R01^ORU_R01|1009|P|2.6||||||UTF-8
+PID||||||||M
+OBX||NM|4201^Height^BHC||66.9|32^inch^BHC|||||F
+OBX||NM|4202^Weight^BHC||143.3|42^lb^BHC|||||F
+OBX||NM|4203^Blood^BHC||4||||||F
+OBX||NM|4204^Pace^BHC||2||||||F
+PV1||I|^^&8&0^^^^^^1CBA8CB36CEF|||||||||||||||A
+OBR||||Monitor|||20230713104818
+OBX||NM|1^^BHC|201|120||||||F
+OBX||NM|2^^BHC|201|50||||||F
+OBX||NM|1^^BHC|251|100||||||F
+OBX||NM|2^^BHC|251|90||||||F
+OBX||NM|1^^BHC|351|160|11^mmHg^BHC|||||F
+OBX||NM|2^^BHC|351|90|11^mmHg^BHC|||||F
+
+
+=== PAGE 59 ===
+54
+OBX||NM|1^^BHC|352|100|11^mmHg^BHC|||||F
+OBX||NM|2^^BHC|352|60|11^mmHg^BHC|||||F
+OBX||NM|1^^BHC|353|115|11^mmHg^BHC|||||F
+OBX||NM|2^^BHC|353|70|11^mmHg^BHC|||||F
+OBX||NM|1^^BHC|354|60|11^mmHg^BHC|||||F
+OBX||NM|2^^BHC|354|20|11^mmHg^BHC|||||F
+OBX||NM|1^^BHC|401|30||||||F
+OBX||NM|2^^BHC|401|8||||||F
+OBX||NM|1^^BHC|801|6.6|14^%^BHC|||||F
+OBX||NM|2^^BHC|801|3.3|14^%^BHC|||||F
+OBX||NM|1^^BHC|802|0.5|14^%^BHC|||||F
+OBX||NM|2^^BHC|802|0.5|14^%^BHC|||||F
+OBX||NM|1^^BHC|803|30||||||F
+OBX||NM|2^^BHC|803|8||||||F
+OBX||NM|1^^BHC|754|39.0|21^C^BHC|||||F
+OBX||NM|2^^BHC|754|36.0|21^C^BHC|||||F
+OBX||NM|1^^BHC|1501|218|13^cmH2O^BHC|||||F
+OBX||NM|2^^BHC|1501|122|13^cmH2O^BHC|||||F
+OBX||NM|1^^BHC|1502|122|13^cmH2O^BHC|||||F
+OBX||NM|2^^BHC|1502|68|13^cmH2O^BHC|||||F
+OBX||NM|1^^BHC|1503|150|13^cmH2O^BHC|||||F
+OBX||NM|2^^BHC|1503|95|13^cmH2O^BHC|||||F
+OBX||NM|1^^BHC|1521|21.3|12^kPa^BHC|||||F
+OBX||NM|2^^BHC|1521|12.0|12^kPa^BHC|||||F
+OBX||NM|1^^BHC|1522|12.0|12^kPa^BHC|||||F
+OBX||NM|2^^BHC|1522|6.7|12^kPa^BHC|||||F
+OBX||NM|1^^BHC|1523|14.7|12^kPa^BHC|||||F
+OBX||NM|2^^BHC|1523|9.3|12^kPa^BHC|||||F
+OBX||NM|1^^BHC|1051|39.0|21^C^BHC|||||F
+OBX||NM|2^^BHC|1051|36.0|21^C^BHC|||||F
+
+
+=== PAGE 60 ===
+55
+7 ADT Net Query Interface
+This section introduces the content of the ADT query interface, which mainly involves the
+communication process between the ADT query interface and the BltADTServer server of
+Biolight development.
+7.1 Communication Process
+7.1.1 Network Connection
+This interface is the client that establishes the TCP connection, and BltADTServer is the
+server that listens.
+After a TCP connection is set, the TCP interface does not actively close the connection. If the
+TCP connection is interrupted or closed, the interface automatically reconnects to the TCP within
+a fixed period of time.
+All ADT messages from both sides are transmitted in the same TCP connection. The
+following two sections detail the data communication process in both transmission directions.
+7.1.2 Data Interaction
+This interface sends a query message in QRY^A19 format. The QRY^A19 message contains
+a patient medical record number (MRN) as a unique query condition.
+The BltADTServer server executes the exact query and returns an ADR^A19 message based
+on the query criteria. If patient information is found that matches the query criteria, patient records
+that meet the query criteria are returned. If no patient information is found that matches the query
+criteria, the message returned does not contain any patient information. If the HIS/CIS system
+does not return any message within a limited period of time, the interface treats it as a query
+timeout.
+After receipt of the HL7 message, the interface returns an ACK message indicating whether
+the format is correct. This interface does not perform any operation when receiving an ACK
+message.
+7.2 ADT Query Message (QRY_A19)
+7.2.1 Format
+
+
+=== PAGE 61 ===
+56
+7.2.2 Example
+MSH|^~\\&||||ADTServer|20220906095605||QRY^A19^QRY_A19|1016|P|2.6||||||UTF-8
+QRD|20220906095605|R|I|2|||1^RD|M2021|^DEM|^BLTCMS
+Among them, the information of ADT patient whose medical record number is M2021 is
+known to be queried in the QRD_8 field.
+7.2.3 MSH Segment
+For details, see 4.2.2 when the message type is QRY_A19 and the message control ID field is
+1016. For details, see Appendix A.5 Controls and Settings.
+7.2.4 QRD Segment
+SEQ
+LEN
+DT
+OPT
+REP
+Field Name
+Description
+1
+24
+DTM
+R
+No
+Query the date/time
+Format：yyyyMMddHHmmss
+2
+1
+ID
+R
+No
+Query mode
+Must be R
+3
+1
+ID
+R
+Yes
+Query priority
+Must be I
+4
+10
+ST
+R
+Yes
+Query ID
+The value cannot be empty
+and must be less than 16
+characters long
+7
+10
+CQ
+R
+Yes
+Quantity request limit
+Can't be empty,1^RD
+8
+60
+XCN
+R
+Yes
+Who to Filter
+Patient unique identification
+9
+250
+CWE
+R
+No
+Filter topic
+The value cannot be empty
+and
+represents
+the
+request
+data type.
+DEM: Demographic data
+10
+R
+No
+Department data code
+“BLTCMS”
+7.3 ADT Query Reply Message (ADR_A19)
+7.3.1 Format
+
+Find the patient
+
+
+=== PAGE 62 ===
+57
+
+No patient found
+7.3.2 Example
+
+Find the patient
+MSH|^~\\&|||||20220906111243||ADR^A19^ADR_A19|1017|P|2.6||||||UTF-8
+MSA|AA|1016|Query Found
+QRD|20220906095605|R|I|2|||1^RD|M2021|^DEM|^BLTCMS
+PID|||M2021||Mis^Luck^Bob||19951108|F
+PV1||I|CCU^R1^B4&36&0||||DoctorInfo|||||||||||U
+OBX||NM|4201^Height^BHC||170.0|31^cm^BHC|||||F
+OBX||NM|4202^Weight^BHC||65.0|41^kg^BHC|||||F
+OBX||NM|4203^Blood^BHC||3||||||F
+OBX||NM|4204^Pace^BHC||2||||||F
+
+No patient found
+MSH|^~\\&|||||20220906110802||ADR^A19^ADR_A19|1017|P|2.6||||||UTF-8
+MSA|AA|1016|No Query Found
+QRD|20220906095605|R|I|2|||1^RD|M2021|^DEM|^BLTCMS
+7.3.3 MSH Segment
+For details, see 4.2.2 when the message type is ADR_A19 and the message control ID field is
+1017. For details, see Appendix A.5 Controls and Settings.
+
+
+=== PAGE 63 ===
+58
+7.3.4 MSA Segment
+SEQ
+LEN
+DT
+OPT
+REP
+Field Name
+Description
+1
+2
+ID
+R
+Yes
+Confirmation
+code
+AA：Application acceptance (affirmative
+confirmation)
+AR ：Application acceptance (negative
+confirmation)
+If
+the
+QRY^A19
+message
+format
+is
+correct, this field is "AA", otherwise "AR"
+2
+20
+ST
+R
+Yes
+Message
+control ID
+The message control ID accompanying
+the QRY query message containing the
+request. This allows the client to map the
+response message to the corresponding
+request.
+3
+80
+ST
+O
+Yes
+Text message
+If the queried patient is Found, the typical
+text will be "Query Found." If the queried
+patient is not Found, the typical text will
+be "No Query Found."
+7.3.5 QRD Segment
+The format and content are the same as those received by QRY^A19.
+7.3.6 PID Segment
+The definition and usage of the PID segment here are exactly the same as in Section 4.2.3,
+see Section 4.2.3 for details.
+7.3.7 PV1 Segment
+SEQ
+LEN
+DT
+OPT
+REP
+Field Name
+Description
+2
+1
+IS
+R
+No
+I:Inpatient
+O:Outpatient
+I:Inpatient
+O:Outpatient
+3
+80
+PL
+O
+No
+<point of care>
+^<room>^<bed>
+<bed> divided into:
+<OfficeName>&<bed
+id>&<IP>&<IPSeq>&0
+<IP>:the bedside device
+<point of care>
+^<room>^<bed>
+<bed> divided into:
+<OfficeName>&<bed
+id>&<IP>&<IPSeq>&0
+<IP>:the bedside device IP
+
+
+=== PAGE 64 ===
+59
+IP Address;
+<IPSeq>:the telemetry
+transmitter’s
+sequence number.
+Address;
+<IPSeq>:the telemetry
+transmitter’s
+sequence number.
+7
+250
+XCN
+O
+Yes
+Attending doctor
+18
+2
+IS
+O
+Y
+Patient type
+Neonate：N
+Adult：A
+Ped：P
+Unknown：U
+44
+24
+DTM
+O
+Y
+Admission date
+Format:yyyyMMddHHmmss
+7.3.8 OBX Segment
+The demographic data of some patients were in PID segment and PV1 segment. Other
+measurements were performed using the OBX segment, including patient height, patient weight,
+blood type, and pacing markers.
+The definition and usage of OBX here are the same as in Section 4.2.7, see 4.2.7 for details.
+7.4 ACK Message
+7.4.1 Format
+7.4.2 Example
+MSH|^~\\&|||||20220906115151||ACK|1018|P|2.6||||||UTF-8
+MSA|AA|1016
+7.4.3 MSH Segment
+For details, see 4.2.2. The Message control ID field is 1018. For details, see Appendix A.5
+Controls and Settings.
+7.4.4 MSA Segment
+The definition and usage of OBX here are the same as in Section 7.3.4, see 7.3.4 for details.
+
+
+=== PAGE 65 ===
+60
+Appendix A Biolight Coding System
+Appendix A.1 Parameter ID
+ID
+Content
+Module
+Description
+Default unit
+201
+HR
+ECG
+Heart rate
+bpm
+202
+QTc
+ECG
+QT
+parameter:
+Corrected
+QT
+interval
+mv
+203
+Delta QTc
+ECG
+QT parameter
+mv
+204
+ST-I
+ECG
+The ST segment is the period
+from
+the
+end
+of
+ventricular
+depolarization to the beginning of
+ventricular repolarization, or the
+end
+of the
+QRS
+wave
+group
+(J-point) to the beginning of the T
+wave.
+ST
+parameters
+corresponding to different ECG
+lead types are as follows:
+(1)
+3 Lead：ST-I、ST-II、ST-III、
+ST-AVR
+、
+ST-AVL
+、
+ST-AVF;
+(2)
+5 Lead：ST-I、ST-II、ST-III、
+ST-AVR
+、
+ST-AVL
+、
+ST-AVF、ST-V;
+(3)
+6 Lead：ST-I、ST-II、ST-III、
+ST-AVR
+、
+ST-AVL
+、
+ST-AVF、ST-Va、ST-Vb;
+(4)
+12 Lead：ST-I、ST-II、ST-III、
+ST-AVR
+、
+ST-AVL
+、
+ST-AVF、ST-V1、ST-V2、
+ST-V3、ST-V4、ST-V5、
+ST-V6；
+mv
+205
+ST-II
+ECG
+mv
+206
+ST-III
+ECG
+mv
+207
+ST-AVR
+ECG
+mv
+208
+ST-AVL
+ECG
+mv
+209
+ST-AVF
+ECG
+mv
+210
+ST-V1
+ECG
+mv
+211
+ST-V2
+ECG
+mv
+212
+ST-V3
+ECG
+mv
+213
+ST-V4
+ECG
+mv
+214
+ST-V5
+ECG
+mv
+215
+ST-V6
+ECG
+mv
+216
+ST-V
+ECG
+mv
+217
+ST-Va
+ECG
+mv
+218
+ST-Vb
+ECG
+mv
+219
+PVcs
+ECG
+Number
+of
+ventricular
+contractions
+/min
+220
+QT
+ECG
+QT parameter
+mv
+251
+SPO2
+SPO2
+Percent
+Oxyhemoglobin
+Saturation - Arterial
+%
+252
+PI
+SPO2
+Perfusion Index
+253
+PVI
+SPO2
+It's the variation of PI over a
+breathing cycle
+254
+SPCO
+SPO2
+carboxyhemoglobin
+
+
+=== PAGE 66 ===
+61
+255
+SPOC
+SPO2
+Oxygen content
+256
+SPHB
+SPO2
+Non-invasive hemoglobin
+257
+SPMET
+SPO2
+methemoglobin
+258
+RR
+SPO2
+Respiratory rate
+rmp
+259
+PR
+SPO2
+Pulse Rate
+bpm
+301
+SPO2
+SPO2L
+Percent
+Oxyhemoglobin
+Saturation - Arterial
+%
+302
+PI
+SPO2L
+Perfusion Index
+303
+PVI
+SPO2L
+It's the variation of PI over a
+breathing cycle
+304
+SPCO
+SPO2L
+carboxyhemoglobin
+305
+SPOC
+SPO2L
+Oxygen content
+306
+SPHB
+SPO2L
+Non-invasive hemoglobin
+307
+SPMET
+SPO2L
+methemoglobin
+308
+RR
+SPO2L
+Respiratory rate
+rmp
+309
+PR
+SPO2L
+Pulse Rate
+bpm
+310
+Delta SPO2
+SPO2L
+Pulse
+oxygen
+saturation
+difference
+351
+SYS
+NIBP
+Noninvasive
+blood
+pressure
+systolic blood pressure
+mmHg
+352
+DIA
+NIBP
+Noninvasive
+blood
+pressure
+diastolic blood pressure
+mmHg
+353
+MAP
+NIBP
+Mean
+arterial
+pressure
+of
+noninvasive blood pressure
+mmHg
+354
+SDP
+NIBP
+Pulse pressure difference
+mmHg
+355
+PR
+NIBP
+Pulse rate
+mmHg
+401
+RR
+RESP
+Respiratory rate
+rmp
+451
+C.O.
+ICG
+Cardiac output
+L/min
+452
+C.I.
+ICG
+Cardiac Index
+L/min/m²
+453
+SV
+ICG
+Stroke volume
+ml
+454
+SI
+ICG
+Stroke index
+ml//m²
+455
+SVR
+ICG
+Systemic vascular resistance
+dyn*s/cm5
+456
+SVRI
+ICG
+Systemic
+vascular
+resistance
+index
+dyn*s*m2/cm5
+457
+TFC
+ICG
+Thoracic fluid content
+/kΩ
+458
+TFI
+ICG
+Thoracic fluid index
+Ω
+459
+HR
+ICG
+Heart rate
+bpm
+460
+QI
+ICG
+Quality index
+%
+461
+DO2I
+ICG
+Oxygen delivery index
+ml/min/m2
+501
+BIS
+BIS
+Bispectral Index
+502
+EMG
+BIS
+Electromyograph
+dB
+503
+SQI
+BIS
+Signal quality index
+%
+
+
+=== PAGE 67 ===
+62
+504
+SR
+BIS
+Rejection ratio
+%
+505
+SEF
+BIS
+Spectral edge frequency
+Hz
+506
+TP
+BIS
+Total power
+dB
+507
+BC
+BIS
+Burst count
+bpm
+551
+SEF
+EEG1
+Spectral edge frequency
+Hz
+552
+MDF
+EEG1
+Median frequency
+Hz
+553
+PPF
+EEG1
+Peak power frequency
+Hz
+554
+TP
+EEG1
+Total power
+dB
+555
+AMP
+EEG1
+556
+Delta
+EEG1
+Delta wave relative power
+%
+557
+Theta
+EEG1
+Theta wave relative power
+%
+558
+Alpha
+EEG1
+Alpha wave relative power
+%
+559
+Beta
+EEG1
+Beta wave relative power
+%
+571
+SEF
+EEG2
+Spectral edge frequency
+Hz
+572
+MDF
+EEG2
+Median frequency
+Hz
+573
+PPF
+EEG2
+Peak power frequency
+Hz
+574
+TP
+EEG2
+Total power
+dB
+575
+AMP
+EEG2
+576
+Delta
+EEG2
+Delta wave relative power
+%
+577
+Theta
+EEG2
+Theta wave relative power
+%
+578
+Alpha
+EEG2
+Alpha wave relative power
+%
+579
+Beta
+EEG2
+Beta wave relative power
+%
+591
+SEF
+EEG3
+Spectral edge frequency
+Hz
+592
+MDF
+EEG3
+Median frequency
+Hz
+593
+PPF
+EEG3
+Peak power frequency
+Hz
+594
+TP
+EEG3
+Total power
+dB
+595
+AMP
+EEG3
+596
+Delta
+EEG3
+Delta wave relative power
+%
+597
+Theta
+EEG3
+Theta wave relative power
+%
+598
+Alpha
+EEG3
+Alpha wave relative power
+%
+599
+Beta
+EEG3
+Beta wave relative power
+%
+611
+SEF
+EEG4
+Spectral edge frequency
+Hz
+612
+MDF
+EEG4
+Median frequency
+Hz
+613
+PPF
+EEG4
+Peak power frequency
+Hz
+614
+TP
+EEG4
+Total power
+dB
+615
+AMP
+EEG4
+616
+Delta
+EEG4
+Delta wave relative power
+%
+617
+Theta
+EEG4
+Theta wave relative power
+%
+618
+Alpha
+EEG4
+Alpha wave relative power
+%
+619
+Beta
+EEG4
+Beta wave relative power
+%
+751
+C.O.
+C.O.
+Cardiac output
+L/min
+752
+C.I.
+C.O.
+Cardiac index
+L/min/m²
+
+
+=== PAGE 68 ===
+63
+753
+TI
+C.O.
+Injection temperature
+℃
+754
+TB
+C.O.
+Blood Temperature
+℃
+801
+CO2ET
+CO2
+End-tidal carbon dioxide
+mmHg
+802
+CO2FI
+CO2
+Fraction of inspired carbon
+mmHg
+803
+AwRR
+CO2
+Airway respiratory rate
+rpm
+821
+N2OET
+N2O
+End-of-breath nitrous oxide
+%
+822
+N2OFI
+N2O
+Fraction of inspired nitrous oxide
+%
+841
+O2ET
+O2
+End-tidal oxygen
+mmHg
+842
+O2FI
+O2
+Fraction of inspired oxygen
+mmHg
+861
+AAET
+AA
+End-tidalAnesthetic gas
+%
+862
+AAFI
+AA
+Fraction of inspired Anesthetic
+gas
+%
+871
+HALET
+AA
+End-of-breath
+anesthetic
+gas
+halothane
+%
+872
+HALFI
+AA
+Inhalation of the anesthetic gas
+halothane
+%
+881
+ENFET
+AA
+The anesthetic gas enflurane at
+the end of breath
+%
+882
+ENFFI
+AA
+Inhalation of the anesthetic gas
+enflurane
+%
+891
+ISOET
+AA
+Isoflurane, the anesthetic gas at
+the end of breath
+%
+892
+ISOFI
+AA
+Inhalation of the anesthetic gas
+isoflurane
+%
+901
+SEVET
+AA
+The anesthetic gas sevoflurane at
+the end of breath
+%
+902
+SEVFI
+AA
+Inhalation of the anesthetic gas
+sevoflurane
+%
+911
+DESET
+AA
+The anesthetic gas desflurane at
+the end of breath
+%
+912
+DESFI
+AA
+Inhalation of the anesthetic gas
+desflurane
+%
+921
+MAC
+AA
+Minimum
+alveolar
+effective
+concentration
+/
+1001
+Tvi
+RM
+Inspiratory tidal volume
+ml
+1002
+Tve
+RM
+Expiratory tidal volume
+ml
+1003
+Mvi
+RM
+Inhalation ventilation per minute
+L/min
+1004
+Mve
+RM
+Exhaled volume per minute
+L/min
+1005
+PIP
+RM
+Peak inspiratory pressure
+cmH2O
+1006
+Pplat
+RM
+Platform pressure value
+cmH2O
+1007
+PEEP
+RM
+Positive end expiratory pressur
+cmH2O
+
+
+=== PAGE 69 ===
+64
+1008
+Pmean
+RM
+Mean airway pressure
+cmH2O
+1009
+Compl
+RM
+Compliance
+ml/cmH2O
+1010
+I:E
+RM
+Inspiatory time: expiratory time
+ratio
+/
+1011
+RR
+RM
+Respiration rate
+rpm
+1012
+Resi
+RM
+Airway resistance
+cmH2O/L/s
+1013
+TV1
+RM
+First second expiratory rate
+%
+1051
+T01
+TEMP_
+A
+Temperature of channel 1
+℃
+1052
+T02
+TEMP_
+A
+Temperature of channel 2
+℃
+1053
+T03
+TEMP_
+A
+Temperature of channel 3
+℃
+1054
+T04
+TEMP_
+A
+Temperature of channel 4
+℃
+1055
+T05
+TEMP_
+A
+Temperature of channel 5
+℃
+1056
+T06
+TEMP_
+A
+Temperature of channel 6
+℃
+1057
+T07
+TEMP_
+A
+Temperature of channel 7
+℃
+1058
+T08
+TEMP_
+A
+Temperature of channel 8
+℃
+1059
+T09
+TEMP_
+A
+Temperature of channel 9
+℃
+1060
+T010
+TEMP_
+A
+Temperature of channel 10
+℃
+1061
+TSkin
+TEMP_
+A
+Skin temperature
+℃
+1062
+TCore
+TEMP_
+A
+Core temperature
+℃
+1063
+TAxil
+TEMP_
+A
+Axillary temperature
+℃
+1064
+TNaso
+TEMP_
+A
+Nasopharyngeal temperature
+℃
+1065
+TEso
+TEMP_
+A
+Esophagus temperature
+℃
+1066
+TRect
+TEMP_
+A
+Rectal temperature
+℃
+1067
+TAmb
+TEMP_
+A
+Ambient temperature
+℃
+1068
+TAirw
+TEMP_
+A
+Airway temperature
+℃
+
+
+=== PAGE 70 ===
+65
+1069
+TVesic
+TEMP_
+A
+vesica urinaria temperature
+℃
+1070
+TBlood
+TEMP_
+A
+Temperature of blood
+℃
+1071
+TMyo
+TEMP_
+A
+Myocardial temperature
+℃
+1072
+TTymp
+TEMP_
+A
+Tympanic membrane temperature
+℃
+1073
+TCereb
+TEMP_
+A
+Cerebrum temperature
+℃
+1101
+T01
+TEMP_
+B
+1102
+T02
+TEMP_
+B
+1103
+T03
+TEMP_
+B
+1104
+T04
+TEMP_
+B
+1105
+T05
+TEMP_
+B
+1106
+T06
+TEMP_
+B
+1107
+T07
+TEMP_
+B
+1108
+T08
+TEMP_
+B
+1109
+T09
+TEMP_
+B
+1110
+T010
+TEMP_
+B
+1111
+TSkin
+TEMP_
+B
+1112
+TCore
+TEMP_
+B
+1113
+TAxil
+TEMP_
+B
+1114
+TNaso
+TEMP_
+B
+1115
+TEso
+TEMP_
+B
+1116
+TRect
+TEMP_
+B
+1117
+TAmb
+TEMP_
+B
+
+
+=== PAGE 71 ===
+66
+1118
+TAirw
+TEMP_
+B
+1119
+TVesic
+TEMP_
+B
+1120
+TBlood
+TEMP_
+B
+1121
+TMyo
+TEMP_
+B
+1122
+TTymp
+TEMP_
+B
+1123
+TCereb
+TEMP_
+B
+1151
+T01
+TEMP_
+C
+1152
+T02
+TEMP_
+C
+1153
+T03
+TEMP_
+C
+1154
+T04
+TEMP_
+C
+1155
+T05
+TEMP_
+C
+1156
+T06
+TEMP_
+C
+1157
+T07
+TEMP_
+C
+1158
+T08
+TEMP_
+C
+1159
+T09
+TEMP_
+C
+1160
+T010
+TEMP_
+C
+1161
+TSkin
+TEMP_
+C
+1162
+TCore
+TEMP_
+C
+1163
+TAxil
+TEMP_
+C
+1164
+TNaso
+TEMP_
+C
+1165
+TEso
+TEMP_
+C
+1166
+TRect
+TEMP_
+C
+
+
+=== PAGE 72 ===
+67
+1167
+TAmb
+TEMP_
+C
+1168
+TAirw
+TEMP_
+C
+1169
+TVesic
+TEMP_
+C
+1170
+TBlood
+TEMP_
+C
+1171
+TMyo
+TEMP_
+C
+1172
+TTymp
+TEMP_
+C
+1173
+TCereb
+TEMP_
+C
+1201
+T01
+TEMP_
+D
+1202
+T02
+TEMP_
+D
+1203
+T03
+TEMP_
+D
+1204
+T04
+TEMP_
+D
+1205
+T05
+TEMP_
+D
+1206
+T06
+TEMP_
+D
+1207
+T07
+TEMP_
+D
+1208
+T08
+TEMP_
+D
+1209
+T09
+TEMP_
+D
+1210
+T010
+TEMP_
+D
+1211
+TSkin
+TEMP_
+D
+1212
+TCore
+TEMP_
+D
+1213
+TAxil
+TEMP_
+D
+1214
+TNaso
+TEMP_
+D
+1215
+TEso
+TEMP_
+D
+
+
+=== PAGE 73 ===
+68
+1216
+TRect
+TEMP_
+D
+1217
+TAmb
+TEMP_
+D
+1218
+TAirw
+TEMP_
+D
+1219
+TVesic
+TEMP_
+D
+1220
+TBlood
+TEMP_
+D
+1221
+TMyo
+TEMP_
+D
+1222
+TTymp
+TEMP_
+D
+1223
+TCereb
+TEMP_
+D
+1251
+T01
+TEMP_
+E
+1252
+T02
+TEMP_
+E
+1253
+T03
+TEMP_
+E
+1254
+T04
+TEMP_
+E
+1255
+T05
+TEMP_
+E
+1256
+T06
+TEMP_
+E
+1257
+T07
+TEMP_
+E
+1258
+T08
+TEMP_
+E
+1259
+T09
+TEMP_
+E
+1260
+T010
+TEMP_
+E
+1261
+TSkin
+TEMP_
+E
+1262
+TCore
+TEMP_
+E
+1263
+TAxil
+TEMP_
+E
+1264
+TNaso
+TEMP_
+E
+
+
+=== PAGE 74 ===
+69
+1265
+TEso
+TEMP_
+E
+1266
+TRect
+TEMP_
+E
+1267
+TAmb
+TEMP_
+E
+1268
+TAirw
+TEMP_
+E
+1269
+TVesic
+TEMP_
+E
+1270
+TBlood
+TEMP_
+E
+1271
+TMyo
+TEMP_
+E
+1272
+TTymp
+TEMP_
+E
+1273
+TCereb
+TEMP_
+E
+1501
+Sys
+IBP_P1
+IBP P1 Module systolic blood
+pressure
+mmHg
+1502
+Dia
+IBP_P1
+IBP P1 Module diastolic blood
+pressure
+mmHg
+1503
+Mean
+IBP_P1
+IBP P1 Module mean pressure
+mmHg
+1504
+PR
+IBP_P1
+IBP P1 Module pulse rate
+bpm
+1505
+PPV
+IBP_P1
+IBP P1 Module Pulse pressure
+variation rate
+%
+1521
+Sys
+IBP_P2
+IBP P2 Module systolic blood
+pressure
+mmHg
+1522
+Dia
+IBP_P2
+IBP P2 Module diastolic blood
+pressure
+mmHg
+1523
+Mean
+IBP_P2
+IBP P2 Module mean pressure
+mmHg
+1524
+PR
+IBP_P2
+IBP P2 Module pulse rate
+bpm
+1525
+PPV
+IBP_P2
+IBP P2 Module Pulse pressure
+variation rate
+%
+1541
+Sys
+IBP_P3
+IBP P3 Module systolic blood
+pressure
+mmHg
+1542
+Dia
+IBP_P3
+IBP P3 Module diastolic blood
+pressure
+mmHg
+1543
+Mean
+IBP_P3
+IBP P3 Module mean pressure
+mmHg
+1544
+PR
+IBP_P3
+IBP P3 Module pulse rate
+bpm
+1545
+PPV
+IBP_P3
+IBP P3 Module Pulse pressure
+variation rate
+%
+1561
+Sys
+IBP_P4
+IBP P4 Module systolic blood
+mmHg
+
+
+=== PAGE 75 ===
+70
+pressure
+1562
+Dia
+IBP_P4
+IBP P4 Module diastolic blood
+pressure
+mmHg
+1563
+Mean
+IBP_P4
+IBP P4 Module mean pressure
+mmHg
+1564
+PR
+IBP_P4
+IBP P4 Module pulse rate
+bpm
+1565
+PPV
+IBP_P4
+IBP P4 Module Pulse pressure
+variation rate
+%
+1581
+Sys
+IBP_P5
+IBP P5 Module systolic blood
+pressure
+mmHg
+1582
+Dia
+IBP_P5
+IBP P5 Module diastolic blood
+pressure
+mmHg
+1583
+Mean
+IBP_P5
+IBP P5 Module mean pressure
+mmHg
+1584
+PR
+IBP_P5
+IBP P5 Module pulse rate
+bpm
+1585
+PPV
+IBP_P5
+IBP P5 Module Pulse pressure
+variation rate
+%
+1601
+Sys
+IBP_P6
+IBP P6 Module systolic blood
+pressure
+mmHg
+1602
+Dia
+IBP_P6
+IBP P6 Module diastolic blood
+pressure
+mmHg
+1603
+Mean
+IBP_P6
+IBP P6 Module mean pressure
+mmHg
+1604
+PR
+IBP_P6
+IBP P6 Module pulse rate
+bpm
+1605
+PPV
+IBP_P6
+IBP P6 Module Pulse pressure
+variation rate
+%
+1621
+Sys
+IBP_P7
+IBP P7 Module systolic blood
+pressure
+mmHg
+1622
+Dia
+IBP_P7
+IBP P7 Module diastolic blood
+pressure
+mmHg
+1623
+Mean
+IBP_P7
+IBP P7 Module mean pressure
+mmHg
+1624
+PR
+IBP_P7
+IBP P7 Module pulse rate
+bpm
+1625
+PPV
+IBP_P7
+IBP P7 Module Pulse pressure
+variation rate
+%
+1641
+Sys
+IBP_P8
+IBP P8 Module systolic blood
+pressure
+mmHg
+1642
+Dia
+IBP_P8
+IBP P8 Module diastolic blood
+pressure
+mmHg
+1643
+Mean
+IBP_P8
+IBP P8 Module mean pressure
+mmHg
+1644
+PR
+IBP_P8
+IBP P8 Module pulse rate
+bpm
+1645
+PPV
+IBP_P8
+IBP P8 Module Pulse pressure
+variation rate
+%
+1661
+Sys
+IBP_AR
+T
+IBP ART Module systolic blood
+pressure
+mmHg
+1662
+Dia
+IBP_AR
+IBP ART Module diastolic blood
+mmHg
+
+
+=== PAGE 76 ===
+71
+T
+pressure
+1663
+Mean
+IBP_AR
+T
+IBP ART Module mean pressure
+mmHg
+1664
+PR
+IBP_AR
+T
+IBP ART Module pulse rate
+bpm
+1665
+PPV
+IBP_AR
+T
+IBP ART Module Pulse pressure
+variation rate
+%
+1681
+Sys
+IBP_CV
+P
+IBP CVP Module systolic blood
+pressure
+mmHg
+1682
+Dia
+IBP_CV
+P
+IBP CVP Module diastolic blood
+pressure
+mmHg
+1683
+Mean
+IBP_CV
+P
+IBP CVP Module mean pressure
+mmHg
+1684
+PR
+IBP_CV
+P
+IBP CVP Module pulse rate
+bpm
+1685
+PPV
+IBP_CV
+P
+IBP CVP Module Pulse pressure
+variation rate
+%
+1701
+Sys
+IBP_PA
+IBP PA Module systolic blood
+pressure
+mmHg
+1702
+Dia
+IBP_PA
+IBP PA Module diastolic blood
+pressure
+mmHg
+1703
+Mean
+IBP_PA
+IBP PA Module mean pressure
+mmHg
+1704
+PR
+IBP_PA
+IBP PA Module pulse rate
+bpm
+1705
+PPV
+IBP_PA
+IBP PA Module Pulse pressure
+variation rate
+%
+1706
+Pawp
+IBP_PA
+IBP PA Module Pulmonary artery
+wedge pressure
+mmHg
+1721
+Sys
+IBP_RA
+P
+IBP RAP Module systolic blood
+pressure
+mmHg
+1722
+Dia
+IBP_RA
+P
+IBP RAP Module diastolic blood
+pressure
+mmHg
+1723
+Mean
+IBP_RA
+P
+IBP RAP Module mean pressure
+mmHg
+1724
+PR
+IBP_RA
+P
+IBP RAP Module pulse rate
+bpm
+1725
+PPV
+IBP_RA
+P
+IBP RAP Module Pulse pressure
+variation rate
+%
+1741
+Sys
+IBP_LA
+P
+IBP LAP Module systolic blood
+pressure
+mmHg
+1742
+Dia
+IBP_LA
+P
+IBP LAP Module diastolic blood
+pressure
+mmHg
+1743
+Mean
+IBP_LA
+P
+IBP LAP Module mean pressure
+mmHg
+
+
+=== PAGE 77 ===
+72
+1744
+PR
+IBP_LA
+P
+IBP LAP Module pulse rate
+bpm
+1745
+PPV
+IBP_LA
+P
+IBP LAP Module Pulse pressure
+variation rate
+%
+1761
+Sys
+IBP_ICP
+IBP ICP Module systolic blood
+pressure
+mmHg
+1762
+Dia
+IBP_ICP
+IBP ICP Module diastolic blood
+pressure
+mmHg
+1763
+Mean
+IBP_ICP
+IBP ICP Module mean pressure
+mmHg
+1764
+PR
+IBP_ICP
+IBP ICP Module pulse rate
+bpm
+1765
+PPV
+IBP_ICP
+IBP ICP Module Pulse pressure
+variation rate
+%
+1781
+Sys
+IBP_UA
+P
+IBP UAP Module systolic blood
+pressure
+mmHg
+1782
+Dia
+IBP_UA
+P
+IBP UAP Module diastolic blood
+pressure
+mmHg
+1783
+Mean
+IBP_UA
+P
+IBP UAP Module mean pressure
+mmHg
+1784
+PR
+IBP_UA
+P
+IBP UAP Module pulse rate
+bpm
+1785
+PPV
+IBP_UA
+P
+IBP UAP Module Pulse pressure
+variation rate
+%
+1801
+Sys
+IBP_BA
+P
+IBP BAP Module systolic blood
+pressure
+mmHg
+1802
+Dia
+IBP_BA
+P
+IBP BAP Module diastolic blood
+pressure
+mmHg
+1803
+Mean
+IBP_BA
+P
+IBP BAP Module mean pressure
+mmHg
+1804
+PR
+IBP_BA
+P
+IBP BAP Module pulse rate
+bpm
+1805
+PPV
+IBP_BA
+P
+IBP BAP Module Pulse pressure
+variation rate
+%
+1821
+Sys
+IBP_FA
+P
+IBP FAP Module systolic blood
+pressure
+mmHg
+1822
+Dia
+IBP_FA
+P
+IBP FAP Module diastolic blood
+pressure
+mmHg
+1823
+Mean
+IBP_FA
+P
+IBP FAP Module mean pressure
+mmHg
+1824
+PR
+IBP_FA
+P
+IBP FAP Module pulse rate
+bpm
+1825
+PPV
+IBP_FA
+P
+IBP FAP Module Pulse pressure
+variation rate
+%
+1841
+Sys
+IBP_UV
+IBP UVP Module systolic blood
+mmHg
+
+
+=== PAGE 78 ===
+73
+P
+pressure
+1842
+Dia
+IBP_UV
+P
+IBP UVP Module diastolic blood
+pressure
+mmHg
+1843
+Mean
+IBP_UV
+P
+IBP UVP Module mean pressure
+mmHg
+1844
+PR
+IBP_UV
+P
+IBP UVP Module pulse rate
+bpm
+1845
+PPV
+IBP_UV
+P
+IBP UVP Module Pulse pressure
+variation rate
+%
+1861
+Sys
+IBP_LA
+IBP LA Module systolic blood
+pressure
+mmHg
+1862
+Dia
+IBP_LA
+IBP LA Module diastolic blood
+pressure
+mmHg
+1863
+Mean
+IBP_LA
+IBP LA Module mean pressure
+mmHg
+1864
+PR
+IBP_LA
+IBP LA Module pulse rate
+bpm
+1865
+PPV
+IBP_LA
+IBP LA Module Pulse pressure
+variation rate
+%
+1881
+Sys
+IBP_AO
+IBP AO Module systolic blood
+pressure
+mmHg
+1882
+Dia
+IBP_AO
+IBP AO Module diastolic blood
+pressure
+mmHg
+1883
+Mean
+IBP_AO
+IBP AO Module mean pressure
+mmHg
+1884
+PR
+IBP_AO
+IBP AO Module pulse rate
+bpm
+1885
+PPV
+IBP_AO
+IBP AO Module Pulse pressure
+variation rate
+%
+2001
+rSO2
+RSO2_1
+Cerebral and regional oxygen
+saturation
+%
+2002
+BL
+RSO2_1
+Baseline
+2003
+DelteBL
+RSO2_1
+Percent change from baseline in
+rSO2
+%
+2004
+AUC
+RSO2_1
+Area under the curve
+%*min
+2005
+DelteSpO2
+RSO2_1
+Blood oxygen saturation and
+cerebral oxygen difference
+%
+2006
+AVG
+RSO2_1
+rSO2 averaged over the last 60
+minutes
+2007
+Position
+RSO2_1
+Number of channels
+2021
+rSO2_2
+RSO2_2
+Cerebral and regional oxygen
+saturation
+%
+2022
+BL_2
+RSO2_2
+Baseline
+2023
+DelteBL_2
+RSO2_2
+Percent change from baseline in
+rSO2
+%
+2024
+AUC_2
+RSO2_2
+Area under the curve
+%*min
+
+
+=== PAGE 79 ===
+74
+2025
+DelteSpO2_2
+RSO2_2
+Blood oxygen saturation and
+cerebral oxygen difference
+%
+2026
+AVG_2
+RSO2_2
+rSO2 averaged over the last 60
+minutes
+2027
+Position_2
+RSO2_2
+Number of channels
+2051
+Total Score
+EWS
+Total score
+2052
+Score Type
+EWS
+Score type
+2101
+Total Score
+GCS
+Total score
+2102
+Eye Opening
+GCS
+Single item score of eye-opening
+response
+2103
+Verbal Response
+GCS
+Single item scores for verbal
+response
+2104
+Motor Response
+GCS
+Single item scores for motor
+response
+2151
+Drop Speed
+DM
+Drop speed
+Drops/min
+2152
+Flowing
+DM
+Flow velocity
+ml/h
+2201
+Stimulate Current
+NMT
+Stimulate current
+mA
+2202
+Measure Current
+NMT
+Measure current
+mA
+2203
+Bargraph Strength
+NMT
+Bargraph strength
+2204
+Measure Result
+NMT
+Measure result
+2205
+Result Type
+NMT
+Result type（0：Score；1：%）
+2206
+Stimulate Cycle
+NMT
+Stimulate cycle
+2207
+Stimulate Mode
+NMT
+Stimulate mode
+2208
+Auto Mode
+NMT
+The depth of block in Auto mode
+is indicated
+2209
+Bargraph Number
+NMT
+Bargraph number
+4001
+Standby Mode
+SYSTE
+M
+4002
+Monitor Name
+SYSTE
+M
+4003
+Central
+monitoring system
+Name
+SYSTE
+M
+4004
+Central
+monitoring system
+system time
+SYSTE
+M
+4005
+Sn
+SYSTE
+M
+4006
+It bed connection
+status
+SYSTE
+M
+4021
+Highest level of
+technical alarm
+SYSTE
+M
+4022
+Highest level of
+SYSTE
+
+
+=== PAGE 80 ===
+75
+physiological
+alarm
+M
+4023
+System alarm
+status
+SYSTE
+M
+4024
+ECG Lead type
+SYSTE
+M
+4025
+PR Source
+SYSTE
+M
+4026
+RR Source
+SYSTE
+M
+Appendix A.2 Parameter attribute section
+ID
+Sub ID
+Content
+Describe
+Value
+1
+Parameter
+ID
+Alarm out of
+limit
+Alarm Upper Limit
+Specify with child ID Parameter ID
+2
+Parameter
+ID
+Alarm below
+limit
+Alarm Lower Limit
+3
+Parameter
+ID
+Alarm level
+Alarm Level
+0:Tips
+1:Low
+level
+alarm
+2:Middle
+alarm
+3:High
+alarm
+4
+Parameter
+ID
+Alarm switch
+Alarm Switch
+5
+Parameter
+ID
+Online
+module
+Module online event（Module Lode）:
+Example:OBX||CE|5^^BHC||5002^SPO2^BHC||||||F
+SpO2 Module is online
+6
+Parameter
+ID
+Offline
+module
+Module offline event（Module Unlode）:
+Example:
+OBX||CE|6^^BHC||5002^SPO2^BHC||||||F
+SPO2 Module offline
+7
+Parameter
+ID
+Supported
+parameters
+Parameters supported by the module（Parameter
+Lode）
+Example:
+OBX||CE|7^^BHC|5002|259^PR^BHC||||||F
+
+
+=== PAGE 81 ===
+76
+SPO2 The module supports PR parameters
+8
+Parameter
+ID
+Unsupported
+parameters
+Parameter not supported by module （Parameter
+Unlode）
+Example:
+OBX||CE|8^^BHC|5002|259^PR^BHC||||||F
+SPO2 The module does not support PR parameters
+Appendix A.3 Module ID section
+ID
+Content
+Description
+5001
+ECG
+ECG (Electrocardiogram)module ID
+5002
+SPO2
+SPO2(Pulse oxygen saturation) module ID
+5003
+SPO2L
+SPO2L(Pulse oxygen saturation) module ID
+5004
+NIBP
+NIBP(Non-invasive Blood pressure) module ID
+5005
+RESP
+RESP(Respiratory) module ID
+5006
+ICG
+ICG(Invasive cardiac output) module ID
+5007
+BIS
+BIS(Bispectral index) module ID
+5008
+EEG1
+EEG (Electroencephalogram) channel 1 module ID
+5009
+EEG2
+EEG (Electroencephalogram) channel 2 module ID
+5010
+EEG3
+EEG (Electroencephalogram) channel 3 module ID
+5011
+EEG4
+EEG (Electroencephalogram) channel 4 module ID
+5012
+CO
+CO module ID
+5013
+CO2
+CO2 module ID
+5014
+N2O
+N2O module ID
+5015
+O2
+O2 module ID
+5016
+AA
+AA module ID
+5017
+RM
+RM(Respiratory mechanics) module ID
+5021
+TEMPA
+TEMP(Temperature) A module ID
+5022
+TEMPB
+TEMP(Temperature) B module ID
+5023
+TEMPC
+TEMP(Temperature) C module ID
+5024
+TEMPD
+TEMP(Temperature) D module ID
+5025
+TEMPE
+TEMP(Temperature) E module ID
+5026
+TEMPF
+TEMP(Temperature) F module ID
+5027
+TEMPG
+TEMP(Temperature) G module ID
+5031
+IBP_P1
+IBP(Invasive Blood Pressure) P1 module ID
+5032
+IBP_P2
+IBP(Invasive Blood Pressure) P2 module ID
+5033
+IBP_P3
+IBP(Invasive Blood Pressure) P3 module ID
+5034
+IBP_P4
+IBP(Invasive Blood Pressure) P4 module ID
+5035
+IBP_P5
+IBP(Invasive Blood Pressure) P5 module ID
+5036
+IBP_P6
+IBP(Invasive Blood Pressure) P6 module ID
+5037
+IBP_P7
+IBP(Invasive Blood Pressure) P7 module ID
+5038
+IBP_P8
+IBP(Invasive Blood Pressure) P8 module ID
+
+
+=== PAGE 82 ===
+77
+5039
+IBP_ART
+IBP(Invasive Blood Pressure) ART module ID
+5040
+IBP_CVP
+IBP(Invasive Blood Pressure) CVP module ID
+5041
+IBP_PA
+IBP(Invasive Blood Pressure) PA module ID
+5042
+IBP_RAP
+IBP(Invasive Blood Pressure) RAP module ID
+5043
+IBP_LAP
+IBP(Invasive Blood Pressure) LAP module ID
+5044
+IBP_ICP
+IBP(Invasive Blood Pressure) ICP module ID
+5045
+IBP_UAP
+IBP(Invasive Blood Pressure) UAP module ID
+5046
+IBP_BAP
+IBP(Invasive Blood Pressure) BAP module ID
+5047
+IBP_FAP
+IBP(Invasive Blood Pressure) FAP module ID
+5048
+IBP_UVP
+IBP(Invasive Blood Pressure) UVP module ID
+5049
+IBP_LV
+IBP(Invasive Blood Pressure) LV module ID
+5050
+IBP_AO
+IBP(Invasive Blood Pressure) AO module ID
+5051
+TOF
+5052
+CPP
+CPP(Cerebral perfusion pressure) module ID
+5053
+RSO2_1
+RSO2(cerebral and regional oxygen saturation) channel
+1 module ID
+5054
+RSO2_2
+RSO2(cerebral and regional oxygen saturation) channel
+2 module ID
+5055
+RSO2_3
+RSO2(cerebral and regional oxygen saturation) channel
+3 module ID
+5056
+RSO2_4
+RSO2(cerebral and regional oxygen saturation) channel
+4 module ID
+5057
+NMT
+NMT(Neuromuscular conduction) module ID
+5058
+EWS
+EWS(Early Warning Score) module ID
+5059
+GCS
+GCS(Glasgow Coma Scale) module ID
+5060
+DM
+DM(infusion monitoring) module ID
+Appendix A.4 Patient information ID
+ID
+Content
+Describe
+Value
+4201
+Height
+Patient Height
+4202
+Weight
+Patient Weight
+4203
+Blood Type
+Patient Blood
+0:Unknown
+1:A
+2:B
+3:AB
+4:O
+5:A_
+6:B_
+7:AB_
+8:O_
+4204
+Pacing
+Patient Paced
+0:Off
+1:On
+
+
+=== PAGE 83 ===
+78
+2:Auto
+3:Unknown
+Appendix A.5 Controls and settings
+ID
+Content
+Describe
+1001
+Module
+online
+Online module information（Module Load）
+Example:
+MSH|^~\&|||||20230518094209||ORU^R01^ORU_R01|1001|P|2.6||||||UTF-8
+PID|||78||Mis^Lucy^Merry||20020202|F
+OBX||NM|4201^Height^BHC||170.0|31^cm^BHC|||||F
+OBX||NM|4202^Weight^BHC||65.0|41^kg^BHC|||||F
+OBX||NM|4203^Blood^BHC||3||||||F
+OBX||NM|4204^Pace^BHC||2||||||F
+PV1||I|^^&8&0^^^^^^1CBA8CB36CEF|||||||||||||||A
+OBR||||Monitor|||20230518094209
+OBX||CE|5^^BHC||5001^ECG^BHC||||||F
+MSH_10:1001 Indicates that the message is the information of all modules on the line;
+OBX||CE|5^^BHC||5001^ECG^BHC||||||F indicates that the ECG module is online. For
+details about the field, see 4.2.7.1 Online Module.
+1002
+Module
+offline
+Offline module information（Module Unload）
+Example:
+MSH|^~\&|||||20230518135240||ORU^R01^ORU_R01|1002|P|2.6||||||UTF-8
+PID|||78||Mis^Lucy^Merry||20020202|F
+OBX||NM|4201^Height^BHC||170.0|31^cm^BHC|||||F
+OBX||NM|4202^Weight^BHC||65.0|41^kg^BHC|||||F
+OBX||NM|4203^Blood^BHC||3||||||F
+OBX||NM|4204^Pace^BHC||2||||||F
+PV1||I|^^&8&0^^^^^^1CBA8CB36CEF|||||||||||||||A
+OBR||||Monitor|||20230518094209
+OBX||CE|6^^BHC||5001^ECG^BHC||||||F
+MSH_10:1002 Indicates that the message is the information of all modules offline;
+In the OBX field, 6^^BHC indicates that the ECG module is offline. 5001^ECG^BHC
+indicates that the ECG module is offline.
+1003
+Supported (or
+unsupported
+parameters)
+Parameter information supported (or not supported) by the module（Parameter Load And
+Unload）
+Example:
+MSH|^~\&|||||20230518135240||ORU^R01^ORU_R01|1003|P|2.6||||||UTF-8
+PID|||78||Mis^Lucy^Merry||20020202|F
+OBX||NM|4201^Height^BHC||170.0|31^cm^BHC|||||F
+OBX||NM|4202^Weight^BHC||65.0|41^kg^BHC|||||F
+OBX||NM|4203^Blood^BHC||3||||||F
+OBX||NM|4204^Pace^BHC||2||||||F
+
+
+=== PAGE 84 ===
+79
+PV1||I|^^&8&0^^^^^^1CBA8CB36CEF|||||||||||||||A
+OBR||||Monitor|||20230518094209
+OBX||CE|7^^BHC|5001|201^HR^BHC||||||F
+MSH_10:1003 Indicates that the message is all parameter information supported (or not
+supported) by the module;
+OBX||CE|7^^BHC|5001|201^HR^ The BHC||||||F field indicates that the ECG module
+supports the HR parameter. For details about the field, see 4.2.7.2 Supported Parameters.
+1004
+Periodic
+parameters
+Periodic parameters（Periodic Parameter）
+Example:
+MSH|^~\&|||||||ORU^R01^ORU_R01|1004|P|2.6||||||UTF-8
+PID|||78||Mis^Lucy^Merry||20020202|F
+OBX||NM|4201^Height^BHC||170.0|31^cm^BHC|||||F
+OBX||NM|4202^Weight^BHC||65.0|41^kg^BHC|||||F
+OBX||NM|4203^Blood^BHC||3||||||F
+OBX||NM|4204^Pace^BHC||2||||||F
+PV1||I|^^&8&0^^^^^^1CBA8CB36CEF|||||||||||||||A
+OBR||||Monitor|||20210914143443
+OBX||NM|201^HR^BHC|5001|60||||||F
+OBX||NM|202^QTC^BHC|5001|359||||||F
+OBX||NM|203^DELTAQTC^BHC|5001|-1||||||F
+OBX||NM|204^ST-I^BHC|5001|0.09||||||F
+OBX||NM|205^ST-II^BHC|5001|0.21||||||F
+OBX||NM|206^ST-III^BHC|5001|0.12||||||F
+OBX||NM|207^ST-aVR^BHC|5001|-0.15||||||F
+.....
+MSH_10:1004 Indicates that the message is all periodic parameter data information of all
+modules；
+OBX||NM|259^PR^BHC|5002|60||||||F indicates that the PR pulse rate of SpO2 is 60 bpm.
+For details about the field, see 4.2.7.3 Periodic Parameter Values.
+1005
+Aperiodic
+parameter
+NIBP
+Aperiodic parameters NIBP（Periodic Parameter_NIBP）
+Example:
+MSH|^~\&|||||20230518135251||ORU^R01^ORU_R01|1005|P|2.6||||||UTF-8
+PID|||78||Mis^Lucy^Merry||20020202|F
+OBX||NM|4201^Height^BHC||170.0|31^cm^BHC|||||F
+OBX||NM|4202^Weight^BHC||65.0|41^kg^BHC|||||F
+OBX||NM|4203^Blood^BHC||3||||||F
+OBX||NM|4204^Pace^BHC||2||||||F
+PV1||I|^^&8&0^^^^^^1CBA8CB36CEF|||||||||||||||A
+OBR||||Monitor|||20230518101324
+OBX||NM|351^NIBP S^BHC|5004|125|11^mmHg^BHC|||||F||APERIODIC|20230518101323
+OBX||NM|352^NIBP D^BHC|5004|84|11^mmHg^BHC|||||F||APERIODIC|20230518101323
+OBX||NM|353^NIBP M^BHC|5004|96|11^mmHg^BHC|||||F||APERIODIC|20230518101323
+
+
+=== PAGE 85 ===
+80
+OBX||NM|354^NIBP SDP^BHC|5004|41|11^mmHg^BHC|||||F||APERIODIC|20230518101323
+OBX||NM|355^NIBP PR^BHC|5004|60||||||F||APERIODIC|20230518101323
+MSH_10:1005 Indicates that the message is non periodic NIBP parameter measurement
+data information
+OBX||NM|352^NIBP D^BHC|5004|84||||||F||APERIODIC|20230518101323
+indicates that the systolic pressure of the aperiodic NIBP parameter is 84 mmHg. For
+details about the field, see 4.2.7.7 Aperiodic Parameter Values.
+1006
+Aperiodic
+parameter
+CO
+Aperiodic parameters CO（Periodic Parameter_CO）
+Example:
+MSH|^~\&|||||20230518135250||ORU^R01^ORU_R01|1006|P|2.6||||||UTF-8
+PID|||78||Mis^Lucy^Merry||20020202|F
+OBX||NM|4201^Height^BHC||170.0|31^cm^BHC|||||F
+OBX||NM|4202^Weight^BHC||65.0|41^kg^BHC|||||F
+OBX||NM|4203^Blood^BHC||3||||||F
+OBX||NM|4204^Pace^BHC||2||||||F
+PV1||I|^^&8&0^^^^^^1CBA8CB36CEF|||||||||||||||A
+OBR||||Monitor|||20230518101323
+OBX||NM|751^C.O.^BHC|5012|5.2||||||F||APERIODIC|20230518101323
+OBX||NM|752^C.I.^BHC|5012|2.9||||||F||APERIODIC|20230518101323
+OBX||NM|753^TI^BHC|5012|-1||||||F||APERIODIC|20230518101323
+OBX||NM|754^TB^BHC|5012|36.87|21^C^BHC|||||F||APERIODIC|20230518101323
+MSH_10:1006 Indicates that the message is aperiodic co parameter measurement data
+information；
+OBX||NM|751^C.O.^BHC|5012|5.2||||||F||APERIODIC|20230518101323
+The field indicates that the cardiac output of the aperiodic parameter CO is 5.2 L/min. For
+details about the field, see 4.2.7.7 Aperiodic Parameter Values.
+1007
+Physiological
+alarm
+Physiological alarm information（Physiological Alarm）
+Example:
+MSH|^~\&|||||20230518135243||ORU^R01^ORU_R01|1007|P|2.6||||||UTF-8
+PID||||||||M
+OBX||NM|4201^Height^BHC||170.0|31^cm^BHC|||||F
+OBX||NM|4202^Weight^BHC||65.0|41^kg^BHC|||||F
+OBX||NM|4203^Blood^BHC||3||||||F
+OBX||NM|4204^Pace^BHC||2||||||F
+PV1||I|^^&8&0^^^^^^1CBA8CB36CEF|||||||||||||||A
+OBR||||Monitor|||20230518135243
+OBX||CE|2||10151^SpO2 High^BHC||||||F|||20230608152545
+OBX||CE|2||10202^NIBP-Sys Low^BHC||||||F|||20230608152441
+OBX||CE|2||10206^NIBP-Dia Low^BHC||||||F|||20230608152441
+MSH_10:1007 Indicates that the message is physiological alarm information of all
+triggered parameters；
+
+
+=== PAGE 86 ===
+81
+OBX||CE|2||10202^NIBP-Sys Low^BHC||||||F|||20230608152441 indicates that the
+physiological alarm occurs at 20230608152441 as the NIBP-Sys Low alarm. For details
+about the field, see 4.2.7.4 Physiological Alarm.
+1008
+Technical
+alarm
+Technical alarm information（Technical Alarm）
+Example:
+MSH|^~\&|||||20230518135252||ORU^R01^ORU_R01|1008|P|2.6||||||UTF-8
+PID||||||||M
+OBX||NM|4201^Height^BHC||170.0|31^cm^BHC|||||F
+OBX||NM|4202^Weight^BHC||65.0|41^kg^BHC|||||F
+OBX||NM|4203^Blood^BHC||3||||||F
+OBX||NM|4204^Pace^BHC||2||||||F
+PV1||I|^^&8&0^^^^^^1CBA8CB36CEF|||||||||||||||A
+OBR||||Monitor|||20230518135252
+OBX||CE|0||20307^IBP1 Zero Required^BHC||||||F|||20230518135242
+OBX||CE|0||20327^IBP2 Zero Required^BHC||||||F|||20230518135242
+MSH_10:1008 Indicates that the message is the technical alarm information of all modules
+triggered at this time；
+OBX||CE|0||20307^IBP1 Zero Required^BHC||||||F|||20230518135242 indicates that the
+technical alarm is IBP1 Zero Required at 20230518135242. For details about the fields,
+see 4.2.7.5 Technical Alarm.
+1009
+Set alarm
+limit
+Setting of alarm upper and lower limits（Setup Limit）
+Example:
+MSH|^~\&|||||20230518160843||ORU^R01^ORU_R01|1009|P|2.6||||||UTF-8
+PID|||78||Mis^Lucy^Merry||20020202|F
+OBX||NM|4201^Height^BHC||170.0|31^cm^BHC|||||F
+OBX||NM|4202^Weight^BHC||65.0|41^kg^BHC|||||F
+OBX||NM|4203^Blood^BHC||3||||||F
+OBX||NM|4204^Pace^BHC||2||||||F
+PV1||I|^^&8&0^^^^^^1CBA8CB36CEF|||||||||||||||A
+OBR||||Monitor|||20230518101318
+OBX||NM|1^^BHC|201|120||||||F
+OBX||NM|2^^BHC|201|50||||||F
+OBX||NM|1^^BHC|251|100||||||F
+OBX||NM|2^^BHC|251|90||||||F
+MSH_10:1009 Indicates that the message is the setting information of the upper and lower
+limit of the alarm；
+OBX||NM|1^^BHC|251|100||||||F field indicates that the alarm upper limit set by parameter
+SPO2 is 100. For details about the field, see 4.2.7.8 Parameter Alarm limit.
+1010
+Set alarm
+level
+Setting of alarm upper and lower limits（Alarm Setup Level）
+Example:
+MSH|^~\&|||||20230518135233||ORU^R01^ORU_R01|1010|P|2.6||||||UTF-8
+PID|||78||Mis^Lucy^Merry||20020202|F
+
+
+=== PAGE 87 ===
+82
+OBX||NM|4201^Height^BHC||170.0|31^cm^BHC|||||F
+OBX||NM|4202^Weight^BHC||65.0|41^kg^BHC|||||F
+OBX||NM|4203^Blood^BHC||3||||||F
+OBX||NM|4204^Pace^BHC||2||||||F
+PV1||I|^^&8&0^^^^^^1CBA8CB36CEF|||||||||||||||A
+OBR||||Monitor|||20230518101318
+OBX||NM|3^^BHC|201|2||||||F
+OBX||NM|3^^BHC|251|2||||||F
+OBX||NM|3^^BHC|351|2||||||F
+MSH_10:1010 Indicates that the message is the setting information of alarm level;
+OBX||NM|3^^BHC|351|2||||||F
+indicates that the diastolic pressure alarm level set by
+NIBP is intermediate alarm level. For details about the field, see 4.2.7.9 Parameter Alarm
+Level.
+1011
+Set alarm
+switch
+Setting of alarm upper and lower limits（Alarm Setup Switch）
+Example:
+MSH|^~\&|||||20230518135241||ORU^R01^ORU_R01|1011|P|2.6||||||UTF-8
+PID|||78||Mis^Lucy^Merry||20020202|F
+OBX||NM|4201^Height^BHC||170.0|31^cm^BHC|||||F
+OBX||NM|4202^Weight^BHC||65.0|41^kg^BHC|||||F
+OBX||NM|4203^Blood^BHC||3||||||F
+OBX||NM|4204^Pace^BHC||2||||||F
+PV1||I|^^&8&0^^^^^^1CBA8CB36CEF|||||||||||||||A
+OBR||||Monitor|||20230518101318
+OBX||NM|4^^BHC|201|1||||||F
+OBX||NM|4^^BHC|251|1||||||F
+OBX||NM|4^^BHC|351|1||||||F
+MSH_10:1011 Indicates that the message is the setting information of the alarm switch;
+OBX||NM|4^^BHC|351|1||||||F indicates that the alarm switch for diastolic pressure setting
+of NIBP is on. For details about the field, see 4.2.7.10 Parameter alarm switch.
+1012
+Broadcast
+machine
+information
+Broadcast machine information
+Example:
+MSH|^~\&|||||20230523111421||ADT^A01^ADT_A01|1012|P|2.6||||||UTF-8
+EVN||20230512094930
+PID|||78||Mis^Lucy^Merry||20020202|F
+PV1||I|^^&8&0^^^^^^1CBA8CB36CEF|||||||||||||||A
+OBX||ST|4002^Monitor Name^BHC||Monitor1||||||F
+MSH_10:1012 indicates that the message is a machine message broadcast by the monitor;
+OBX||ST|4002^Monitor Name^BHC||Monitor1||||||F
+The field indicates the monitor
+name is Monitor1 and is described in section 6.2.6 OBX Segment.
+1014
+TCP
+Heartbeat
+Heartbeat Packet Message（Heartbeat Packet）
+Example:
+
+
+=== PAGE 88 ===
+83
+MSH|^~\&|||||20230614102744||ORU^R01^ORU_R01|1014|P|2.6||||||UTF-8
+MSH_10:1014 indicates that the message is a Tcp heartbeat packet.
+1015
+Waveform
+data
+Waveform Data
+Example:
+MSH|^~\&|||||20230518135241||ORU^R01^ORU_R01|1015|P|2.6||||||UTF-8
+MSH_10:1015 indicates that the message is a waveform data message;
+The waveform data contains a lot of information. For details, see 4.3 Waveform Data
+Sending.
+1016
+ADT Patient
+Query
+Message
+ADT Patient Query Message(QRY_A19)
+Example:
+MSH|^~\\&||||ADTServer|20220906095605||QRY^A19^QRY_A19|1016|P|2.6||||||UTF-8
+QRD|20220906095605|R|I|2|||1^RD|M2021|^DEM|^BLTCMS
+MSH_10:1016 indicates that the message is an ADT patient query message;
+QRD_8: M2021 in the field is the patient's medical record number (patient's unique
+identifier). See section 7.2.4 QRD Segment for detailed description of the field.
+1017
+ADT Patient
+Query Result
+Message
+ADT Patient Query Result Message(ADR_A19)
+Example:
+MSH|^~\\&|||||20220906111243||ADR^A19^ADR_A19|1017|P|2.6||||||UTF-8
+MSA|AA|1016|Query Found
+QRD|20220906095605|R|I|2|||1^RD|M2021|^DEM|^BLTCMS
+PID|||M2021||Mis^Luck^Bob||19951108|F
+PV1||I|CCU^R1^B4&36&0||||DoctorInfo|||||||||||U
+OBX||NM|4201^Height^BHC||170.0|31^cm^BHC|||||F
+OBX||NM|4202^Weight^BHC||65.0|41^kg^BHC|||||F
+OBX||NM|4203^Blood^BHC||3||||||F
+OBX||NM|4204^Pace^BHC||2||||||F
+MSH_10:1017 indicates that the message is a query result message for ADT patients;
+The message returns patient information (patient record number, name, date of birth, etc.)
+1018
+ACK
+Acknowledge
+Message
+ACK Acknowledge Message
+Example:
+MSH|^~\\&|||||20220906115151||ACK|1018|P|2.6||||||UTF-8
+MSA|AA|1016
+MSH_10:1018 indicates that the message is a message confirmation message.
+1025
+Aperiodic
+parameter
+NMT
+Aperiodic parameter NMT（Periodic Parameter_NMT）
+Example:
+MSH|^~\&|||||20230518135241||ORU^R01^ORU_R01|1025|P|2.6||||||UTF-8
+PID|||78||Mis^Lucy^Merry||20020202|F
+OBX||NM|4201^Height^BHC||170.0|31^cm^BHC|||||F
+OBX||NM|4202^Weight^BHC||65.0|41^kg^BHC|||||F
+
+
+=== PAGE 89 ===
+84
+OBX||NM|4203^Blood^BHC||3||||||F
+OBX||NM|4204^Pace^BHC||2||||||F
+PV1||I|^^&8&0^^^^^^1CBA8CB36CEF|||||||||||||||A
+OBR||||Monitor|||20230518115149
+OBX||ST|2201^Stimulate Current^BHC|5057|25^25^25^25||||||F||APERIODIC|20230518115149
+OBX||ST|2202^Measure Current^BHC|5057|24.80^24.81^24.80^24.79||||||F||APERIODIC|20230518115149
+OBX||ST|2203^Bargraph Strength^BHC|5057|70^10^10^0||||||F||APERIODIC|20230518115149
+OBX||NM|2204^Measure Result^BHC|5057|3||||||F||APERIODIC|20230518115149
+OBX||NM|2205^Result Type^BHC|5057|0||||||F||APERIODIC|20230518115149
+OBX||NM|2206^Stimulate Cycle^BHC|5057|-1||||||F||APERIODIC|20230518115149
+OBX||NM|2207^Stimulate Mode^BHC|5057|3||||||F||APERIODIC|20230518115149
+OBX||NM|2208^Auto Mode^BHC|5057|-1||||||F||APERIODIC|20230518115149
+OBX||NM|2209^Bargraph Number^BHC|5057|4||||||F||APERIODIC|20230518115149
+MSH_10:1025 indicates that the message is aperiodic NMT parameter measurement data;
+OBX||ST|2202^Measure Current^BHC|5057|24.80^24.81^24.80^24.79||||||F||APERIODIC|20230518115149
+indicates that the four measured currents of the NMT parameter are 24.80, 24.81, 24.80
+and 24.79 mA respectively.
+1026
+Aperiodic
+parameter
+PAWP
+Aperiodic parameter PAWP (Periodic Parameter_PAWP)
+Example:
+MSH|^~\&|||||20230518135241||ORU^R01^ORU_R01|1026|P|2.6||||||UTF-8
+PID|||78||Mis^Lucy^Merry||20020202|F
+OBX||NM|4201^Height^BHC||170.0|31^cm^BHC|||||F
+OBX||NM|4202^Weight^BHC||65.0|41^kg^BHC|||||F
+OBX||NM|4203^Blood^BHC||3||||||F
+OBX||NM|4204^Pace^BHC||2||||||F
+PV1||I|^^&8&0^^^^^^1CBA8CB36CEF|||||||||||||||A
+OBR||||Monitor|||20230518114729
+OBX||NM|1706^Pawp^BHC|5041|81|11^mmHg^BHC|||||F||APERIODIC|20230518114729
+MSH_10:1026 indicates that the message is aperiodic PAWP parameter measurement data
+information;
+OBX||NM|1706^Pawp^BHC|5041|81||||||F||APERIODIC|20230518114729
+indicates
+that
+the Pawp parameter value in the IBP_PA module is 81 mmHg. For details about the field,
+see 4.2.7.7 Aperiodic Parameter Value.
+1027
+Aperiodic
+parameter
+EWS
+Aperiodic parameter EWS (Periodic Parameter_EWS)
+Example:
+MSH|^~\&|||||20230518135241||ORU^R01^ORU_R01|1027|P|2.6||||||UTF-8
+PID|||78||Mis^Lucy^Merry||20020202|F
+OBX||NM|4201^Height^BHC||170.0|31^cm^BHC|||||F
+OBX||NM|4202^Weight^BHC||65.0|41^kg^BHC|||||F
+OBX||NM|4203^Blood^BHC||3||||||F
+OBX||NM|4204^Pace^BHC||2||||||F
+PV1||I|^^&8&0^^^^^^1CBA8CB36CEF|||||||||||||||A
+
+
+=== PAGE 90 ===
+85
+OBR||||Monitor|||20230518135302
+OBX||NM|2051^Total Score^BHC|5058|5||||||F||APERIODIC|20230518135302
+OBX||NM|2052^Score Type^BHC|5058|0||||||F||APERIODIC|20230518135302
+MSH_10:1027 indicates that the message is aperiodic EWS parameter measurement data;
+OBX||NM|2051^Total
+Score^BHC|5058|5||||||F||APERIODIC|20230518135302
+indicates
+that the Total Score of the EWS module is 5. For details about the fields, see 4.2.7.7
+Aperiodic Parameter Values.
+1028
+Aperiodic
+parameter
+GCS
+Aperiodic parameter GCS (Periodic Parameter_GCS)
+Example:
+MSH|^~\&|||||20230518135241||ORU^R01^ORU_R01|1028|P|2.6||||||UTF-8
+PID|||78||Mis^Lucy^Merry||20020202|F
+OBX||NM|4201^Height^BHC||170.0|31^cm^BHC|||||F
+OBX||NM|4202^Weight^BHC||65.0|41^kg^BHC|||||F
+OBX||NM|4203^Blood^BHC||3||||||F
+OBX||NM|4204^Pace^BHC||2||||||F
+PV1||I|^^&8&0^^^^^^1CBA8CB36CEF|||||||||||||||A
+OBR||||Monitor|||20230518135251
+OBX||NM|2101^Total Score^BHC|5059|9||||||F||APERIODIC|20230518135251
+OBX||NM|2102^Eye Opening^BHC|5059|2||||||F||APERIODIC|20230518135251
+OBX||NM|2103^Verbal Response^BHC|5059|3||||||F||APERIODIC|20230518135251
+OBX||NM|2104^Motor Response^BHC|5059|4||||||F||APERIODIC|20230518135251
+MSH_10:1028 indicates that the message is aperiodic GCS parameter measurement data
+information;
+OBX||NM|2102^Eye Opening^BHC|5059|2||||||F||APERIODIC|20230518135251 indicates
+that the single score of the Eye Opening parameter of the GCS module is 2. For details
+about the fields, see 4.2.7.7 Aperiodic Parameter Values.
+1029
+Realtime
+Query
+Message
+Realtime Query Message（QRY_R02）
+Example:
+MSH|^~\&|||||20220424095857||ORY^R02^ORY_R02|1029|P|2.6||||||UTF-8
+QRD|20220424095857|R|I|2|||||RES
+QRF|MON||||0&0^1^0^0
+MSH_10:1029 indicates that the message is real-time query information;
+QRD|20220424095857|R|I|2|||||RES, see section 5.2.4 QRD for details;
+QRF|MON||||0&0^1^0^0
+In the Segment, 1 indicates that the type of information queried
+is physiological parameter data. For details about the fields, see section 5.2.5 QRF
+Segment.
+1030
+Realtime
+Query Result
+Message
+Realtime Query Result Message（ORF_R04）
+Examlpe:
+MSH|^~\\&|||||20230616115450||ORF^R04^ORF_R04|1030|P|2.6||||||UTF-8
+MSA|AA|1029
+QRD|20230616115452|R|I|2|||||RES
+
+
+=== PAGE 91 ===
+86
+QRF|MON||||0&0^2^0^0
+PID|||78||Mis^Lucy^Merry||20020202|F
+OBR||||Monitor|||20230616115450
+OBX||CE|2||10151^SpO2 High^BHC||||||F|||20230616115207
+OBX||CE|2||10202^NIBP-Sys Low^BHC||||||F|||20230616115218
+OBX||CE|2||10206^NIBP-Dia Low^BHC||||||F|||20230616115218
+OBX||CE|2||10203^NIBP-Map High^BHC||||||F|||20230616115218
+OBX||CE|2||10208^NIBP-Sdp Low^BHC||||||F|||20230616115218
+MSH_10:1030 indicates that the message is a real-time query result；
+The example is a real-time result message requesting the physiological alarm of the
+monitor.
+QRF_5:0&0^2^0^0
+The binary code of 2 in the field is 0010, indicating that the
+requested data type is physiological alarm. For details about the message, see 5.2.5 QRF
+Segment.
+Appendix A.6 Physiological Alarm ID
+ID
+Content
+10001
+HR High
+10002
+HR Low
+10003
+HR Too High
+10004
+HR Too Low
+10005
+ECG Weak signal
+10011
+QTc High
+10012
+Delta QTc High
+10021
+ST_I High
+10022
+ST_I Low
+10023
+ST_IIHigh
+10024
+ST_II Low
+10025
+ST_III High
+10026
+ST_III Low
+10027
+ST_AVR High
+10028
+ST_AVR Low
+10029
+ST_AVL High
+10030
+ST_AVL Low
+10031
+ST_AVF High
+10032
+ST_AVF Low
+10033
+ST_V1 High
+10034
+ST_V1 Low
+10035
+ST_V2 High
+10036
+ST_V2 Low
+10037
+ST_V3 High
+
+
+=== PAGE 92 ===
+87
+10038
+ST_V3 Low
+10039
+ST_V4 High
+10040
+ST_V4 Low
+10041
+ST_V5 High
+10042
+ST_V5 Low
+10043
+ST_V6 High
+10044
+ST_V6 Low
+10045
+ST_V High
+10046
+ST_V Low
+10047
+ST_Va High
+10048
+ST_Va Low
+10049
+ST_Vb High
+10050
+ST_Vb Low
+10101
+ECG Asystole
+10102
+ECG Vent Fib/Tach
+10103
+ECG Vent Brady
+10104
+ECG Extreme Tachy
+10105
+ECG Extreme Brady
+10106
+ECG V-Tach
+10107
+ECG Run PVCs
+10108
+ECG Couplet
+10109
+ECG Bigeminy
+10110
+ECG Trigeminy
+10111
+ECG R On T
+10112
+ECG PVC
+10113
+ECG Tachy
+10114
+ECG Brady
+10115
+ECG Missed Beat
+10116
+ECG A-Fib
+10117
+ECG A-Fib End
+10118
+ECG PNP
+10119
+ECG PNC
+10120
+ECG Noise
+10121
+ECG Frequent PVCs
+10122
+ECG Nonsustained V-Tach
+10123
+ECG Vent Rhythm
+10124
+ECG Pause
+10125
+ECG Irregular Rhythm
+10126
+ECG Pauses/min High
+10127
+ECG Irregular Rhythm End
+10128
+ECG Learning
+10151
+SPO2 High
+10152
+SPO2 Low
+
+
+=== PAGE 93 ===
+88
+10153
+SPO2 Desat
+10154
+Delta SPO2 High
+10155
+SPO2 Search Pulse Timeout
+10156
+SPO2 RR High
+10157
+SPO2 RR Low
+10158
+SPO2 Apnea
+10159
+SPO2 PI Low
+10171
+SPO2L High
+10172
+SPO2L Low
+10173
+SPO2L Desat
+10174
+Delta SPO2 High
+10175
+SPO2L Search Pulse Timeout
+10176
+SPO2L RR High
+10177
+SPO2L RR Low
+10178
+SPO2L Apnea
+10179
+SPO2L PI Low
+10201
+NIBP SYS High
+10202
+NIBP SYS Low
+10203
+NIBP MAP High
+10204
+NIBP MAP Low
+10205
+NIBP DIA High
+10206
+NIBP DIA Low
+10207
+NIBP SDP High
+10208
+NIBP SDP Low
+10251
+RESP RR High
+10252
+RESP RR Low
+10253
+RESP Apnea
+10254
+RESP Artifact
+10301
+IBP1 SYS High
+10302
+IBP1 SYS Low
+10303
+IBP1 MEAN High
+10304
+IBP1 MEAN Low
+10305
+IBP1 DIA High
+10306
+IBP1 DIA Low
+10311
+IBP2 SYS High
+10312
+IBP2 SYS Low
+10313
+IBP2 MEAN High
+10314
+IBP2 MEAN Low
+10315
+IBP2 DIA High
+10316
+IBP2 DIA Low
+10321
+IBP3 SYS High
+10322
+IBP3 SYS Low
+10323
+IBP3 MEAN High
+
+
+=== PAGE 94 ===
+89
+10324
+IBP3 MEAN Low
+10325
+IBP3 DIA High
+10326
+IBP3 DIA Low
+10331
+IBP4 SYS High
+10332
+IBP4 SYS Low
+10333
+IBP4 MEAN High
+10334
+IBP4 MEAN Low
+10335
+IBP4 DIA High
+10336
+IBP4 DIA Low
+10341
+IBP5 SYS High
+10342
+IBP5 SYS Low
+10343
+IBP5 MEAN High
+10344
+IBP5 MEAN Low
+10345
+IBP5 DIA High
+10346
+IBP5 DIA Low
+10351
+IBP6 SYS High
+10352
+IBP6 SYS Low
+10353
+IBP6 MEAN High
+10354
+IBP6 MEAN Low
+10355
+IBP6 DIA High
+10356
+IBP6 DIA Low
+10361
+IBP7 SYS High
+10362
+IBP7 SYS Low
+10363
+IBP7 MEAN High
+10364
+IBP7 MEAN Low
+10365
+IBP7 DIA High
+10366
+IBP7 DIA Low
+10371
+IBP8 SYS High
+10372
+IBP8 SYS Low
+10373
+IBP8 MEAN High
+10374
+IBP8 MEAN Low
+10375
+IBP8 DIA High
+10376
+IBP8 DIA Low
+10381
+IBP_ART SYS High
+10382
+IBP_ART SYS Low
+10383
+IBP_ART MEAN High
+10384
+IBP_ART MEAN Low
+10385
+IBP_ART DIA High
+10386
+IBP_ART DIA Low
+10391
+IBP_CVP SYS High
+10392
+IBP_CVP SYS Low
+
+
+=== PAGE 95 ===
+90
+10393
+IBP_CVP MEAN High
+10394
+IBP_CVP MEAN Low
+10395
+IBP_CVP DIA High
+10396
+IBP_CVP DIA Low
+10401
+PA SYS High
+10402
+PA SYS Low
+10403
+PA MEAN High
+10404
+PA MEAN Low
+10405
+PA DIA High
+10406
+PA DIA Low
+10411
+RAP SYS High
+10412
+RAP SYS Low
+10413
+RAP MEAN High
+10414
+RAP MEAN Low
+10415
+RAP DIA High
+10416
+RAP DIA Low
+10421
+LAP SYS High
+10422
+LAP SYS Low
+10423
+LAP MEAN High
+10424
+LAP MEAN Low
+10425
+LAP DIA High
+10426
+LAP DIA Low
+10431
+ICP SYS High
+10432
+ICP SYS Low
+10433
+ICP MEAN High
+10434
+ICP MEAN Low
+10435
+ICP DIA High
+10436
+ICP DIA Low
+10441
+UAP SYS High
+10442
+UAP SYS Low
+10443
+UAP MEAN High
+10444
+UAP MEAN Low
+10445
+UAP DIA High
+10446
+UAP DIA Low
+10451
+BAP SYS High
+10452
+BAP SYS Low
+10453
+BAP MEAN High
+10454
+BAP MEAN Low
+10455
+BAP DIA High
+10456
+BAP DIA Low
+
+
+=== PAGE 96 ===
+91
+10461
+FAP SYS High
+10462
+FAP SYS Low
+10463
+FAP MEAN High
+10464
+FAP MEAN Low
+10465
+FAP DIA High
+10466
+FAP DIA Low
+10471
+UVP SYS High
+10472
+UVP SYS Low
+10473
+UVP MEAN High
+10474
+UVP MEAN Low
+10475
+UVP DIA High
+10476
+UVP DIA Low
+10481
+LV SYS High
+10482
+LV SYS Low
+10483
+LV MEAN High
+10484
+LV MEAN Low
+10485
+LV DIA High
+10486
+LV DIA Low
+10491
+AO SYS High
+10492
+AO SYS Low
+10493
+AO MEAN High
+10494
+AO MEAN Low
+10495
+AO DIA High
+10496
+AO DIA Low
+10601
+ETCO2 High
+10602
+ETCO2 Low
+10603
+FICO2 High
+10604
+FICO2 Low
+10605
+AWRR High
+10606
+AWRR Low
+10607
+CO2 Apnea
+10611
+ETO2 High
+10612
+ETO2 Low
+10613
+FIO2 High
+10614
+FIO2 Low
+10621
+ETN2O High
+10622
+ETN2O Low
+10623
+FIN2O High
+10624
+FIN2O Low
+10631
+Agent_No_ETAA High
+
+
+=== PAGE 97 ===
+92
+10632
+Agent_No_ETAA Low
+10633
+Agent_No_FIAA High
+10634
+Agent_No_FIAA Low
+10641
+Agent_Halothane_ETAA High
+10642
+Agent_Halothane_ETAA Low
+10643
+Agent_Halothane_FIAA High
+10644
+Agent_Halothane_FIAA Low
+10651
+Agent_Enflurane_ETAA High
+10652
+Agent_Enflurane_ETAA Low
+10653
+Agent_Enflurane_FIAA High
+10654
+Agent_Enflurane_FIAA Low
+10661
+Agent_Isoflurane_ETAA High
+10662
+Agent_Isoflurane_ETAA Low
+10663
+Agent_Isoflurane_FIAA High
+10664
+Agent_Isoflurane_FIAA Low
+10671
+Agent_Sevoflurane_ETAA High
+10672
+Agent_Sevoflurane_ETAA Low
+10673
+Agent_Sevoflurane_FIAA High
+10674
+Agent_Sevoflurane_FIAA Low
+10681
+Agent_Desflurane_ETAA High
+10682
+Agent_Desflurane_ETAA Low
+10683
+Agent_Desflurane_FIAA High
+10684
+Agent_Desflurane_FIAA Low
+10691
+PR High
+10692
+PR Low
+10701
+CO-TB High
+10702
+CO-TB Low
+10751
+RM-PEEP High
+10752
+RM-PEEP Low
+10753
+RM-PIP High
+10754
+RM-PIP Low
+10755
+RM-MVE High
+10756
+RM-MVE Low
+10757
+RM-RR High
+10758
+RM-RR Low
+10759
+RM Apnea
+10781
+CPP High
+10782
+CPP Low
+10901
+ICG-C.I High
+10902
+ICG-C.I Low
+
+
+=== PAGE 98 ===
+93
+10903
+ICG-TFC High
+10904
+ICG-TFC Low
+10951
+BIS High
+10952
+BIS Low
+11001
+RSO2-CH1 High
+11002
+RSO2-CH1 Low
+11003
+RSO2-CH1-DeltaSpo2 High
+11004
+RSO2-CH2 High
+11005
+RSO2-CH2 Low
+11006
+RSO2-CH2-DeltaSpo2 High
+10801
+T1 High
+10802
+T1 Low
+10803
+T2 High
+10804
+T2 Low
+10805
+T3 High
+10806
+T3 Low
+10807
+T4 High
+10808
+T4 Low
+10809
+T5 High
+10810
+T5 Low
+10811
+T6 High
+10812
+T6 Low
+10813
+T7 High
+10814
+T7 Low
+10815
+T8 High
+10816
+T8 Low
+10817
+T9 High
+10818
+T9 Low
+10819
+T10 High
+10820
+T10 Low
+10821
+Skin Temp High
+10822
+Skin Temp Low
+10823
+Core Temp High
+10824
+Core Temp Low
+10825
+Axil Temp High
+10826
+Axil Temp Low
+10827
+Naso Temp High
+10828
+Naso Temp Low
+10829
+Eso Temp High
+10830
+Eso Temp Low
+
+
+=== PAGE 99 ===
+94
+10831
+Rect Temp High
+10832
+Rect Temp Low
+10833
+Amb Temp High
+10834
+Amb Temp Low
+10835
+Airw Temp High
+10836
+Airw Temp Low
+10837
+Vesic Temp High
+10838
+Vesic Temp Low
+10839
+Blood Temp High
+10840
+Blood Temp Low
+10841
+Myo Temp High
+10842
+Myo Temp Low
+10843
+Tymp Temp High
+10844
+Tymp Temp Low
+10845
+Cereb Temp High
+10846
+Cereb Temp Low
+10847
+TA High
+10848
+TA Low
+10849
+TB High
+10850
+TB Low
+10851
+TC High
+10852
+TC Low
+10853
+TD High
+10854
+TD Low
+10855
+TE High
+10856
+TE Low
+Appendix A.7 Technical alarm ID
+ID
+Content
+20001
+ECG Communication Error
+20002
+ECG Self Checking Error
+20003
+ECG V1 Sensor Off
+20004
+ECG V2 Sensor Off
+20005
+ECG V3 Sensor Off
+20006
+ECG V4 Sensor Off
+20007
+ECG V5 Sensor Off
+20008
+ECG V6 Sensor Off
+20009
+ECG Ra Sensor Off
+
+
+=== PAGE 100 ===
+95
+20010
+ECG RL Sensor Off
+20011
+ECG La Sensor Off
+20012
+ECG LL Sensor Off
+20013
+ECG V Sensor Off
+20014
+ECG Va Sensor Off
+20015
+ECG Vb Sensor Off
+20016
+ECG Leads Sensor Off
+20017
+ECG V1 Polarized
+20018
+ECG V2 Polarized
+20019
+ECG V3 Polarized
+20020
+ECG V4 Polarized
+20021
+ECG V5 Polarized
+20022
+ECG V6 Polarized
+20023
+ECG I Polarized
+20024
+ECG II Polarized
+20025
+ECG III Polarized
+20026
+ECG AVR Polarized
+20027
+ECG AVL Polarized
+20028
+ECG AVF Polarized
+20029
+ECG Va Polarized
+20030
+ECG Vb Polarized
+20031
+ECG can't analyse ST
+20032
+ECG can't analyse QT
+20033
+ECG Suspected Pacing Signal
+20034
+ECG Cable Will Expire Soon
+20051
+SPO2 Communication Error
+20052
+SPO2 Self Checking Error
+20053
+SPO2 Sensor Off
+20054
+SPO2 Searching Pulse...
+20055
+SPO2 Low Confidence
+20056
+SPO2 No Sensor Connected
+20057
+SPO2 Value Update Timeout
+20058
+SPO2 PR Value Update Timeout
+20059
+SPO2 No Cable
+20060
+SPO2 Replace Cable
+20061
+SPO2 Cable validation failed
+20062
+SPO2 Unrecognized Cable
+20063
+SPO2 TBD
+20064
+SPO2 No Sensor
+20065
+SPO2 Invalid Sensor
+20066
+SPO2 Replace Sensor
+20067
+SPO2 Motion Interference
+20068
+SPO2 Sensor Incompatible
+
+
+=== PAGE 101 ===
+96
+20069
+SPO2 Check Sensor
+20070
+SPO2 DEMO TOOL
+20071
+SPO2 Low Perfusion
+20072
+SPO2 Sensor Initializing
+20073
+SPO2 Replace Adhesive
+20074
+SPO2 No Adhesive
+20075
+SPO2 Incompatible Adhesive
+20076
+SPO2 Unrecognized Adhesive
+20077
+SPO2 PI Low Confidence
+20078
+SPO2 PVI Low Confidence
+20079
+SPO2 SpCO Low Confidence
+20080
+SPO2 SpOC Low Confidence
+20081
+SPO2 SpMet Low Confidence
+20082
+SPO2 SpHb Low Confidence
+20101
+SPO2LCommunication Error
+20102
+SPO2LSelf Checking Error
+20103
+SPO2L Sensor Off
+20104
+SPO2L Pulse Search
+20105
+SPO2L Low Confidence
+20106
+SPO2L No Sensor Connected
+20107
+SPO2L Value Update Timeout
+20108
+SPO2L PR Value Update Timeout
+20109
+SPO2L No Cable
+20110
+SPO2L Replace Cable
+20111
+SPO2L Cable validation failed
+20112
+SPO2L Unrecognized Cable
+20113
+SPO2L TBD
+20114
+SPO2L No Sensor
+20115
+SPO2L Invalid Sensor
+20116
+SPO2L Replace Sensor
+20117
+SPO2L Motion Interference
+20118
+SPO2L Sensor Incompatible
+20119
+SPO2L Check Sensor
+20120
+SPO2L DEMO TOOL
+20121
+SPO2L Low Perfusion
+20122
+SPO2L Sensor Initializing
+20123
+SPO2L Replace Adhesive
+20124
+SPO2L No Adhesive
+20125
+SPO2L Incompatible Adhesive
+20126
+SPO2 Unrecognized Adhesive
+20127
+SPO2L PI Low Confidence
+20128
+SPO2L PVI Low Confidence
+20129
+SPO2L SpCO Low Confidence
+
+
+=== PAGE 102 ===
+97
+20130
+SPO2L SpOC Low Confidence
+20131
+SPO2L SpMet Low Confidence
+20132
+SPO2L SpHb Low Confidence
+20151
+NIBP Communication Error
+20152
+NIBP Hardware Self Checking Error
+20153
+NIBP Self Checking Error
+20154
+NIBP Loose Cuff
+20155
+NIBP Air Leakage
+20156
+NIBP Air Pressure Error
+20157
+NIBP Weak signal
+20158
+NIBP Out of Range
+20159
+NIBP Excessive motion
+20160
+NIBP Overpressure Detected
+20161
+NIBP Signal Saturated
+20162
+NIBP Air System Leak
+20163
+NIBP System Failure
+20164
+NIBP Time out
+20165
+NIBP Cuff Type Error
+20166
+NIBP Zero Failed
+20167
+NIBP Calibration Failed
+20168
+NIBP Overpressure Zero Failed
+20169
+NIBP Overpressure Calibrate Failed
+20170
+NIBP Cycle Abort
+20171
+NIBP Exceeded Retry Count
+20172
+NIBP Pneumatic Blockage
+20173
+NIBP Measurement Terminated
+20174
+NIBP Air Leak or Loose Cuff
+20175
+NIBP Safety Timeout
+20176
+NIBP Calibration Successful
+20177
+NIBP Calibration Failure
+20201
+RESP Communication Error
+20202
+RESP Self-test Failed
+20203
+RESP Sensor Off
+20301
+IBP1 Communication Error
+20302
+IBP1 Self Checking Error
+20303
+IBP1 Calibration Failed
+20304
+IBP1 Zero Failed
+20305
+IBP1 Sensor Off
+20306
+IBP1 Catheter Off
+20307
+IBP1 Zero Required
+20308
+IBP1 Zero In Progress...
+20309
+IBP1 Zero Succeed
+20310
+IBP1 Pressure Calibrating
+
+
+=== PAGE 103 ===
+98
+20311
+IBP1 Pressure Calibration Succeed
+20321
+IBP2 Communication Error
+20322
+IBP2 Self Checking Error
+20323
+IBP2 Calibration Failed
+20324
+IBP2 Zero Failed
+20325
+IBP2 Sensor Off
+20326
+IBP2 Catheter Off
+20327
+IBP2 Zero Required
+20328
+IBP2 Zero In Progress...
+20329
+IBP2 Zero Succeed
+20330
+IBP2 Pressure Calibrating
+20331
+IBP2 Pressure Calibration Succeed
+20341
+IBP3 Communication Error
+20342
+IBP3 Self Checking Error
+20343
+IBP3 Calibration Failed
+20344
+IBP3 Zero Failed
+20345
+IBP3Sensor Off
+20346
+IBP3 Catheter Off
+20347
+IBP3 Zero Required
+20348
+IBP3 Zero In Progress...
+20349
+IBP3 Zero Succeed
+20350
+IBP3 Pressure Calibrating
+20351
+IBP3 Pressure Calibration Succeed
+20361
+IBP4 Communication Error
+20362
+IBP4 Self Checking Error
+20363
+IBP4 Calibration Failed
+20364
+IBP4 Zero Failed
+20365
+IBP4Sensor Off
+20366
+IBP4 Catheter Off
+20367
+IBP4 Zero Required
+20368
+IBP4 Zero In Progress...
+20369
+IBP4 Zero Succeed
+20370
+IBP4 Pressure Calibrating
+20371
+IBP4 Pressure Calibration Succeed
+20381
+IBP5 Communication Error
+20382
+IBP5 Self Checking Error
+20383
+IBP5 Calibration Failed
+20384
+IBP5 Zero Failed
+20385
+IBP5Sensor Off
+20386
+IBP5 Catheter Off
+20387
+IBP5 Zero Required
+20388
+IBP5 Zero In Progress...
+20389
+IBP5 Zero Succeed
+
+
+=== PAGE 104 ===
+99
+20390
+IBP5 Pressure Calibrating
+20391
+IBP5 Pressure Calibration Succeed
+20401
+IBP6 Communication Error
+20402
+IBP6 Self Checking Error
+20403
+IBP6 Calibration Failed
+20404
+IBP6 Zero Failed
+20405
+IBP6 Sensor Off
+20406
+IBP6 Catheter Off
+20407
+IBP6 Zero Required
+20408
+IBP6 Zero In Progress...
+20409
+IBP6 Zero Succeed
+20410
+IBP6 Pressure Calibrating
+20411
+IBP6 Pressure Calibration Succeed
+20421
+IBP7 Communication Error
+20422
+IBP7 Self Checking Error
+20423
+IBP7 Calibration Failed
+20424
+IBP7 Zero Failed
+20425
+IBP7 Sensor Off
+20426
+IBP7 Catheter Off
+20427
+IBP7 Zero Required
+20428
+IBP7 Zero In Progress...
+20429
+IBP7 Zero Succeed
+20430
+IBP7 Pressure Calibrating
+20431
+IBP7 Pressure Calibration Succeed
+20441
+IBP8 Communication Error
+20442
+IBP8 Self Checking Error
+20443
+IBP8 Calibration Failed
+20444
+IBP8 Zero Failed
+20445
+IBP8 Sensor Off
+20446
+IBP8 Catheter Off
+20447
+IBP8 Zero Required
+20448
+IBP8 Zero In Progress...
+20449
+IBP8 Zero Succeed
+20450
+IBP8 Pressure Calibrating
+20451
+IBP8 Pressure Calibration Succeed
+20461
+ART Communication Error
+20462
+ART Self Checking Error
+20463
+ART Calibration Failed
+20464
+ART Zero Failed
+20465
+ART Sensor Off
+20466
+ART Catheter Off
+20467
+ART Zero Required
+20468
+ART Zero In Progress...
+
+
+=== PAGE 105 ===
+100
+20469
+ART Zero Succeed
+20470
+ART Pressure Calibrating
+20471
+ART Pressure Calibration Succeed
+20481
+CVP Communication Error
+20482
+CVP Self Checking Error
+20483
+CVP Calibration Failed
+20484
+CVP Zero Failed
+20485
+CVP Sensor Off
+20486
+CVP Catheter Off
+20487
+CVP Zero Required
+20488
+CVP Zero In Progress...
+20489
+CVP Zero Succeed
+20490
+CVP Pressure Calibrating
+20491
+CVP Pressure Calibration Succeed
+20501
+PA Communication Error
+20502
+PA Self Checking Error
+20503
+PA Calibration Failed
+20504
+PA Zero Failed
+20505
+PA Sensor Off
+20506
+PA Catheter Off
+20507
+PA Zero Required
+20508
+PA Zero In Progress...
+20509
+PA Zero Succeed
+20510
+PA Pressure Calibrating
+20511
+PA Pressure Calibration Succeed
+20521
+RAP Communication Error
+20522
+RAP Self Checking Error
+20523
+RAP Calibration Failed
+20524
+RAP Zero Failed
+20525
+RAP Sensor Off
+20526
+RAP Catheter Off
+20527
+RAP Zero Required
+20528
+RAP Zero In Progress...
+20529
+RAP Zero Succeed
+20530
+RAP Pressure Calibrating
+20531
+RAP Pressure Calibration Succeed
+20541
+LAP Communication Error
+20542
+LAP Self Checking Error
+20543
+LAP Calibration Failed
+20544
+LAP Zero Failed
+20545
+LAP Sensor Off
+20546
+LAP Catheter Off
+20547
+LAP Zero Required
+
+
+=== PAGE 106 ===
+101
+20548
+LAP Zero In Progress...
+20549
+LAP Zero Succeed
+20540
+LAP Pressure Calibrating
+20551
+LAP Pressure Calibration Succeed
+20561
+ICP Communication Error
+20562
+ICP Self Checking Error
+20563
+ICP Calibration Failed
+20564
+ICP Zero Failed
+20565
+ICP Sensor Off
+20566
+ICP Catheter Off
+20567
+ICP Zero Required
+20568
+ICP Zero In Progress...
+20569
+ICP Zero Succeed
+20570
+ICP Pressure Calibrating
+20571
+ICP Pressure Calibration Succeed
+20581
+UAP Communication Error
+20582
+UAP Self Checking Error
+20583
+UAP Calibration Failed
+20584
+UAP Zero Failed
+20585
+UAP Sensor Off
+20586
+UAP Catheter Off
+20587
+UAP Zero Required
+20588
+UAP Zero In Progress...
+20589
+UAP Zero Succeed
+20590
+UAP Pressure Calibrating
+20591
+UAP Pressure Calibration Succeed
+20601
+BAP Communication Error
+20602
+BAP Self Checking Error
+20603
+BAP Calibration Failed
+20604
+BAP Zero Failed
+20605
+BAP Sensor Off
+20606
+BAP Catheter Off
+20607
+BAP Zero Required
+20608
+BAP Zero In Progress...
+20609
+BAP Zero Succeed
+20610
+BAP Pressure Calibrating
+20611
+BAP Pressure Calibration Succeed
+20621
+FAP Communication Error
+20622
+FAP Self Checking Error
+20623
+FAP Calibration Failed
+20624
+FAP Zero Failed
+20625
+FAP Sensor Off
+20626
+FAP Catheter Off
+
+
+=== PAGE 107 ===
+102
+20627
+FAP Zero Required
+20628
+FAP Zero In Progress...
+20629
+FAP Zero Succeed
+20630
+FAP Pressure Calibrating
+20631
+FAP Pressure Calibration Succeed
+20641
+UVP Communication Error
+20642
+UVP Self Checking Error
+20643
+UVP Calibration Failed
+20644
+UVP Zero Failed
+20645
+UVP Sensor Off
+20646
+UVP Catheter Off
+20647
+UVP Zero Required
+20648
+UVP Zero In Progress...
+20649
+UVP Zero Succeed
+20650
+UVP Pressure Calibrating
+20651
+UVP Pressure Calibration Succeed
+20661
+LV Communication Error
+20662
+LV Self Checking Error
+20663
+LV Calibration Failed
+20664
+LV Zero Failed
+20665
+LV Sensor Off
+20666
+LV Catheter Off
+20667
+LV Zero Required
+20668
+LV Zero In Progress...
+20669
+LV Zero Succeed
+20670
+LV Pressure Calibrating
+20671
+LV Pressure Calibration Succeed
+20681
+AO Communication Error
+20682
+AO Self Checking Error
+20683
+AO Calibration Failed
+20684
+AO Zero Failed
+20685
+AO Sensor Off
+20686
+AO Catheter Off
+20687
+AO Zero Required
+20688
+AO Zero In Progress...
+20689
+AO Zero Succeed
+20690
+AO Pressure Calibrating
+20691
+AO Pressure Calibration Succeed
+20901
+CO2 Communication Error
+20902
+CO2 Self Checking Error
+20903
+CO2 Sensor Off
+20904
+CO2 Check Adapter:E1
+20905
+CO2 Out of Range
+
+
+=== PAGE 108 ===
+103
+20906
+CO2 Sleep Mode
+20907
+CO2 Zero In Progress...
+20908
+CO2 Sensor Not Ready to Zero
+20909
+CO2 Zero Required
+20910
+CO2 Zero Required:E1
+20911
+CO2 Check Adapter:E2
+20912
+CO2 Sensor Hotting
+20913
+CO2 Sensor Over Temp
+20914
+CO2 temperature Is Not Stable
+20915
+CO2 Compensation Not Set
+20916
+CO2 Wait for Sensor
+20917
+CO2 Sensor Faulty:E1
+20918
+CO2 Sensor Faulty:E2
+20919
+CO2 EEPROM Checksum Error
+20920
+CO2 Pump Off
+20921
+CO2 Check Sample Line
+20922
+Pump Life expired
+20923
+Sample Line Disconnected
+20924
+CO2 Self-Test
+20925
+CO2 Outside Specified Accuracy Range
+20926
+CO2 Sensor Faulty:E5
+20927
+CO2 Motor Speed Error
+20928
+CO2 Factory calibration lost
+20929
+CO2 Replace adapter
+20930
+CO2 Sampling Line Clogged
+20931
+CO2 No adapter
+20932
+CO2 No sample line
+20933
+CO2 Ambient Pressure Outside Range
+20934
+CO2 Internal Temp Out of Range
+20935
+CO2 Span Calibration Command Failed
+20936
+CO2 Pressure Calibrating
+20937
+CO2 Calculation Overflow Detected
+20938
+CO2 temperature Is Not Stable
+20939
+CO2 System In Self_Zero Mode
+20940
+CO2 Sensor Temperature Low
+20941
+CO2 Sensor Temperature High
+20942
+CO2 Calibration Error Occurred
+20943
+CO2 ADC Voltage Error
+20944
+CO2 ADC Data Invalid
+20945
+CO2 Flowrate Out Of Range
+20946
+CO2 RAM Self-test Failed
+20947
+CO2 Main Code Self-test Failure
+20948
+CO2 Boot Code Self-test Failure
+
+
+=== PAGE 109 ===
+104
+20949
+CO2 Invalid command
+20971
+O2 Communication Error
+20972
+O2 Sensor Error
+20973
+O2 Interface error
+20974
+O2 Out of Range
+20981
+N2O Communication Error
+20982
+N2O Out of Range
+20991
+AA Communication Error
+20992
+AA Agent ID Are Unreliable
+20993
+AA At Least One Anesthetic Gas Out of Range
+20994
+AA Mixed Anesthetic Gas
+21001
+C.O. Communication Error
+21003
+C.O. TI Self Checking Error
+21004
+C.O. TB Self Checking Error
+21005
+C.O. Catheter Const Error
+21006
+C.O. Out of Range
+21007
+C.O. TB Unstable
+21008
+C.O. Measure Time Out
+21009
+C.O. TI Sensor Off
+21010
+C.O. TB Sensor Off
+21011
+C.O. TI Over High Range
+21013
+C.O. TI TI Below Low Range
+21012
+C.O. TB Over High Range
+21014
+C.O. TB TI Below Low Range
+21051
+RM Communication Error
+21052
+RM Sensor Off
+21053
+RM Check Zero Failed
+21054
+RM Power Err
+21401
+ICG Communication Error
+21402
+ICG Self Checking Error
+21403
+ICG Sensor Off
+21404
+ICG Electrode Off
+21405
+ICG Sensor Initializing 中
+21406
+ICG Check Sensor
+21407
+ICG Invalid Patient Settings
+21408
+ICG Invalid Blood Pressure Settings
+21409
+ICG External Measurement Settings
+21410
+ICG
+Invalid Hardware
+21451
+BIS Communication Error
+21452
+BIS Sensor Off
+21453
+BIS Bad SQI
+21454
+BIS Poor SQI
+21455
+BIS Simulator Connected
+
+
+=== PAGE 110 ===
+105
+21601
+EEG Communication Error
+21602
+EEG CH1 Electrode Off
+21603
+EEG CH2 Electrode Off
+21604
+EEG CH3 Electrode Off
+21605
+EEG CH4 Electrode Off
+21606
+EEG CH1 Polarized
+21607
+EEG CH2 Polarized
+21608
+EEG CH3 Polarized
+21609
+EEG CH4 Polarized
+21610
+EEG CH1 Impedance High
+21611
+EEG CH2 Impedance High
+21612
+EEG CH3 Impedance High
+21613
+EEG CH4 Impedance High
+21651
+DM Communication Error
+21652
+DM Drip Rate Abnormal
+21653
+DM Finished
+21701
+NMT Communication Error
+21702
+NMT Cable Off
+21703
+NMT Stimulus Off
+21704
+NMT Sensor Error
+21705
+NMT Low Battery
+23001
+Battery Low
+23002
+Battery Fault
+23003
+CMS Disconnected
+23004
+Otherbed Disconnected
+23005
+Recorder Out Of Paper
+23006
+Recorder Too Hot
+23007
+Recorder Error
+23008
+Recorder Does Not Exist
+23009
+Low Disk Space
+23010
+Disk Full
+23011
+System Clock Error
+23012
+Processor error
+23101
+ECG Abnormal Unplugged
+23102
+SPO2 Abnormal Unplugged
+23103
+SPO2L Abnormal Unplugged
+23104
+NIBP Abnormal Unplugged
+23105
+RESP Abnormal Unplugged
+23106
+CO2 Abnormal Unplugged
+23107
+ICG Abnormal Unplugged
+23108
+BIS Abnormal Unplugged
+23109
+EEG Abnormal Unplugged
+23110
+AA Abnormal Unplugged
+
+
+=== PAGE 111 ===
+106
+23111
+O2 Abnormal Unplugged
+23112
+N2O Abnormal Unplugged
+23113
+CO2 Abnormal Unplugged
+23114
+RM Abnormal Unplugged
+23115
+IBP1 Abnormal Unplugged
+23116
+IBP2 Abnormal Unplugged
+23117
+IBP3 Abnormal Unplugged
+23118
+IBP4 Abnormal Unplugged
+23119
+IBP5 Abnormal Unplugged
+23120
+IBP6 Abnormal Unplugged
+23121
+IBP7 Abnormal Unplugged
+23122
+IBP8 Abnormal Unplugged
+23123
+ART Abnormal Unplugged
+23124
+CVP Abnormal Unplugged
+23125
+PA Abnormal Unplugged
+23126
+RAP Abnormal Unplugged
+23127
+LAP Abnormal Unplugged
+23128
+ICP Abnormal Unplugged
+23129
+UAP Abnormal Unplugged
+23130
+BAP Abnormal Unplugged
+23131
+FAP Abnormal Unplugged
+23132
+UVP Abnormal Unplugged
+23133
+LV Abnormal Unplugged
+23134
+AO Abnormal Unplugged
+23145
+TA Abnormal Unplugged
+23146
+TB Abnormal Unplugged
+23147
+TC Abnormal Unplugged
+23148
+TD Abnormal Unplugged
+23149
+TE Abnormal Unplugged
+23150
+DM Abnormal Unplugged
+23151
+NMT Abnormal Unplugged
+23152
+P1 Abnormal Unplugged
+23153
+MPS Abnormal Unplugged
+21101
+T1 Self Checking Error
+21102
+T1 Sensor Off
+21103
+T1 Out High Limit
+21104
+T1 Out Low Limit
+21111
+T2 Self Checking Error
+21112
+T2 Sensor Off
+21113
+T2 Out High Limit
+21114
+T2 Out Low Limit
+21121
+T3 Self Checking Error
+21122
+T3 Sensor Off
+
+
+=== PAGE 112 ===
+107
+21123
+T3 Out High Limit
+21124
+T3 Out Low Limit
+21131
+T4 Self Checking Error
+21132
+T4 Sensor Off
+21133
+T4 Out High Limit
+21134
+T4 Out Low Limit
+21141
+T5 Self Checking Error
+21142
+T5 Sensor Off
+21143
+T5 Out High Limit
+21144
+T5 Out Low Limit
+21151
+T6 Self Checking Error
+21152
+T6 Sensor Off
+21153
+T6 Out High Limit
+21154
+T6 Out Low Limit
+21161
+T7 Self Checking Error
+21162
+T7 Sensor Off
+21163
+T7 Out High Limit
+21164
+T7 Out Low Limit
+21171
+T8 Self Checking Error
+21172
+T8 Sensor Off
+21173
+T8 Out High Limit
+21174
+T8 Out Low Limit
+21181
+T9 Self Checking Error
+21182
+T9 Sensor Off
+21183
+T9 Out High Limit
+21184
+T9 Out Low Limit
+21191
+T10 Self Checking Error
+21192
+T10 Sensor Off
+21193
+T10 Out High Limit
+21194
+T10 Out Low Limit
+21201
+Skin Temp Self Checking Error
+21202
+Skin Temp Sensor Off
+21203
+Skin Temp Out High Limit
+21204
+Skin Temp Out Low Limit
+21211
+Core Temp Self Checking Error
+21212
+Core Temp Sensor Off
+21213
+Core Temp Out High Limit
+21214
+Core Temp Out Low Limit
+21221
+Axil Temp Self Checking Error
+21222
+Axil Temp Sensor Off
+21223
+Axil Temp Out High Limit
+21224
+Axil Temp Out Low Limit
+21231
+Naso Temp Self Checking Error
+
+
+=== PAGE 113 ===
+108
+21232
+Naso Temp Sensor Off
+21233
+Naso Temp Out High Limit
+21234
+Naso Temp Out Low Limit
+21241
+Eso Temp Self Checking Error
+21242
+Eso Temp Sensor Off
+21243
+Eso Temp Out High Limit
+21244
+Eso Temp Out Low Limit
+21251
+Rect Temp Self Checking Error
+21252
+Rect Temp Sensor Off
+21253
+Rect Temp Out High Limit
+21254
+Rect Temp Out Low Limit
+21261
+Amb Temp Self Checking Error
+21262
+Amb Temp Sensor Off
+21263
+Amb Temp Out High Limit
+21264
+Amb Temp Out Low Limit
+21271
+Airw Temp Self Checking Error
+21272
+Airw Temp Sensor Off
+21273
+Airw Temp Out High Limit
+21274
+Airw Temp Out Low Limit
+21281
+Vesic Temp Self Checking Error
+21282
+Vesic Temp Sensor Off
+21283
+Vesic Temp Out High Limit
+21284
+Vesic Temp Out Low Limit
+21291
+Blood Temp Self Checking Error
+21292
+Blood Temp Sensor Off
+21293
+Blood Temp Out High Limit
+21294
+Blood Temp Out Low Limit
+21301
+Myo Temp Self Checking Error
+21302
+Myo Temp Sensor Off
+21303
+Myo Temp Out High Limit
+21304
+Myo Temp Out Low Limit
+21311
+Tymp Temp Self Checking Error
+21312
+Tymp Temp Sensor Off
+21313
+Tymp Temp Out High Limit
+21314
+Tymp Temp Out Low Limit
+21321
+Cereb Temp Self Checking Error
+21322
+Cereb Temp Sensor Off
+21323
+Cereb Temp Out High Limit
+21324
+Cereb Temp Out Low Limit
+21501
+RSO2 Communication Error
+21502
+RSO2_CH1 Out of Range
+21503
+RSO2_CH1 Short Path Symmetry
+21504
+RSO2_CH1 Differential symmetry
+
+
+=== PAGE 114 ===
+109
+21505
+RSO2_CH1 Light absorption out of range
+21506
+RSO2_CH1 Noise
+21507
+RSO2_CH1 Differential signal slope too large
+21508
+RSO2_CH1 Short path out of range
+21509
+RSO2_CH1 Long path too low
+21510
+RSO2_CH1 No Sensor
+21511
+RSO2_CH1 Unauthorized Sensor
+21512
+RSO2_CH1 Incompatible Sensor
+21513
+RSO2_CH1 Inadequate Power
+21514
+RSO2_CH1 Defective Sensor
+21515
+RSO2_CH1 No Cable Connected
+21516
+RSO2_CH1 Cable Incompatible
+21517
+RSO2_CH1 Defective Cable
+21518
+RSO2_CH1 Cable Will Expire Soon
+21519
+RSO2_CH1 Cable Life Expired
+21520
+RSO2_CH1 No Cable Connected
+21521
+RSO2_CH1 Defective Sensor
+21522
+RSO2_CH1 Sensor Life Near Expiration
+21523
+RSO2_CH1 Sensor Life Expired
+21524
+RSO2_CH1 No Adhesive Connected
+21525
+RSO2_CH1 Incompatible Adhesive
+21526
+RSO2_CH1 Defective Adhesive
+21527
+RSO2_CH1 Adhesive Life Near Expiration
+21528
+RSO2_CH1 Adhesive Life Expired
+21529
+RSO2_CH1 Sensor Initializing
+21530
+RSO2_CH1 Sensor Off
+21531
+RSO2_CH1
+Pulse Search
+21532
+RSO2_CH1 Motion Interference
+21533
+RSO2_CH1 Low Perfusion Index
+21534
+RSO2_CH1 Check Sensor Connection
+21535
+RSO2_CH1 Demo Mode
+21536
+RSO2_CH1 No Sensor Site Selected
+21552
+RSO2_CH2 Out of Range
+21553
+RSO2_CH2 Short path symmetry
+21554
+RSO2_CH2 Differential symmetry
+21555
+RSO2_CH2 Light absorption out of range
+21556
+RSO2_CH2 Noise
+21557
+RSO2_CH2 Differential signal slope too large
+21557
+RSO2_CH2 Short path out of range
+21558
+RSO2_CH2 Long path too low
+21560
+RSO2_CH2 No Sensor
+21561
+RSO2_CH2 Unauthorized Sensor
+21562
+RSO2_CH2 Incompatible Sensor
+
+
+=== PAGE 115 ===
+110
+21563
+RSO2_CH2 Inadequate Power
+21564
+RSO2_CH2 Defective Sensor
+21565
+RSO2_CH2 No Cable Connected
+21566
+RSO2_CH2 Cable Incompatible
+21567
+RSO2_CH2 Defective Cable
+21568
+RSO2_CH2 Cable Will Expire Soon
+21569
+RSO2_CH2 Cable Life Expired
+21570
+RSO2_CH2 No Cable Connected
+21571
+RSO2_CH2 Defective Sensor
+21572
+RSO2_CH2 Sensor Life Near Expiration
+21573
+RSO2_CH2 Sensor Life Expired
+21574
+RSO2_CH2 No Adhesive Connected
+21575
+RSO2_CH2 Incompatible Adhesive
+21576
+RSO2_CH2 Defective Adhesive
+21577
+RSO2_CH2 Adhesive Life Near Expiration
+21578
+RSO2_CH2 Adhesive Life Expired
+21579
+RSO2_CH2 Sensor Initializing
+21580
+RSO2_CH2 Sensor Off
+21581
+RSO2_CH2
+Pulse Search
+21582
+RSO2_CH2 Motion Interference
+21583
+RSO2_CH2 Low Perfusion Index
+21584
+RSO2_CH2 Check Sensor Connection
+21585
+RSO2_CH2 Demo Mode
+21586
+RSO2_CH2 No Sensor Site Selected
+Appendix A.8 Module waveform ID
+ID
+内容
+30001
+ECG_1
+30002
+ECG_2
+30003
+ECG_3
+30004
+ECG_Avr
+30005
+ECG_Avl
+30006
+ECG_Avf
+30007
+ECG_V1
+30008
+ECG_V2
+30009
+ECG_V3
+30010
+ECG_V4
+30011
+ECG_V5
+30012
+ECG_V6
+
+
+=== PAGE 116 ===
+111
+30013
+ECG_Va
+30014
+ECG_Vb
+30015
+ECG_V
+30021
+SPO2
+30022
+SPO2L
+30031
+RESP
+30032
+ICG
+30033
+BIS
+30041
+EEG1
+30042
+EEG2
+30043
+EEG3
+30044
+EEG4
+30051
+CO
+30052
+CO2
+30053
+N2O
+30054
+O2
+30061
+AA
+30062
+HAL
+30063
+ENF
+30064
+ISO
+30065
+SEV
+30066
+DES
+30071
+RM_FLOW
+30072
+RM_PAW
+30073
+RM_VOL
+30081
+IBP_P1
+30082
+IBP_P2
+30083
+IBP_ART
+30084
+IBP_CVP
+30085
+IBP_PA
+30086
+IBP_RAP
+30087
+IBP_LAP
+30088
+IBP_ICP
+30089
+IBP_PAWP_NULL
+30090
+IBP_UAP
+30091
+IBP_BAP
+30092
+IBP_FAP
+30093
+IBP_UVP
+30094
+IBP_LV
+30095
+IBP_AO
+30096
+IBP_PAWP
+30100
+PR
+30101
+RR
+
+
+=== PAGE 117 ===
+112
+Appendix A.9 Units ID
+ID
+Contents
+11
+mmHg
+12
+kPa
+13
+cmH2O
+14
+%
+21
+C
+22
+F
+31
+cm
+32
+inch
+41
+kg
+42
+lb
+Note: Italics in the document are reserved items
+Appendix A.10 Unit conversion
+Original unit
+Target unit
+Transformation relation
+mmHg（Millimetes
+of mercury）
+kPa（Kilopascal）
+1 mmHg = 0.13328 kPa
+cmH2O
+（Centimeters of water）
+1 mmHg = 1.36 cmH2O
+%（Percentage）
+1 mmHg = 100 / P
+P is the standard atmosphere
+lb（Pound）
+Kg（kilogram）
+1 lb =
+0.45359 Kg
+in（Iinch）
+cm（Centimeter）
+1 in = 2.54 cm
+ºC（Centigrade）
+ºF（Fahrenheit）
+F = 32 + C * 1.8
+Where F is degrees Fahrenheit and C is degrees
+Centigrade
+Drops/min
+（Drops/minutes
+ml/h（Milliliter/hour）
+Dropping speed (mL/h)
+=
+Liquid volume(mL) *
+Drops per minute(drops/min) ÷ 60
+
+
+=== PAGE 118 ===
+113
+Note: Standard atmospheric pressure conversion P=1.013X10 ^ 5 (Pa)=760 (mmHg)
+
+
